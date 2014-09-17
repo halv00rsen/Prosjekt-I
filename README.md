@@ -7,6 +7,6 @@ readme for gruppe 10
 
 en liten forandring
 
-enda en
+enda en?
 
 en liten forandring
