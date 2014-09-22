@@ -7,9 +7,9 @@ public class textGUI {
 		gui.Alternativer("admin");
 	}
 	
-	void Alternativer(String Bruker) {
+	public void Alternativer(String Bruker) {
 		int alternativ = -1;
-		Scanner sc = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in);
 		
 		while (alternativ != 5){
 			System.out.println();
@@ -20,7 +20,7 @@ public class textGUI {
 			System.out.println("4. Sjekk Status");
 			System.out.println("5. Avslutt");
 			System.out.print("Velg alternativ: ");
-			alternativ = sc.nextInt();
+			alternativ = scanner.nextInt();
 			System.out.println();
 			
 			switch(alternativ) {
@@ -32,25 +32,26 @@ public class textGUI {
 			default: break;
 			}
 		}
+		scanner.close();
 	}
 	
-	void visKalender() {
+	public void visKalender() {
 		System.out.println("Vis kalender");
 	}
 	
-	void reserverKoie() {
+	public void reserverKoie() {
 		System.out.println("Reserver Koie");
 	}
 	
-	void avbestillKoie() {
+	public void avbestillKoie() {
 		System.out.println("Avbestill koie");
 	}
 	
-	void sjekkStatus() {
+	public void sjekkStatus() {
 		System.out.println("Sjekk status");
 	}
 	
-	void avslutt() {
+	public void avslutt() {
 		System.out.println("Avslutt");
 	}
 }
