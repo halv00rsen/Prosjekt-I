@@ -10,3 +10,5 @@ en liten forandring
 enda en?
 
 en liten forandring
+
+Let's merge!
