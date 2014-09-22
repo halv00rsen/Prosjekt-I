@@ -10,7 +10,7 @@ public class Equipment {
 	}
 	
 	public Equipment(String name){
-        this(name, True);
+        this(name, true);
 	}
 
 	public boolean isBroken(){
