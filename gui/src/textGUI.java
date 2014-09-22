@@ -11,7 +11,7 @@ public class textGUI {
 		int alternativ = -1;
 		Scanner sc = new Scanner(System.in);
 		
-		while (alternativ != 5) 
+		while (alternativ != 5){
 			System.out.println();
 			System.out.println("***MENY***");
 			System.out.println("1. Vis Kalender");
@@ -31,6 +31,7 @@ public class textGUI {
 			case 5: avslutt(); break;
 			default: break;
 			}
+		}
 	}
 	
 	void visKalender() {
