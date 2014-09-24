@@ -13,13 +13,13 @@ public class Calendar {
 	}
 	
 	public static boolean validDate(int day, int month){
-		if (day < 1)
+		if (day < 1 || month < 1 || month > 12)
 			return false;
 		if (month == 2 && day <= 28){
 			return true;
-		}else if ((month == 1 || month == 3)){
-			
+		}else if ((month < 8 && month % 2 == 1) || (month > 7 && month % 2 == 1)){
+			return true;
 		}
-		return false;
+		return true;
 	}
 }
