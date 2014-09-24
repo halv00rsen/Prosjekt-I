@@ -1,7 +1,11 @@
 package tests;
 
-class Equipment {
-	public static void main(String[] args){
-		System.out.println("Test.")
+public class EquipmentTest {
+	
+	public static void main(String[] args) {
+		
+		System.out.println("Test.");
+		
 	}
+
 }
