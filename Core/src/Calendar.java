@@ -1,13 +1,16 @@
 package src;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class Calendar {
 	
 	public final static int daysInFeature = 180;
+	private final List<BookingDate> datesBooked;
 	
 	public Calendar(){
-		
+		datesBooked = new ArrayList<BookingDate>();
 	}
 	
 	public boolean dayIsTaken(Date date){
@@ -19,37 +22,45 @@ public class Calendar {
 	}
 	
 	public void reservePeriod(Date date, int days){
-		
+		reservePeriod(date, getLastDate(date, days));
 	}
 	
 	private Date getLastDate(Date date, int days){
 		if (days > daysInFeature)
 			return null;
-		int day = date.day;
+		int day = date.day + days;
 		int month = date.month;
-		if (validDate(day + days, month))
-			return new Date(day + days, month);
-		return null;
+		while (!validDate(day, month)){
+			int daysInMonth = getDaysOfMonth(month);
+			month++;
+			day -= daysInMonth;
+		}
+		return new Date(day, month);
 	}
 	
-	public void reservePeriod(Date dateFrom, Date dateTo){
+	public static int getDaysOfMonth(int month){
+		if (month == 2){
+			java.util.Calendar c = new GregorianCalendar();
+			if (c.getWeekYear() % 4 == 0)//skuddår
+				return 29;
+			return 28;
+		}else if ((month < 8 && month % 2 == 1) || (month > 7 && month % 2 == 0)){
+			return 31;//sjekker alle måneder med 31 dager
+		}
+		else if ((month < 8 && month % 2 == 0) || (month > 7 && month % 2 == 1)){
+			return 30;//sjekker ralle måneder med 30 dager
+		}else
+			return -1;
+	}
+	
+	private void reservePeriod(Date dateFrom, Date dateTo){
 		
 	}
 	
 	public static boolean validDate(int day, int month){
-		if (day < 1 || month < 1 || month > 12)
+		int daysInMonth = getDaysOfMonth(month);
+		if (day < 1 || daysInMonth == -1 || day > daysInMonth)
 			return false;
-		if (month == 2){//spesialtilfellet februar
-			java.util.Calendar c = new GregorianCalendar();
-			if (c.getWeekYear() % 4 == 0)//skuddår
-				return day <= 29;
-			return day <= 28;
-		}else if ((month < 8 && month % 2 == 1) || (month > 7 && month % 2 == 0)){
-			return day <= 31;//sjekker alle måneder med 31 dager
-		}
-		else if ((month < 8 && month % 2 == 0) || (month > 7 && month % 2 == 1)){
-			return day <= 30;//sjekker ralle måneder med 30 dager
-		}
-		return false;
+		return true;
 	}
 }
