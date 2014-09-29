@@ -2,7 +2,7 @@ package src;
 import java.util.*;	
 
 public class textGUI {
-	// public static void main() skal fjernes når main() klassen i core er ferdig og kan 
+	// public static void main() skal fjernes nï¿½r main() klassen i core er ferdig og kan 
 	// lage et textGUI objekt.
 	public static void main(String[] args) {
 		textGUI gui = new textGUI();
@@ -17,14 +17,14 @@ public class textGUI {
 		
 		if (login == "admin") {
 			while (alternativ != 5) {	
-				System.out.println();
-				System.out.println("***MENY***");
-				System.out.println("1. Vis Kalender");
-				System.out.println("2. Avbestill Koie");
-				System.out.println("3. Sjekk Status");
-				System.out.println("4. Vis Kart");
-				System.out.println("5. Avslutt");
-				System.out.print("Velg alternativ: ");
+				System.out.println("\n"
+						+ "***MENY***\n"
+						+ "1. Vis Kalender\n"
+						+ "2. Avbestill Koie\n"
+						+ "3. Sjekk Status\n"
+						+ "4. Vis Kart\n"
+						+ "5. Avslutt\n"
+						+ "Velg alternativ: ");
 				alternativ = scanner.nextInt();
 				System.out.println();
 			
@@ -40,16 +40,16 @@ public class textGUI {
 		}
 		else if (login == "bruker") {
 			while (alternativ != 7) {
-				System.out.println();
-				System.out.println("***MENY***");
-				System.out.println("1. Vis Kalender");
-				System.out.println("2. Reserver Koie");
-				System.out.println("3. Avbestill Koie");
-				System.out.println("4. Sjekk Status");
-				System.out.println("5. Vis Kart");
-				System.out.println("6. Raporter feil og mangler");
-				System.out.println("7. Avslutt");
-				System.out.print("Velg alternativ: ");
+				System.out.println("\n"
+						+ "***MENY***\n"
+						+ "1. Vis Kalender\n"
+						+ "2. Reserver Koie\n"
+						+ "3. Avbestill Koie\n"
+						+ "4. Sjekk Status\n"
+						+ "5. Vis Kart\n"
+						+ "6. Raporter feil og mangler\n"
+						+ "7. Avslutt\n"
+						+ "Velg alternativ: ");
 				alternativ = scanner.nextInt();
 				System.out.println();
 				
@@ -73,7 +73,7 @@ public class textGUI {
 		System.out.println("Vis kalender");
 	}
 	
-	//Metode for å reservere koie for gitt bruker
+	//Metode for ï¿½ reservere koie for gitt bruker
 	public void reserverKoie() {
 		System.out.println("Reserver Koie");
 	}
@@ -88,7 +88,7 @@ public class textGUI {
 		System.out.println("Avbestill koie. bruker");
 	}
 	
-	//printer en ny text liste med valg av koie som status skal sjekkes på
+	//printer en ny text liste med valg av koie som status skal sjekkes pï¿½
 	public void sjekkStatus() {
 		System.out.println("Sjekk status");
 	}
