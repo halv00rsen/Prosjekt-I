@@ -1,7 +1,7 @@
 package src;
 
 public class Equipment {
-	private static String name;
+	private String name;
 	private boolean broken;
 
 	public Equipment(String name, boolean broken){
@@ -10,7 +10,7 @@ public class Equipment {
 	}
 	
 	public Equipment(String name){
-        this(name, true);
+        this(name, false);
 	}
 
 	public boolean isBroken(){
@@ -19,6 +19,10 @@ public class Equipment {
 	
 	public void setBroken(boolean broken){
 		this.broken = broken;
+	}
+	
+	public void setBroken(){
+		this.setBroken(true);
 	}
 
 	public String getName(){

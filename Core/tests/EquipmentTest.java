@@ -1,12 +1,16 @@
 package tests;
 
-//import src.Equipment;
+import src.Equipment;
 
 public class EquipmentTest {
 	
 	public static void main(String[] args) {
 		//int x = 2;
-		System.out.println("a");
+		Equipment e = new Equipment("Gitar");
+		System.out.println(e.getName());
+		System.out.println(e.isBroken());
+		e.setBroken();
+		System.out.println(e.isBroken());
 		
 	}
 
