@@ -57,6 +57,30 @@ public class Calendar {
 		
 	}
 	
+	public static int getNumOfDaysBetween(Date dateFrom, Date dateTo){
+		int monthDifference = (dateTo.month - dateFrom.month) % 12;
+		if (monthDifference < 0)
+			monthDifference += 12;
+		if (monthDifference == 0){
+			return dateTo.day - dateFrom.day;
+		}
+		else{
+			int numDays = getDaysOfMonth(dateFrom.month) - dateFrom.day;
+			int monthFrom = dateFrom.month;
+			for (int a = 1; a < monthDifference + 1; a++){
+				int actualMonth = (monthFrom + a) % 12;
+				if (actualMonth < 0)
+					actualMonth += 12;
+				if (actualMonth == dateTo.month)
+					numDays += dateTo.day;
+				else{
+					numDays += getDaysOfMonth(actualMonth);
+				}
+			}
+			return numDays;
+		}
+	}
+	
 	public static boolean validDate(int day, int month){
 		int daysInMonth = getDaysOfMonth(month);
 		if (day < 1 || daysInMonth == -1 || day > daysInMonth)

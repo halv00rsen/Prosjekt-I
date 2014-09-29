@@ -10,4 +10,12 @@ public class Date {
 		this.day = day;
 		this.month = month;
 	}
+	
+	public boolean isSameDate(Date date){
+		return date.month == this.month && date.day == this.day;
+	}
+	
+	public boolean dateIsAfterThis(Date date){
+		
+	}
 }
