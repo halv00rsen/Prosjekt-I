@@ -6,7 +6,7 @@ public class textGUI {
 	// lage et textGUI objekt.
 	public static void main(String[] args) {
 		textGUI gui = new textGUI();
-		gui.Alternativer("admin");
+		gui.Alternativer("bruker");
 	}
 	
 	
