@@ -59,7 +59,7 @@ public class Calendar {
 
 	public static int getNumOfDaysBetween(Date dateFrom, Date dateTo){//sjekker antall dager mellom dateFrom og dateTo
 		int monthDifference = (dateTo.month - dateFrom.month) % 12;
-		if (monthDifference < 0)
+		if (monthDifference < 0 || (dateTo.day < dateFrom.day && monthDifference == 0))
 			monthDifference += 12;
 		if (monthDifference == 0){
 			return dateTo.day - dateFrom.day;
