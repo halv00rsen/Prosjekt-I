@@ -69,6 +69,13 @@ public class Calendar {
 			if (booking.datesCollideWithBooking(dateFrom, dateTo))
 				return;
 		}
+		BookingDate booking = new BookingDate(dateFrom, dateTo);
+		for (int a = 0; a < datesBooked.size(); a++){
+			if (!booking.isAfter(datesBooked.get(a))){
+				datesBooked.add(a, booking);
+				return;
+			}
+		}
 		datesBooked.add(new BookingDate(dateFrom, dateTo));
 	}
 	
