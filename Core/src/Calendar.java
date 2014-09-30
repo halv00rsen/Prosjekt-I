@@ -21,6 +21,7 @@ public class Calendar {
 		return true;
 	}
 	
+	//sjekker om reservasjonen eksisterer og fjerner den
 	public void removeReservation(Date dateFrom, Date dateTo){
 		BookingDate removeBooking = null;
 		for (BookingDate booking : datesBooked){
@@ -38,6 +39,7 @@ public class Calendar {
 		removeReservation(dateFrom, getLastDate(dateFrom, days));
 	}
 	
+	//sjekker om en reservasjon finnes
 	public boolean reservationExcists(Date dateFrom, int days){
 		Date dateTo = getLastDate(dateFrom, days);
 		for (BookingDate booking : datesBooked){
@@ -47,6 +49,7 @@ public class Calendar {
 		return false;
 	}
 	
+	//sjekker om denne reservasjonen kan reserveres
 	public boolean reservationIsOk(Date dateFrom, int days){
 		Date dateTo = getLastDate(dateFrom, days);
 		for (BookingDate booking : datesBooked){
@@ -56,14 +59,17 @@ public class Calendar {
 		return true;
 	}
 	
+	//reserverer en gitt periode
 	public void reservePeriod(Date date, int days){
 		reservePeriod(date, getLastDate(date, days));
 	}
 	
+	//returnerer en kopi av datoer som er booket
 	public List<BookingDate> getDatesBooked(){
 		return new ArrayList<BookingDate>(datesBooked);
 	}
 	
+	//reserverer ei koie
 	private void reservePeriod(Date dateFrom, Date dateTo){
 		for (BookingDate booking : datesBooked){
 			if (booking.datesCollideWithBooking(dateFrom, dateTo))
@@ -79,7 +85,8 @@ public class Calendar {
 		datesBooked.add(new BookingDate(dateFrom, dateTo));
 	}
 	
-	private Date getLastDate(Date date, int days){//returnerer hvilken dato som er x dager foran date
+	//returnerer hvilken dato som er x dager foran date
+	private Date getLastDate(Date date, int days){
 		if (days > daysInFeature)
 			return null;
 		int day = date.day + days;
@@ -87,12 +94,15 @@ public class Calendar {
 		while (!validDate(day, month)){
 			int daysInMonth = getDaysOfMonth(month);
 			month++;
+			if (month == 13)
+				month = 1;
 			day -= daysInMonth;
 		}
 		return new Date(day, month);
 	}
 	
-	public static int getDaysOfMonth(int month){//returnerer antall dager i denne aktuelle måneden
+	//returnerer antall dager i denne aktuelle måneden
+	public static int getDaysOfMonth(int month){
 		if (month == 2){
 			java.util.Calendar c = new GregorianCalendar();
 			if (c.getWeekYear() % 4 == 0)//skuddår
@@ -107,9 +117,10 @@ public class Calendar {
 			return -1;
 	}
 	
-
-	public static int getNumOfDaysBetween(Date dateFrom, Date dateTo){//sjekker antall dager mellom dateFrom og dateTo
-		int monthDifference = (dateTo.month - dateFrom.month) % 12;//er statisk, brukes av andre klasser, bla BookingDate
+	//sjekker antall dager mellom dateFrom og dateTo
+	//er statisk, brukes av andre klasser, bla BookingDate
+	public static int getNumOfDaysBetween(Date dateFrom, Date dateTo){
+		int monthDifference = (dateTo.month - dateFrom.month) % 12;
 		if (monthDifference < 0 || (dateTo.day < dateFrom.day && monthDifference == 0))
 			monthDifference += 12;
 		if (monthDifference == 0){
@@ -130,9 +141,11 @@ public class Calendar {
 		}
 	}
 	
-	public static boolean validDate(int day, int month){//sjekker om en dato er på riktig format, day og month er ikke 0-indeksert
-		int daysInMonth = getDaysOfMonth(month);//er statisk, kan brukes av andre klasser, bla. Date 
-		if (day < 1 || daysInMonth == -1 || day > daysInMonth)
+	//sjekker om en dato er på riktig format, day og month er ikke 0-indeksert
+	//er statisk, kan brukes av andre klasser, bla. Date 
+	public static boolean validDate(int day, int month){
+		int daysInMonth = getDaysOfMonth(month);
+		if (day < 1 || daysInMonth == -1 || day > daysInMonth || month > 12)
 			return false;
 		return true;
 	}
