@@ -34,8 +34,21 @@ public class Calendar {
 		}
 	}
 	
+	public boolean reservationIsOk(Date dateFrom, int days){
+		Date dateTo = getLastDate(dateFrom, days);
+		for (BookingDate booking : datesBooked){
+			if (booking.datesCollideWithBooking(dateFrom, dateTo))
+				return false;
+		}
+		return true;
+	}
+	
 	public void reservePeriod(Date date, int days){
 		reservePeriod(date, getLastDate(date, days));
+	}
+	
+	public List<BookingDate> getDatesBooked(){
+		return new ArrayList<BookingDate>(datesBooked);
 	}
 	
 	private void reservePeriod(Date dateFrom, Date dateTo){
