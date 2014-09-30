@@ -15,7 +15,7 @@ public class Date {
 		return date.month == this.month && date.day == this.day;
 	}
 	
-	public boolean dateIsAfterThis(Date date){
-		
+	public boolean isAfter(Date date){
+		return Calendar.getNumOfDaysBetween(date, this) < Calendar.daysInFeature;
 	}
 }

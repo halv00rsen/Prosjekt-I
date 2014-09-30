@@ -56,8 +56,8 @@ public class Calendar {
 	private void reservePeriod(Date dateFrom, Date dateTo){
 		
 	}
-	
-	public static int getNumOfDaysBetween(Date dateFrom, Date dateTo){
+
+	public static int getNumOfDaysBetween(Date dateFrom, Date dateTo){//sjekker antall dager mellom dateFrom og dateTo
 		int monthDifference = (dateTo.month - dateFrom.month) % 12;
 		if (monthDifference < 0)
 			monthDifference += 12;
@@ -69,19 +69,17 @@ public class Calendar {
 			int monthFrom = dateFrom.month;
 			for (int a = 1; a < monthDifference + 1; a++){
 				int actualMonth = (monthFrom + a) % 12;
-				if (actualMonth < 0)
-					actualMonth += 12;
 				if (actualMonth == dateTo.month)
 					numDays += dateTo.day;
 				else{
 					numDays += getDaysOfMonth(actualMonth);
 				}
-			}
+			}System.out.println("number Of days: " + numDays);
 			return numDays;
 		}
 	}
 	
-	public static boolean validDate(int day, int month){
+	public static boolean validDate(int day, int month){//sjekker om en dato er på riktig format, day og month er ikke 0-indeksert
 		int daysInMonth = getDaysOfMonth(month);
 		if (day < 1 || daysInMonth == -1 || day > daysInMonth)
 			return false;

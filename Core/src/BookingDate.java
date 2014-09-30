@@ -13,6 +13,6 @@ public class BookingDate {
 	
 	public boolean datesCollideWithBooking(Date dateFrom, Date dateTo){
 		int numDays = Calendar.getNumOfDaysBetween(dateFrom, dateTo);
-		
+		return true;
 	}
 }

@@ -10,6 +10,9 @@ public class TestMain {
 //				System.out.println("Day: " + b + ", isValid: " + Calendar.validDate(b, a + 1));
 //			}
 //		}
+		Date d1 = new Date(12, 12);
+		Date d2 = new Date(5, 1);
 		System.out.println(Calendar.getNumOfDaysBetween(new Date(12, 12), new Date(5, 1)));
+		System.out.println(d2.isAfter(d1));
 	}
 }
