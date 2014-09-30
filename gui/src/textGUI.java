@@ -4,18 +4,31 @@ import java.util.*;
 public class textGUI {
 	// public static void main() skal fjernes nï¿½r main() klassen i core er ferdig og kan 
 	// lage et textGUI objekt.
+	
+	private Calendar calendar;//Bare til testing
+	private Scanner scanner;
+	
 	public static void main(String[] args) {
 		textGUI gui = new textGUI();
 		gui.Alternativer("bruker");
 	}
 	
+	private void initBruker(){
+		calendar.reservePeriod(new Date(1,1), 5);
+	}
+	
+	private void initAdmin(){
+		
+	}
 	
 	// En metode som looper over brukerens alternativer (brukeren settes
 	public void Alternativer(String login) {
+		calendar = new Calendar();//skal fjærnes
 		int alternativ = -1;
-		Scanner scanner = new Scanner(System.in);
+		scanner = new Scanner(System.in);
 		
 		if (login == "admin") {
+			initAdmin();
 			while (alternativ != 5) {	
 				System.out.println("\n"
 						+ "***MENY***\n"
@@ -39,6 +52,7 @@ public class textGUI {
 			}
 		}
 		else if (login == "bruker") {
+			initBruker();
 			while (alternativ != 7) {
 				System.out.println("\n"
 						+ "***MENY***\n"
@@ -70,12 +84,36 @@ public class textGUI {
 	
 	//Metode som skal vise kalender oversikt over all koiene og reservasjonene som er gjordt
 	public void visKalender() {
-		System.out.println("Vis kalender");
+		System.out.println("Kalender:");
+		for (BookingDate booking : calendar.getDatesBooked()){
+			System.out.println("  " + booking.toString());
+		}
 	}
 	
 	//Metode for ï¿½ reservere koie for gitt bruker
 	public void reserverKoie() {
-		System.out.println("Reserver Koie");
+		System.out.println("Reserver Koie [måned:dato:antDager]:");
+		String[] dato = scanner.next().split(":");
+		int[] dato1 = new int[3];
+		for (int a = 0; a < 3; a++){
+			try{
+				dato1[a] = Integer.parseInt(dato[a]);
+			}catch(Exception e){
+				System.out.println("ikke gyldig datoformat");
+				return;
+			}
+		}
+		if (!Calendar.validDate(dato1[1], dato1[0])){
+			System.out.println("Datoen ikke gyldig");
+			return;
+		}
+		Date dateFrom = new Date(dato1[1], dato1[0]);
+		if (calendar.reservationIsOk(dateFrom, dato1[2])){
+			calendar.reservePeriod(dateFrom, dato1[2]);
+			System.out.println("Din reservasjon ble godkjent!");
+		}else{
+			System.out.println("Din reservasjon ble ikke godkjent.");
+		}
 	}
 	
 	//Avbestilling av hvilken som heslt reservasjon
