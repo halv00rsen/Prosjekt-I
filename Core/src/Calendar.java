@@ -74,7 +74,7 @@ public class Calendar {
 				else{
 					numDays += getDaysOfMonth(actualMonth);
 				}
-			}System.out.println("number Of days: " + numDays);
+			}
 			return numDays;
 		}
 	}
