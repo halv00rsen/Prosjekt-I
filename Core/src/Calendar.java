@@ -21,11 +21,32 @@ public class Calendar {
 		return true;
 	}
 	
+	public void removeReservation(Date dateFrom, Date dateTo){
+		BookingDate removeBooking = null;
+		for (BookingDate booking : datesBooked){
+			if (booking.equals(dateFrom, dateTo)){
+				removeBooking = booking;
+				break;
+			}
+		}
+		if (removeBooking != null){
+			datesBooked.remove(removeBooking);
+		}
+	}
+	
 	public void reservePeriod(Date date, int days){
 		reservePeriod(date, getLastDate(date, days));
 	}
 	
-	private Date getLastDate(Date date, int days){
+	private void reservePeriod(Date dateFrom, Date dateTo){
+		for (BookingDate booking : datesBooked){
+			if (booking.datesCollideWithBooking(dateFrom, dateTo))
+				return;
+		}
+		datesBooked.add(new BookingDate(dateFrom, dateTo));
+	}
+	
+	private Date getLastDate(Date date, int days){//returnerer hvilken dato som er x dager foran date
 		if (days > daysInFeature)
 			return null;
 		int day = date.day + days;
@@ -38,7 +59,7 @@ public class Calendar {
 		return new Date(day, month);
 	}
 	
-	public static int getDaysOfMonth(int month){
+	public static int getDaysOfMonth(int month){//returnerer antall dager i denne aktuelle måneden
 		if (month == 2){
 			java.util.Calendar c = new GregorianCalendar();
 			if (c.getWeekYear() % 4 == 0)//skuddår
@@ -53,12 +74,9 @@ public class Calendar {
 			return -1;
 	}
 	
-	private void reservePeriod(Date dateFrom, Date dateTo){
-		
-	}
 
 	public static int getNumOfDaysBetween(Date dateFrom, Date dateTo){//sjekker antall dager mellom dateFrom og dateTo
-		int monthDifference = (dateTo.month - dateFrom.month) % 12;
+		int monthDifference = (dateTo.month - dateFrom.month) % 12;//er statisk, brukes av andre klasser, bla BookingDate
 		if (monthDifference < 0 || (dateTo.day < dateFrom.day && monthDifference == 0))
 			monthDifference += 12;
 		if (monthDifference == 0){
@@ -80,7 +98,7 @@ public class Calendar {
 	}
 	
 	public static boolean validDate(int day, int month){//sjekker om en dato er på riktig format, day og month er ikke 0-indeksert
-		int daysInMonth = getDaysOfMonth(month);
+		int daysInMonth = getDaysOfMonth(month);//er statisk, kan brukes av andre klasser, bla. Date 
 		if (day < 1 || daysInMonth == -1 || day > daysInMonth)
 			return false;
 		return true;

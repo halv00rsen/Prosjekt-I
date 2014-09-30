@@ -11,16 +11,18 @@ public class Date {
 		this.month = month;
 	}
 	
-	public boolean isSameDate(Date date){
+	public boolean equals(Date date){
+		if (date == null)
+			return false;
 		return date.month == this.month && date.day == this.day;
 	}
 	
 	public boolean isAfter(Date date){
-		return isSameDate(date) ? false: Calendar.getNumOfDaysBetween(date, this) < Calendar.daysInFeature;
+		return equals(date) ? false: Calendar.getNumOfDaysBetween(date, this) < Calendar.daysInFeature;
 	}
 	
 	public boolean isBefore(Date date){
-		return isSameDate(date) ? false: Calendar.getNumOfDaysBetween(this, date) < Calendar.daysInFeature;
+		return equals(date) ? false: Calendar.getNumOfDaysBetween(this, date) < Calendar.daysInFeature;
 	}
 	
 	public String toString(){
