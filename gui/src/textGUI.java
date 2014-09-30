@@ -14,7 +14,8 @@ public class textGUI {
 	}
 	
 	private void initBruker(){
-		calendar.reservePeriod(new Date(1,1), 5);
+		calendar.reservePeriod(new Date(5,1), 5);
+		calendar.reservePeriod(new Date(25, 12), 10);
 	}
 	
 	private void initAdmin(){
@@ -85,8 +86,9 @@ public class textGUI {
 	//Metode som skal vise kalender oversikt over all koiene og reservasjonene som er gjordt
 	public void visKalender() {
 		System.out.println("Kalender:");
+		int counter = 1;
 		for (BookingDate booking : calendar.getDatesBooked()){
-			System.out.println("  " + booking.toString());
+			System.out.println(counter + ". " + booking.toString());
 		}
 	}
 	
@@ -101,7 +103,6 @@ public class textGUI {
 			calendar.reservePeriod(dateFrom, dato1[2]);
 			System.out.println("Din reservasjon ble godkjent!");
 		}else{
-			System.out.println(dateFrom);
 			System.out.println("Din reservasjon ble ikke godkjent.");
 		}
 	}
