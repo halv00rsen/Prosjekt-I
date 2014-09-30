@@ -16,6 +16,14 @@ public class Date {
 	}
 	
 	public boolean isAfter(Date date){
-		return Calendar.getNumOfDaysBetween(date, this) < Calendar.daysInFeature;
+		return isSameDate(date) ? false: Calendar.getNumOfDaysBetween(date, this) < Calendar.daysInFeature;
+	}
+	
+	public boolean isBefore(Date date){
+		return isSameDate(date) ? false: Calendar.getNumOfDaysBetween(this, date) < Calendar.daysInFeature;
+	}
+	
+	public String toString(){
+		return "month: " + month + ", day: " + day;
 	}
 }
