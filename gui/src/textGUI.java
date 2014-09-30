@@ -93,6 +93,20 @@ public class textGUI {
 	//Metode for ï¿½ reservere koie for gitt bruker
 	public void reserverKoie() {
 		System.out.println("Reserver Koie [måned:dato:antDager]:");
+		int[] dato1 = datoFormat();
+		if (dato1 == null)
+			return;
+		Date dateFrom = new Date(dato1[1], dato1[0]);
+		if (calendar.reservationIsOk(dateFrom, dato1[2])){
+			calendar.reservePeriod(dateFrom, dato1[2]);
+			System.out.println("Din reservasjon ble godkjent!");
+		}else{
+			System.out.println(dateFrom);
+			System.out.println("Din reservasjon ble ikke godkjent.");
+		}
+	}
+	
+	private int[] datoFormat(){
 		String[] dato = scanner.next().split(":");
 		int[] dato1 = new int[3];
 		for (int a = 0; a < 3; a++){
@@ -100,20 +114,13 @@ public class textGUI {
 				dato1[a] = Integer.parseInt(dato[a]);
 			}catch(Exception e){
 				System.out.println("ikke gyldig datoformat");
-				return;
+				return null;
 			}
-		}
-		if (!Calendar.validDate(dato1[1], dato1[0])){
+		}if (!Calendar.validDate(dato1[1], dato1[0])){
 			System.out.println("Datoen ikke gyldig");
-			return;
+			return null;
 		}
-		Date dateFrom = new Date(dato1[1], dato1[0]);
-		if (calendar.reservationIsOk(dateFrom, dato1[2])){
-			calendar.reservePeriod(dateFrom, dato1[2]);
-			System.out.println("Din reservasjon ble godkjent!");
-		}else{
-			System.out.println("Din reservasjon ble ikke godkjent.");
-		}
+		return dato1;
 	}
 	
 	//Avbestilling av hvilken som heslt reservasjon
@@ -123,7 +130,15 @@ public class textGUI {
 	
 	//Avbestilling av koie reservert av bruker
 	public void avbestillKoieBruker() {
-		System.out.println("Avbestill koie. bruker");
+		System.out.println("Avbestill koie. bruker [måned:dato:antDager]");
+		int[] dato = datoFormat();
+		if (dato == null)
+			return;
+		Date date = new Date(dato[1], dato[0]);
+		if (calendar.reservationExcists(date, dato[2])){
+			calendar.removeReservation(date, dato[2]);
+			System.out.println("Din reservasjon ble slettet");
+		}
 	}
 	
 	//printer en ny text liste med valg av koie som status skal sjekkes pï¿½

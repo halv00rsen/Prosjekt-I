@@ -14,7 +14,7 @@ public class BookingDate {
 	}
 	
 	public boolean datesCollideWithBooking(Date dateFrom, Date dateTo){//sjekker om datoer sendt inn kolliderer med denne bookingen
-		return dateFrom.isAfter(this.dateTo) || dateTo.isBefore(this.dateFrom);
+		return !(dateFrom.isAfter(this.dateTo) || dateTo.isBefore(this.dateFrom));
 	}
 	
 	public boolean collideWith(BookingDate booking){

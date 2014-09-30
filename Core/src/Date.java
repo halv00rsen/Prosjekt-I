@@ -18,7 +18,7 @@ public class Date {
 	}
 	
 	public boolean isAfter(Date date){
-		return equals(date) ? false: Calendar.getNumOfDaysBetween(date, this) < Calendar.daysInFeature;
+		return equals(date) ? false: !isBefore(date);//Calendar.getNumOfDaysBetween(date, this) < Calendar.daysInFeature;
 	}
 	
 	public boolean isBefore(Date date){

@@ -10,11 +10,17 @@ public class TestMain {
 //				System.out.println("Day: " + b + ", isValid: " + Calendar.validDate(b, a + 1));
 //			}
 //		}
-		Date d1 = new Date(12, 12);
-		Date d2 = new Date(3, 2);
-		Date d3 = new Date(4, 2);
-		Date d4 = new Date(7, 2);
-		BookingDate bd = new BookingDate(d3, d4);
-		System.out.println(bd.datesCollideWithBooking(d1, d2));
+		Calendar c = new Calendar();
+		Date check = new Date(1,1);
+		for (int b = 1; b < 13; b++){
+			for (int a = 1; a < 365; a++){
+				if (Calendar.validDate(a, b)){
+					Date d = new Date(a, b);
+					System.out.println(check + "    d: " + d);
+					System.out.println("After: " + check.isAfter(d));
+					System.out.println("Before: " + check.isBefore(d) + "\n");
+				}
+			}
+		}
 	}
 }

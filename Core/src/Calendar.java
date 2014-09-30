@@ -34,6 +34,19 @@ public class Calendar {
 		}
 	}
 	
+	public void removeReservation(Date dateFrom, int days){
+		removeReservation(dateFrom, getLastDate(dateFrom, days));
+	}
+	
+	public boolean reservationExcists(Date dateFrom, int days){
+		Date dateTo = getLastDate(dateFrom, days);
+		for (BookingDate booking : datesBooked){
+			if (booking.equals(dateFrom, dateTo))
+				return true;
+		}
+		return false;
+	}
+	
 	public boolean reservationIsOk(Date dateFrom, int days){
 		Date dateTo = getLastDate(dateFrom, days);
 		for (BookingDate booking : datesBooked){
