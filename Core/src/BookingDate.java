@@ -21,6 +21,13 @@ public class BookingDate {
 		return datesCollideWithBooking(booking.dateFrom, booking.dateTo);
 	}
 	
+	public boolean isAfter(BookingDate booking){
+		if (booking == null)
+			return false;
+		return booking.dateFrom.isBefore(dateFrom);
+			
+	}
+	
 	public boolean equals(BookingDate booking){
 		if (booking == null)
 			return false;
