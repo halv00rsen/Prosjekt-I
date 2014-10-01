@@ -8,22 +8,22 @@ public class Calendar {
 	
 	public final static int daysInFeature = 180;
 	private final List<BookingDate> datesBooked;
-	private Date todaysDate;//dato per dags dato
+	private Date todaysDate, maxDate;//dato per dags dato
 	
 	public Calendar(){
 		datesBooked = new ArrayList<BookingDate>();
 		java.util.Calendar c = new GregorianCalendar();
 		int monthToDay = c.get(c.MONTH) + 1;
 		todaysDate = new Date(c.get(c.DAY_OF_MONTH), monthToDay);
-		System.out.println(todaysDate);
+		maxDate = getLastDate(todaysDate, daysInFeature);
 	}
 	
-	public boolean dayIsTaken(Date date){
-		return true;
+	public Date getTodaysDate(){
+		return todaysDate;
 	}
 	
-	public boolean dayIsTaken(int day, int month){
-		return true;
+	public Date getMaxDate(){
+		return maxDate;
 	}
 	
 	//sjekker om reservasjonen eksisterer og fjerner den
