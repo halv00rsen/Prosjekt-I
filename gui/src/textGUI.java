@@ -8,11 +8,6 @@ public class textGUI {
 	private Calendar calendar;//Bare til testing
 	private Scanner scanner;
 	
-	public static void main(String[] args) {
-		textGUI gui = new textGUI();
-		gui.Alternativer("bruker");
-	}
-	
 	private void initBruker(){
 		calendar.reservePeriod(new Date(5,1), 5);
 		calendar.reservePeriod(new Date(25, 12), 10);
@@ -86,19 +81,21 @@ public class textGUI {
 	//Metode som skal vise kalender oversikt over all koiene og reservasjonene som er gjordt
 	public void visKalender() {
 		System.out.println("Kalender:");
-		int counter = 1;
+		int counter = 0;
 		for (BookingDate booking : calendar.getDatesBooked()){
-			System.out.println(counter + ". " + booking.toString());
+			System.out.println(counter++ + ". " + booking.toString());
 		}
 	}
 	
 	//Metode for ï¿½ reservere koie for gitt bruker
 	public void reserverKoie() {
-		System.out.println("Reserver Koie [måned:dato:antDager]:");
+		System.out.println("Reserver Koie [dato:måned:antDager]:");
+		System.out.println("Du kan leie fra " + calendar.getTodaysDate() + " til " + 
+				calendar.getMaxDate() + ".");
 		int[] dato1 = datoFormat();
 		if (dato1 == null)
 			return;
-		Date dateFrom = new Date(dato1[1], dato1[0]);
+		Date dateFrom = new Date(dato1[0], dato1[1]);
 		if (calendar.reservationIsOk(dateFrom, dato1[2])){
 			calendar.reservePeriod(dateFrom, dato1[2]);
 			System.out.println("Din reservasjon ble godkjent!");
@@ -131,11 +128,11 @@ public class textGUI {
 	
 	//Avbestilling av koie reservert av bruker
 	public void avbestillKoieBruker() {
-		System.out.println("Avbestill koie. bruker [måned:dato:antDager]");
+		System.out.println("Avbestill koie. bruker [dato:måned:antDager]");
 		int[] dato = datoFormat();
 		if (dato == null)
 			return;
-		Date date = new Date(dato[1], dato[0]);
+		Date date = new Date(dato[0], dato[1]);
 		if (calendar.reservationExcists(date, dato[2])){
 			calendar.removeReservation(date, dato[2]);
 			System.out.println("Din reservasjon ble slettet");
