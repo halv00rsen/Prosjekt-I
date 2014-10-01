@@ -14,8 +14,8 @@ public class Koie {
 	private final Calendar cabinRented;
 	
 
-	public Koie(String name, int numBeds, int numSeats, boolean sykkel, boolean toppTur, boolean vaffel, 
-			boolean jakt, boolean fiske, boolean gitar, String terreng, String spesialiteter){
+	public Koie(String name, int numBeds, int numSeats, boolean sykkel, boolean toppTur, 
+			boolean jakt, boolean fiske, boolean gitar, boolean vaffel, String terreng, String spesialiteter){
 		this.name = name;
 		this.numBeds = numBeds;
 		this.numSeats = numSeats;
