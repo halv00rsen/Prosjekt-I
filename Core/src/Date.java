@@ -34,7 +34,7 @@ public class Date {
 	
 	//sjekker om en dato er etter denne
 	public boolean isAfter(Date date){
-		return equals(date) ? false: !isBefore(date);//Calendar.getNumOfDaysBetween(date, this) < Calendar.daysInFeature;
+		return equals(date) ? false: Calendar.getNumOfDaysBetween(date, this) < Calendar.daysInFeature;
 	}
 	
 	//sjekker om en dato er etter denne

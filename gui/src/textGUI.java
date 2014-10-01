@@ -81,7 +81,7 @@ public class textGUI {
 	//Metode som skal vise kalender oversikt over all koiene og reservasjonene som er gjordt
 	public void visKalender() {
 		System.out.println("Kalender:");
-		int counter = 0;
+		int counter = 1;
 		for (BookingDate booking : calendar.getDatesBooked()){
 			System.out.println(counter++ + ". " + booking.toString());
 		}
@@ -114,7 +114,7 @@ public class textGUI {
 				System.out.println("ikke gyldig datoformat");
 				return null;
 			}
-		}if (!Calendar.validDate(dato1[1], dato1[0])){
+		}if (!Calendar.validDate(dato1[0], dato1[1])){
 			System.out.println("Datoen ikke gyldig");
 			return null;
 		}
