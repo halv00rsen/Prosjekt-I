@@ -8,9 +8,14 @@ public class Calendar {
 	
 	public final static int daysInFeature = 180;
 	private final List<BookingDate> datesBooked;
+	private Date todaysDate;//dato per dags dato
 	
 	public Calendar(){
 		datesBooked = new ArrayList<BookingDate>();
+		java.util.Calendar c = new GregorianCalendar();
+		int monthToDay = c.get(c.MONTH) + 1;
+		todaysDate = new Date(c.get(c.DAY_OF_MONTH), monthToDay);
+		System.out.println(todaysDate);
 	}
 	
 	public boolean dayIsTaken(Date date){
@@ -49,14 +54,27 @@ public class Calendar {
 		return false;
 	}
 	
-	//sjekker om denne reservasjonen kan reserveres
+	//sjekker om denne reservasjonen kan reserveres, så ikke overbooking skjer
 	public boolean reservationIsOk(Date dateFrom, int days){
-		Date dateTo = getLastDate(dateFrom, days);
+		return reservationIsOk(dateFrom, getLastDate(dateFrom, days), days);
+		
+	}
+	
+	private boolean reservationIsOk(Date dateFrom, Date dateTo, int numOfDays){
+		if (numOfDays > daysInFeature || numOfDays < 0 || dateFrom == null || dateTo == null)
+			return false;
 		for (BookingDate booking : datesBooked){
 			if (booking.datesCollideWithBooking(dateFrom, dateTo))
 				return false;
 		}
-		return true;
+		if (!todaysDate.isBefore(dateFrom) || todaysDate.equals(dateFrom))
+			return true;
+		int daysFromToNow = todaysDate.getDaysBetween(dateFrom);
+		return numOfDays + daysFromToNow <= daysInFeature;
+	}
+	
+	private boolean reservationIsOk(Date dateFrom, Date dateTo){
+		return reservationIsOk(dateFrom, dateTo, dateFrom.getDaysBetween(dateTo));
 	}
 	
 	//reserverer en gitt periode
@@ -71,10 +89,8 @@ public class Calendar {
 	
 	//reserverer ei koie
 	private void reservePeriod(Date dateFrom, Date dateTo){
-		for (BookingDate booking : datesBooked){
-			if (booking.datesCollideWithBooking(dateFrom, dateTo))
-				return;
-		}
+		if (!reservationIsOk(dateFrom, dateTo))
+			return;
 		BookingDate booking = new BookingDate(dateFrom, dateTo);
 		for (int a = 0; a < datesBooked.size(); a++){
 			if (!booking.isAfter(datesBooked.get(a))){
@@ -87,12 +103,14 @@ public class Calendar {
 	
 	//returnerer hvilken dato som er x dager foran date
 	private Date getLastDate(Date date, int days){
-		if (days > daysInFeature)
+		if (days > daysInFeature || days < 0)
 			return null;
+		if (days == 0)
+			return new Date(date);
 		int day = date.day + days;
 		int month = date.month;
 		while (!validDate(day, month)){
-			int daysInMonth = getDaysOfMonth(month);
+			int daysInMonth = getDayOfMonth(month);
 			month++;
 			if (month == 13)
 				month = 1;
@@ -102,7 +120,7 @@ public class Calendar {
 	}
 	
 	//returnerer antall dager i denne aktuelle måneden
-	public static int getDaysOfMonth(int month){
+	public static int getDayOfMonth(int month){
 		if (month == 2){
 			java.util.Calendar c = new GregorianCalendar();
 			if (c.getWeekYear() % 4 == 0)//skuddår
@@ -127,14 +145,16 @@ public class Calendar {
 			return dateTo.day - dateFrom.day;
 		}
 		else{
-			int numDays = getDaysOfMonth(dateFrom.month) - dateFrom.day;
+			int numDays = getDayOfMonth(dateFrom.month) - dateFrom.day;
 			int monthFrom = dateFrom.month;
 			for (int a = 1; a < monthDifference + 1; a++){
 				int actualMonth = (monthFrom + a) % 12;
+				if (actualMonth == 0)
+					actualMonth += 12;
 				if (actualMonth == dateTo.month)
 					numDays += dateTo.day;
 				else{
-					numDays += getDaysOfMonth(actualMonth);
+					numDays += getDayOfMonth(actualMonth);
 				}
 			}
 			return numDays;
@@ -144,7 +164,7 @@ public class Calendar {
 	//sjekker om en dato er på riktig format, day og month er ikke 0-indeksert
 	//er statisk, kan brukes av andre klasser, bla. Date 
 	public static boolean validDate(int day, int month){
-		int daysInMonth = getDaysOfMonth(month);
+		int daysInMonth = getDayOfMonth(month);
 		if (day < 1 || daysInMonth == -1 || day > daysInMonth || month > 12)
 			return false;
 		return true;

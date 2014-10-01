@@ -18,6 +18,13 @@ public class Date {
 			(actualMonth == month && c.get(c.DAY_OF_MONTH) > day ? 1: 0));
 	}
 	
+	//Lager en kopi av dateinputten
+	public Date(Date date){
+		month = date.month;
+		day = date.day;
+		year = date.year;
+	}
+	
 	//sjekker om en dato er lik denne
 	public boolean equals(Date date){
 		if (date == null)
@@ -33,6 +40,14 @@ public class Date {
 	//sjekker om en dato er etter denne
 	public boolean isBefore(Date date){
 		return equals(date) ? false: Calendar.getNumOfDaysBetween(this, date) < Calendar.daysInFeature;
+	}
+	
+	//returnerer antall dager mellom dette objektet og en annen dato
+	public int getDaysBetween(Date date){
+		return Calendar.getNumOfDaysBetween(this, date);
+//		int d1 = Calendar.getNumOfDaysBetween(this, date);
+//		int d2 = Calendar.getNumOfDaysBetween(date, this);
+//		return d1 > d2 ? d1 : d2;
 	}
 	
 	//returnerer dato pе formatet dd-mm-ееее
