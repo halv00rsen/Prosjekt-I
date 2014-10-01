@@ -6,45 +6,39 @@ import java.util.List;
 
 public class Koie {
 	public final String name;
-	public final int numBeds;
-	public final int numSeats;
-	public final boolean toppTur;
-	public final boolean jakt;
-	public final boolean fiske;
-	public final boolean sykkel;
-	public final boolean gitar;
-	public final boolean vaffel;
-	public final enum terreng {S,T,S/T,H};
-	public final String spesialiteter;
+	public final int numBeds, numSeats;
+	public final boolean toppTur, jakt, fiske, sykkel, gitar, vaffel;
+	public final String terreng, spesialiteter;
 	
 	private final List<Equipment> equipment;
 	private final Calendar cabinRented;
 	
 
-	public Koie(String name, int numBeds, numSeats, boolean sykkel, toppTur, jakt, fiske, gitar, vaffel enum terreng, String spesialiteter){
+	public Koie(String name, int numBeds, int numSeats, boolean sykkel, boolean toppTur, boolean vaffel, 
+			boolean jakt, boolean fiske, boolean gitar, String terreng, String spesialiteter){
 		this.name = name;
 		this.numBeds = numBeds;
 		this.numSeats = numSeats;
 		this.toppTur = toppTur;
 		this.jakt = jakt;
-		this fiske = fiske;
-		this terreng = terreng;
+		this.fiske = fiske;
 		this.spesialiteter=spesialiteter;
 		this.gitar=gitar;
 		this.vaffel=vaffel;
 		equipment = new ArrayList<Equipment>();
 		cabinRented = new Calendar();
 		this.sykkel= sykkel;
+		this.terreng = terreng;
 	}
 	
 	
 	
 	public void reserveCabin(int dayFrom, int monthFrom, int numOfDays){
-		if cabinRented.validDate(dayFrom,monthFrom) {
-			cabinRented.reservePeriod( dayFrom, monthFrom, numOfDays)
+		if (cabinRented.validDate(dayFrom,monthFrom)) {
+//			cabinRented.reservePeriod( dayFrom, monthFrom, numOfDays)
 			}
-		else
-		
+//		else
 	}
+}
 	
 	
