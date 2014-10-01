@@ -67,7 +67,10 @@ public class Calendar {
 			if (booking.datesCollideWithBooking(dateFrom, dateTo))
 				return false;
 		}
-		if (!todaysDate.isBefore(dateFrom) || todaysDate.equals(dateFrom))
+		if (!todaysDate.isBefore(dateFrom)){
+			return dateFrom.isAfter(todaysDate);
+		}
+		else if (todaysDate.equals(dateFrom))
 			return true;
 		int daysFromToNow = todaysDate.getDaysBetween(dateFrom);
 		return numOfDays + daysFromToNow <= daysInFeature;
