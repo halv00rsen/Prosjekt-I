@@ -12,14 +12,17 @@ public class EquipmentTest {
 		
 		Equipment e = new Equipment("Gitar");
 		assertEquals(e.getName(), "Gitar");
+		
 		e.setName("El-gitar");
 		assertNotEquals(e.getName(), "Gitar");
 		assertEquals(e.getName(), "El-gitar");
 		
 		
 		assertEquals(e.isBroken(), false);
+		
 		e.setBroken();
 		assertEquals(e.isBroken(), true);
+		
 		e.setBroken(false);
 		assertEquals(e.isBroken(), false);
 		
