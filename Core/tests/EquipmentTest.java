@@ -17,7 +17,6 @@ public class EquipmentTest {
 		assertNotEquals(e.getName(), "Gitar");
 		assertEquals(e.getName(), "El-gitar");
 		
-		
 		assertEquals(e.isBroken(), false);
 		
 		e.setBroken();
