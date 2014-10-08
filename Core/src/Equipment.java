@@ -1,16 +1,16 @@
 package src;
 
-public class Equipment {
+public class Equipment{
 	private String name;
 	private boolean broken;
 
 	public Equipment(String name, boolean broken){
-	        this.name = name;
-	        this.broken = broken;
+		this.name = name;
+		this.broken = broken;
 	}
 	
 	public Equipment(String name){
-        this(name, false);
+		this(name, false);
 	}
 
 	public boolean isBroken(){
