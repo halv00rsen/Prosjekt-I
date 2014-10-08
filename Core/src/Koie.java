@@ -19,16 +19,27 @@ public class Koie {
 		this.name = name;
 		this.numBeds = numBeds;
 		this.numSeats = numSeats;
+		this.sykkel= sykkel;
 		this.toppTur = toppTur;
 		this.jakt = jakt;
 		this.fiske = fiske;
-		this.spesialiteter=spesialiteter;
+		
+		equipment = new ArrayList<Equipment>();
+		if (gitar){
+			Equipment e = new Equipment("Gitar");
+			equipment.add(e);
+		}
+		if (vaffel){
+			Equipment e = new Equipment("Vaffeljern");
+			equipment.add(e);
+		}
 		this.gitar=gitar;
 		this.vaffel=vaffel;
-		equipment = new ArrayList<Equipment>();
-		cabinRented = new Calendar();
-		this.sykkel= sykkel;
+		
+		
 		this.terreng = terreng;
+		this.spesialiteter=spesialiteter;
+		cabinRented = new Calendar();
 	}
 	
 	
