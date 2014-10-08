@@ -13,4 +13,8 @@ public class UserReport {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
+	
+	private String[] getNameCabins(){
+		return null;
+	}
 }
