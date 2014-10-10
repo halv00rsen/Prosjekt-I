@@ -41,9 +41,7 @@ public class Koie {
 		this.spesialiteter=spesialiteter;
 		cabinRented = new Calendar();
 	}
-	
-	
-	
+		
 	public void reserveCabin(int dayFrom, int monthFrom, int numOfDays){
 		if (cabinRented.validDate(dayFrom,monthFrom)) {
 //			cabinRented.reservePeriod( dayFrom, monthFrom, numOfDays)
