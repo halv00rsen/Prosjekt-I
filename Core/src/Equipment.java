@@ -9,6 +9,7 @@ public class Equipment{
 		this.broken = broken;
 	}
 	
+	// Setter broken automatisk til false hvis argumentet ikke er oppgitt
 	public Equipment(String name){
 		this(name, false);
 	}
@@ -21,6 +22,7 @@ public class Equipment{
 		this.broken = broken;
 	}
 	
+	// Setter broken automatisk til true hvis argumentet ikke er oppgitt
 	public void setBroken(){
 		this.setBroken(true);
 	}
