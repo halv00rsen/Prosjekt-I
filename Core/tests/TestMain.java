@@ -1,6 +1,6 @@
 package tests;
 
-import src;
+//import src;
 
 public class TestMain {
 	
