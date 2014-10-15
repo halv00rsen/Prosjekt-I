@@ -1,4 +1,6 @@
-package src;
+package tests;
+
+//import src;
 
 public class TestMain {
 	

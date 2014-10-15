@@ -2,7 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="Core"/>
 	<classpathentry kind="src" path="gui"/>
+<<<<<<< HEAD
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.1.6-bin.jar"/>
+=======
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+>>>>>>> e4e8962cb836377746ae751df86836e8a8a1af8d
 	<classpathentry kind="output" path="bin"/>
 </classpath>

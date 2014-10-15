@@ -1,16 +1,17 @@
 package src;
 
-public class Equipment {
+public class Equipment{
 	private String name;
 	private boolean broken;
 
 	public Equipment(String name, boolean broken){
-	        this.name = name;
-	        this.broken = broken;
+		this.name = name;
+		this.broken = broken;
 	}
 	
+	// Setter broken automatisk til false hvis argumentet ikke er oppgitt
 	public Equipment(String name){
-        this(name, false);
+		this(name, false);
 	}
 
 	public boolean isBroken(){
@@ -21,6 +22,7 @@ public class Equipment {
 		this.broken = broken;
 	}
 	
+	// Setter broken automatisk til true hvis argumentet ikke er oppgitt
 	public void setBroken(){
 		this.setBroken(true);
 	}

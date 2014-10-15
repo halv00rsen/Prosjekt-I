@@ -1,16 +1,29 @@
 package tests;
 
 import src.Equipment;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class EquipmentTest {
 	
-	public static void main(String[] args) {
-		//int x = 2;
+	@Test
+	public void testInstantiationAndSetBroken() {
+		
 		Equipment e = new Equipment("Gitar");
-		System.out.println(e.getName());
-		System.out.println(e.isBroken());
+		assertEquals(e.getName(), "Gitar");
+		
+		e.setName("El-gitar");
+		assertNotEquals(e.getName(), "Gitar");
+		assertEquals(e.getName(), "El-gitar");
+		
+		assertEquals(e.isBroken(), false);
+		
 		e.setBroken();
-		System.out.println(e.isBroken());
+		assertEquals(e.isBroken(), true);
+		
+		e.setBroken(false);
+		assertEquals(e.isBroken(), false);
 		
 	}
 
