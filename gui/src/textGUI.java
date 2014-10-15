@@ -2,9 +2,6 @@ package src;
 import java.util.*;	
 
 public class textGUI {
-	// public static void main() skal fjernes n�r main() klassen i core er ferdig og kan 
-	// lage et textGUI objekt.
-	
 	private Calendar calendar;//Bare til testing
 	private Scanner scanner;
 	
