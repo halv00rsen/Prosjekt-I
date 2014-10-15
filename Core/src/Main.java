@@ -33,7 +33,6 @@ public class Main {
 		boolean hasFiske = Boolean.parseBoolean(infoparts[6]);
 		String terrengType = infoparts[7];
 		String spesialiteter = infoparts[8];
-		String equipment = koieequipment;
 		
 		Koie koie = new Koie(name, numBeds, numSeats, hasSykkel, hasTopptur, 
 				hasJakt, hasFiske, terrengType, spesialiteter, koieequipment);

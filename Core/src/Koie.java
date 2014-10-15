@@ -26,6 +26,7 @@ public class Koie {
 		this.terreng = terreng;
 		this.spesialiteter=spesialiteter;
 		
+
 		String[] parts = koieequipment.split(", ");
 		
 		equipment = new ArrayList<Equipment>();
@@ -36,7 +37,7 @@ public class Koie {
 			
 		cabinRented = new Calendar();
 	}
-		
+			
 	public String getName() {
 		return name;
 	}
