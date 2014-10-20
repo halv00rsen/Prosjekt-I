@@ -52,6 +52,8 @@ public class AdminLogin extends JPanel{
 	private class ButtonListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
+			if (listener == null)
+				return;
 			if (e.getSource() == ok){
 				listener.login(userName.getText(), password.getPassword());
 			}else if (e.getSource() == reset){
