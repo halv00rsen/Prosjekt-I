@@ -1,9 +1,12 @@
 package tests;
 
 import src.Koie;
+import src.Equipment;
+
+import java.util.List;
+import java.util.ArrayList;
 
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -12,9 +15,15 @@ public class KoieEquipmentTest {
 	
 	@Test
 	public void testInstantiation() {
-//		Koie koie = new Koie("Koia", 6, 10, false, false, false, false, true, true, "terreng", "spes");
+		List<Equipment> equipment = new ArrayList<Equipment>();
+		Equipment g = new Equipment("Gitar");
+		Equipment v = new Equipment("Vaffeljern");
+		equipment.add(g);
+		equipment.add(v);
 		
-//		assertTrue(koie instanceof Koie);
+		Koie koie = new Koie("Koia", 6, 10, false, false, false, false, "terreng", "spes", equipment);
+		
+		assertTrue(koie instanceof Koie);
 	}
 
 }
