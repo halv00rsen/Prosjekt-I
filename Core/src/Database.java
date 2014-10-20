@@ -38,10 +38,13 @@ public class Database {
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM event");
 			while (res.next()) {
-				String 
+				//String 
 				
 			//IKKE FERDIG...
 			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
