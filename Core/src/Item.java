@@ -1,16 +1,16 @@
 package src;
 
-public class Equipment{
+public class Item{
 	private String name;
 	private boolean broken;
 
-	public Equipment(String name, boolean broken){
+	public Item(String name, boolean broken){
 		this.name = name;
 		this.broken = broken;
 	}
 	
 	// Setter broken automatisk til false hvis argumentet ikke er oppgitt
-	public Equipment(String name){
+	public Item(String name){
 		this(name, false);
 	}
 
