@@ -8,14 +8,14 @@ public class Koie {
 	private final int id, numBeds, numSeats, year;
 	private final boolean sykkel, toppTur, jakt, fiske;
 	private final String coordinates, terreng, spesialiteter;
-	private final List<Equipment> equipment;
+	private final List<Item> equipment;
 	private final Calendar cabinRented;
 
 	public Koie(int id, String name,
 				int numBeds, int numSeats, String coordinates,
 				int year, String terreng,
 				boolean sykkel, boolean toppTur, boolean jakt, boolean fiske,
-				String spesialiteter, List<Equipment> equipment) {
+				String spesialiteter, List<Item> equipment) {
 
 		this.id = id;
 		this.name = name;
@@ -93,7 +93,7 @@ public class Koie {
 		return spesialiteter;
 	}
 	
-	public List<Equipment> getEquipment() {
+	public List<Item> getEquipment() {
 		return equipment;
 	}
 
