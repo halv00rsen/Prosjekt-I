@@ -52,6 +52,14 @@ public class DestroyedItems extends JPanel{
 	  public DestroyedItems() {
 	    initScreen();
 	  }
+	  
+	  public void getDestroyedElements(){
+//		  ListModel<String> stuff = destList.getModel();
+//		  String[] items = new String[stuff.getSize()];
+//		  for (String item: stuff){
+//			  
+//		  }
+	  }
 
 	  public String getSourceChoicesTitle() {
 	    return sourceLabel.getText();

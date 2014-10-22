@@ -30,7 +30,6 @@ public class UserReport {
 	private JFrame frame;
 	private JTextArea textArea;
 	private JComboBox<String> alleKoier;
-	private JList<String> destroyedEquipment, equipmentCabin;
 	private ButtonListener buttonListener;
 	private JButton okButton, cancelButton;
 	private DestroyedItems destroyedItems;
@@ -68,17 +67,12 @@ public class UserReport {
 			alleKoier.addItem(koie);
 		panel_1.add(alleKoier);
 		alleKoier.addActionListener(buttonListener);
-		panel_1.add(new JLabel("Velg utstyr:"));
-		equipmentCabin = new JList<String>();
-		panel_1.add(equipmentCabin);
 		
 		JLabel lbldelagtUtstyr = new JLabel("\u00D8delagt utstyr");
 		panel_1.add(lbldelagtUtstyr);
 		
 		destroyedItems = new DestroyedItems();
 		tabbedPane.addTab("Ødelagt utsyr", null, destroyedItems, null);
-		destroyedEquipment = new JList<String>();
-		panel_1.add(destroyedEquipment);
 		updateEquipmentInCabin();
 		
 		
@@ -103,7 +97,6 @@ public class UserReport {
 	
 	private void updateEquipmentInCabin(){
 		String cabin = (String) alleKoier.getSelectedItem();
-		equipmentCabin.removeAll();
 		destroyedItems.clearDestinationListModel();
 		destroyedItems.clearSourceListModel();
 		if (cabin.equals("Koie 1")){
@@ -130,6 +123,7 @@ public class UserReport {
 			}
 			else if (arg0.getSource() == okButton){
 				System.out.println(alleKoier.getSelectedItem());
+				destroyedItems.getDestroyedElements();
 				System.out.println(textArea.getText());
 			}else if (arg0.getSource() == alleKoier){
 				updateEquipmentInCabin();
