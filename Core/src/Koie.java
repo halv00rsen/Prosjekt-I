@@ -5,29 +5,54 @@ import java.util.List;
 
 public class Koie {
 	private final String name;
-	private final int numBeds, numSeats;
-	private final boolean toppTur, jakt, fiske, sykkel;
-	private final String terreng, spesialiteter;
+	private final int id, numBeds, numSeats, year;
+	private final boolean sykkel, toppTur, jakt, fiske;
+	private final String coordinates, terreng, spesialiteter;
 	private final List<Equipment> equipment;
 	private final Calendar cabinRented;
-	
 
-	public Koie(String name, int numBeds, int numSeats, boolean sykkel, boolean toppTur, 
-			boolean jakt, boolean fiske, String terreng, String spesialiteter, List<Equipment> equipment){
+	public Koie(int id, String name,
+				int numBeds, int numSeats, String coordinates,
+				int year, String terreng,
+				boolean sykkel, boolean toppTur, boolean jakt, boolean fiske,
+				String spesialiteter, List<Equipment> equipment) {
+
+		this.id = id;
 		this.name = name;
 		this.numBeds = numBeds;
 		this.numSeats = numSeats;
+		this.coordinates = coordinates;
+		this.year = year;
+		this.terreng = terreng;
 		this.sykkel= sykkel;
 		this.toppTur = toppTur;
 		this.jakt = jakt;
 		this.fiske = fiske;
-		this.terreng = terreng;
 		this.spesialiteter = spesialiteter;
 		this.equipment = equipment;
 			
 		cabinRented = new Calendar();
 	}
+	
+	public String toString() {
+		return name +"\t"+
+				String.valueOf(numBeds) +"\t"+
+				String.valueOf(numBeds) +"\t"+
+				coordinates +"\t"+
+				String.valueOf(year) +"\t"+
+				terreng +"\t"+
+				String.valueOf(sykkel) +"\t"+
+				String.valueOf(toppTur) +"\t"+
+				String.valueOf(jakt) +"\t"+
+				String.valueOf(fiske) +"\t"+
+				spesialiteter;
+	}
 			
+
+	public int getId() {
+		return id;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -38,6 +63,10 @@ public class Koie {
 
 	public int getNumSeats() {
 		return numSeats;
+	}
+	
+	public String getCoordinates() {
+		return coordinates;
 	}
 
 	public boolean isToppTur() {

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -21,17 +22,19 @@ public class KoieEquipmentTest {
 		equipment.add(g);
 		equipment.add(v);
 		
-		Koie koie = new Koie("Koia", 6, 10, false, false, false, false, "terreng", "spes", equipment);
-		
+		Koie koie = new Koie(1, "Koia",
+							 6, 10, "71N 10E", 
+							 1968, "terreng", 
+							 false, false, false, false, 
+							 "spes", equipment);
+
 		assertTrue(koie instanceof Koie);
 		
 		List<Equipment> equip = koie.getEquipment();
 		for (Equipment e : equip) {
-			System.out.println(e.getName());
-			System.out.println(e.isBroken());
 			assertEquals(e.isBroken(), false);
 		}
 
+		System.out.println(koie.toString());
 	}
-
 }
