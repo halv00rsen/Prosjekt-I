@@ -20,6 +20,15 @@ public class Inventory {
 		
 	}
 	
+	public Item getItemByName(String name) {
+		for (Item item : items) {
+			if (item.getName().equals(name)) {
+				return item;
+			}
+		}
+		return null;
+	}
+	
 	public void addItem(String name) {
 		items.add(new Item(name));
 		
