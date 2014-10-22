@@ -10,8 +10,19 @@ public class Inventory {
 		items = new ArrayList<Item>();
 	}
 	
-	public void addItem(Item item) {
-		items.add(item);
+	public boolean hasItem(String name) {
+		for (Item item : items) {
+			if (item.getName().equals(name)) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
+	public void addItem(String name) {
+		items.add(new Item(name));
+		
 	}
 	
 	public void removeItem(Item item) {
