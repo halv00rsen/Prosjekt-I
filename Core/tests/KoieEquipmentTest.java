@@ -24,6 +24,14 @@ public class KoieEquipmentTest {
 		Koie koie = new Koie("Koia", 6, 10, false, false, false, false, "terreng", "spes", equipment);
 		
 		assertTrue(koie instanceof Koie);
+		
+		List<Equipment> equip = koie.getEquipment();
+		for (Equipment e : equip) {
+			System.out.println(e.getName());
+			System.out.println(e.isBroken());
+			assertEquals(e.isBroken(), false);
+		}
+
 	}
 
 }
