@@ -3,9 +3,6 @@ package src;
 import java.sql.*;
 
 public class Database {
-	public static void main(String[] args) {
-		Database mySQL = new Database();
-	}
 	
 	Connection conn;
 	
@@ -13,7 +10,7 @@ public class Database {
 		this.conn = connection();
 	}
 	
-	public Connection connection() {
+	private Connection connection() {
 		try {		
 			String url = "jdbc:mysql://mysql.stud.ntnu.no/";
 			String dbName = "alekh_prosjekt1";
@@ -33,17 +30,14 @@ public class Database {
 		}
 	}
 	
-	public void insert(String column, String value) {
+	public void insert(String query) {
 		try {
 			Statement st = conn.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM event");
-			while (res.next()) {
-				//String 
-				
-			//IKKE FERDIG...
+			int res = st.executeUpdate(query);
+			if (res == 1) {
+				System.out.println("insert vellykket!");
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
