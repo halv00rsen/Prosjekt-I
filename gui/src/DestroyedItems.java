@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -57,12 +58,11 @@ public class DestroyedItems extends JPanel{
 		      1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, EMPTY_INSETS, 0, 0));
 	  }
 	  
-	  public void getDestroyedElements(){
-//		  ListModel<String> stuff = destList.getModel();
-//		  String[] items = new String[stuff.getSize()];
-//		  for (String item: stuff){
-//			  
-//		  }
+	  public List<String> getDestroyedElements(){
+		  List<String> items = new ArrayList<String> ();
+		  for (int a = 0; a < brokenInventoryListModel.getSize(); a++)
+			  items.add((String) brokenInventoryListModel.getElementAt(a));
+		  return items;
 	  }
 	  
 	  public void setInventory(String[] inventory){

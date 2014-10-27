@@ -121,7 +121,8 @@ public class UserReport {
 			}
 			else if (arg0.getSource() == okButton){
 				System.out.println(alleKoier.getSelectedItem());
-				destroyedItems.getDestroyedElements();
+				for (String a : destroyedItems.getDestroyedElements())
+					System.out.println(a);
 				System.out.println(textArea.getText());
 			}else if (arg0.getSource() == alleKoier){
 				updateEquipmentInCabin();
