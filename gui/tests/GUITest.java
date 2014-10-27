@@ -8,6 +8,10 @@ import src.GUI;
 
 public class GUITest implements AdminLoginListener{
 	
+	/**
+	 * 
+	 * @param args 
+	 */
 	public static void main(String[] args){
 		GUITest test = new GUITest();
 		test.init();

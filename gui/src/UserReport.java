@@ -97,16 +97,14 @@ public class UserReport {
 	
 	private void updateEquipmentInCabin(){
 		String cabin = (String) alleKoier.getSelectedItem();
-		destroyedItems.clearDestinationListModel();
-		destroyedItems.clearSourceListModel();
 		if (cabin.equals("Koie 1")){
 			String[] a = new String[] {"Gitar", "Stol", "Bord"};
-			destroyedItems.addSourceElements(a);
+			destroyedItems.setInventory(a);
 //			for (String b : a)
 //				equipmentCabin.addItem(b);
 		}else{
 			String[] a = new String[] {"Ski", "Sofa", "TV"};
-			destroyedItems.addSourceElements(a);
+			destroyedItems.setInventory(a);
 //			for (String b : a)
 //				equipmentCabin.addItem(b);
 		}

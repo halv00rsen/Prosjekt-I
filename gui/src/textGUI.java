@@ -6,8 +6,8 @@ public class textGUI {
 	private Scanner scanner;
 	
 	private void initBruker(){
-		calendar.reservePeriod(new Date(5,1), 5);
-		calendar.reservePeriod(new Date(25, 12), 10);
+		calendar.reservePeriod(new Date(5,1), 5, "name");
+		calendar.reservePeriod(new Date(25, 12), 10, "name");
 	}
 	
 	private void initAdmin(){
@@ -94,7 +94,7 @@ public class textGUI {
 			return;
 		Date dateFrom = new Date(dato1[0], dato1[1]);
 		if (calendar.reservationIsOk(dateFrom, dato1[2])){
-			calendar.reservePeriod(dateFrom, dato1[2]);
+			calendar.reservePeriod(dateFrom, dato1[2], "name");
 			System.out.println("Din reservasjon ble godkjent!");
 		}else{
 			System.out.println("Din reservasjon ble ikke godkjent.");
