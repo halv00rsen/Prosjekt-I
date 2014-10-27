@@ -81,8 +81,8 @@ public class Calendar {
 	}
 	
 	//reserverer en gitt periode
-	public void reservePeriod(Date date, int days){
-		reservePeriod(date, getLastDate(date, days));
+	public void reservePeriod(Date date, int days, String person){
+		reservePeriod(date, getLastDate(date, days), person);
 	}
 	
 	//returnerer en kopi av datoer som er booket
@@ -91,17 +91,17 @@ public class Calendar {
 	}
 	
 	//reserverer ei koie
-	private void reservePeriod(Date dateFrom, Date dateTo){
+	private void reservePeriod(Date dateFrom, Date dateTo, String person){
 		if (!reservationIsOk(dateFrom, dateTo))
 			return;
-		BookingDate booking = new BookingDate(dateFrom, dateTo);
+		BookingDate booking = new BookingDate(dateFrom, dateTo, person);
 		for (int a = 0; a < datesBooked.size(); a++){
 			if (!booking.isAfter(datesBooked.get(a))){
 				datesBooked.add(a, booking);
 				return;
 			}
 		}
-		datesBooked.add(new BookingDate(dateFrom, dateTo));
+		datesBooked.add(new BookingDate(dateFrom, dateTo, person));
 	}
 	
 	//returnerer hvilken dato som er x dager foran date

@@ -4,11 +4,13 @@ public class BookingDate {
 	
 	public final Date dateFrom, dateTo;
 	public final int numberOfDays;
+	public final String person;
 	
-	public BookingDate(Date dateFrom, Date dateTo) throws IllegalArgumentException{
+	public BookingDate(Date dateFrom, Date dateTo, String person) throws IllegalArgumentException{
 		this.dateFrom = dateFrom;
 		this.dateTo = dateTo;
 		numberOfDays = Calendar.getNumOfDaysBetween(dateFrom, dateTo);
+		this.person = person;
 		if (numberOfDays > Calendar.daysInFeature || dateFrom == null || dateTo == null)
 			throw new IllegalArgumentException("not valid dates for the program");
 	}
