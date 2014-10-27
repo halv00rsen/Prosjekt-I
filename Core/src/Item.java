@@ -5,13 +5,22 @@ public class Item{
 	private String name;
 	private boolean broken;
 
+	/**
+	 * Oppretter Item-objekt
+	 * @param id	
+	 * @param name
+	 * @param broken
+	 */
 	public Item(int id, String name, boolean broken){
 		this.id = id;
 		this.name = name;
 		this.broken = broken;
 	}
 	
-	// Setter broken automatisk til false hvis argumentet ikke er oppgitt
+	/**
+	 * Oppretter Item-objekt med bare navn, setter id til 0 og broken til false.
+	 * @param name	Navn
+	 */
 	public Item(String name){
 		this(0, name, false);
 	}
