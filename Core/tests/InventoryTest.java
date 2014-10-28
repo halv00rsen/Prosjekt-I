@@ -8,7 +8,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 public class InventoryTest {
-	
 	@Test
 	public void testInstantiation() {
 		Inventory inventory = new Inventory();
@@ -18,22 +17,21 @@ public class InventoryTest {
 	@Test
 	public void testAddItemAndHasItem() {
 		Inventory inventory = new Inventory();
-		inventory.addItem("Gitar");
+		inventory.addItemByName("Gitar");
 		
-		assertTrue(inventory.hasItem("Gitar"));
+		assertTrue(inventory.hasItemByName("Gitar"));
 	}
 	
 	@Test
 	public void testRemoveItem() {
 		Inventory inventory = new Inventory();
-		inventory.addItem("Gitar");
+		inventory.addItemByName("Gitar");
 
-		assertTrue(inventory.hasItem("Gitar"));
+		assertTrue(inventory.hasItemByName("Gitar"));
 
 		Item gitar = inventory.getItemByName("Gitar");
 		inventory.removeItem(gitar);
 
-		assertFalse(inventory.hasItem("Gitar"));
+		assertFalse(inventory.hasItemByName("Gitar"));
 	}
-
 }
