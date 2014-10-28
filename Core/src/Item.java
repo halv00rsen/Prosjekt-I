@@ -58,5 +58,4 @@ public class Item {
 	public void setBroken(boolean broken) {
 		this.broken = broken;
 	}
-
 }
