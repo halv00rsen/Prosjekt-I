@@ -5,7 +5,7 @@ import src.Inventory;
 public class Koie {
 	private final String name;
 	private final String id, numBeds, numSeats, year; //trenger ikke � v�re int fordi vi bruker aldri de numeriske verdiene til noe
-	private final boolean sykkel, toppTur, jakt, fiske;
+	private final boolean sykkel, topptur, jakt, fiske;
 	private final String coordinates, terreng, spesialiteter;
 	private final Inventory inventory;
 	private final Calendar cabinRented;
@@ -13,7 +13,7 @@ public class Koie {
 	public Koie(String id, String name,
 				String numBeds, String numSeats, String coordinates,
 				String year, String terreng,
-				boolean sykkel, boolean toppTur, boolean jakt, boolean fiske,
+				boolean sykkel, boolean topptur, boolean jakt, boolean fiske,
 				String spesialiteter, Inventory inventory) {
 
 		this.id = id;
@@ -24,7 +24,7 @@ public class Koie {
 		this.year = year;
 		this.terreng = terreng;
 		this.sykkel= sykkel;
-		this.toppTur = toppTur;
+		this.topptur = topptur;
 		this.jakt = jakt;
 		this.fiske = fiske;
 		this.spesialiteter = spesialiteter;
@@ -53,8 +53,8 @@ public class Koie {
 		return coordinates;
 	}
 
-	public boolean hasToppTur() {
-		return toppTur;
+	public boolean hasTopptur() {
+		return topptur;
 	}
 
 	public boolean hasJakt() {
@@ -96,7 +96,7 @@ public class Koie {
 				String.valueOf(year) +"\t"+
 				terreng +"\t"+
 				String.valueOf(sykkel) +"\t"+
-				String.valueOf(toppTur) +"\t"+
+				String.valueOf(topptur) +"\t"+
 				String.valueOf(jakt) +"\t"+
 				String.valueOf(fiske) +"\t"+
 				spesialiteter;
