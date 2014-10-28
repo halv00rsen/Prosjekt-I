@@ -1,6 +1,7 @@
 package src;
 
 import java.util.Scanner;
+import java.io.FileReader;
 
 public class Main {
 	
@@ -10,15 +11,7 @@ public class Main {
 	private void init(){
 		//textGui = new textGUI();
 		//textGui.Alternativer("bruker");
-//		database = new Database();
-		
-		//legger til koieinfo fra "initialiseringAvKoier.dat"
-		Scanner in = new Scanner("initialiseringAvKoier.dat");
-		String[] kolonner = in.nextLine().split(" ");
-		for (String elem : kolonner) {
-			System.out.println(elem);
-		}
-		in.close();
+		database = new Database("Core/src/initialiseringAvKoier.txt");
 	}
 	
 	private void run(){
