@@ -5,17 +5,17 @@ import java.util.List;
 
 public class Koie {
 	private final String name;
-	private final int id, numBeds, numSeats, year;
+	private final String id, numBeds, numSeats, year; //trenger ikke å være int fordi vi bruker aldri de numeriske verdiene til noe
 	private final boolean sykkel, toppTur, jakt, fiske;
 	private final String coordinates, terreng, spesialiteter;
-	private final List<Item> equipment;
+	private final List<Item> inventory;
 	private final Calendar cabinRented;
 
-	public Koie(int id, String name,
-				int numBeds, int numSeats, String coordinates,
-				int year, String terreng,
+	public Koie(String id, String name,
+				String numBeds, String numSeats, String coordinates,
+				String year, String terreng,
 				boolean sykkel, boolean toppTur, boolean jakt, boolean fiske,
-				String spesialiteter, List<Item> equipment) {
+				String spesialiteter, List<Item> inventory) {
 
 		this.id = id;
 		this.name = name;
@@ -29,7 +29,7 @@ public class Koie {
 		this.jakt = jakt;
 		this.fiske = fiske;
 		this.spesialiteter = spesialiteter;
-		this.equipment = equipment;
+		this.inventory = inventory;
 			
 		cabinRented = new Calendar();
 	}
@@ -49,7 +49,7 @@ public class Koie {
 	}
 			
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	
@@ -57,11 +57,11 @@ public class Koie {
 		return name;
 	}
 
-	public int getNumBeds() {
+	public String getNumBeds() {
 		return numBeds;
 	}
 
-	public int getNumSeats() {
+	public String getNumSeats() {
 		return numSeats;
 	}
 	
@@ -69,19 +69,19 @@ public class Koie {
 		return coordinates;
 	}
 
-	public boolean isToppTur() {
+	public boolean hasToppTur() {
 		return toppTur;
 	}
 
-	public boolean isJakt() {
+	public boolean hasJakt() {
 		return jakt;
 	}
 
-	public boolean isFiske() {
+	public boolean hasFiske() {
 		return fiske;
 	}
 
-	public boolean isSykkel() {
+	public boolean hasSykkel() {
 		return sykkel;
 	}
 
@@ -94,7 +94,7 @@ public class Koie {
 	}
 	
 	public List<Item> getEquipment() {
-		return equipment;
+		return inventory;
 	}
 
 	public void reserveCabin(int dayFrom, int monthFrom, int numOfDays, String name){
