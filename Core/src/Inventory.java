@@ -64,6 +64,16 @@ public class Inventory {
 		return lostAndFoundItems;
 	}
 
+	public List<Item> getNewItems() {
+		List<Item> newItems = new ArrayList<Item>();
+		for (Item item : items) {
+			if (item.getId() == Item.DEFAULT_ID) {
+				newItems.add(item);
+			}
+		}
+		return newItems;
+	}
+
 	public Item getItemById(int id) {
 		for (Item item : items) {
 			if (item.getId() == id) {
