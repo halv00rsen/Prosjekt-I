@@ -2,6 +2,7 @@ package src;
 
 import java.io.FileReader;
 import java.sql.*;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -13,16 +14,21 @@ public class Database {
 		try {
 			//lager koie tabellen.
 			makeQuery("CREATE TABLE Koier" +
-					  "(id VARCHAR(255), " +
-					  "navn VARCHAR(255), " +
+					  "(koieID VARCHAR(255), " +
+					  "name VARCHAR(255), " +
 					  "numBeds VARCHAR(255), " +
 					  "numSeats VARCHAR(255), " +
 					  "year VARCHAR(255), " +
 					  "coordinate VARCHAR(255), " +
-					  "PRIMARY KEY ( id ))");
+					  "PRIMARY KEY ( koieID ))");
 			
-			//lager reservasjonskalenderen
-			// mangler kode...
+			//lager reservasjons
+			makeQuery("CREATE TABLE ReservasjonsKalender" +
+					  "(koieID VARCHAR(255), " +
+					  "person VARCHAR(255), " +
+					  "dateFrom VARCHAR(255), " + 
+					  "dateTo VARCHAR(255), " +
+					  "PRIMARY KEY ( koieID ))");
 			
 			//evt andre tabeller
 			//...
@@ -83,9 +89,31 @@ public class Database {
 		}
 	}
 	
-	//metode for å oppdatere databasen med info fra koie objektet sendt som aargument til metoden
+	//metode for å oppdatere databasen med info fra koie objektet sendt som argument til metoden
 	public void toDatabase(Koie koie) {
-		String query = "";
 		
+		//oppdaterer datoene koien er reservert for.
+		Calendar calendar = koie.getCalendar();
+		List<BookingDate> datesBooked = calendar.getDatesBooked();
+		
+		//må kanskje gjøre et query for å slette allerede reserverte datoer først
+		//har ikke helt tenkt gjennom dette enda... vet ikke hvordan det blir seende ut i databasen.
+		
+		for (BookingDate date : datesBooked) {
+			String bookedFrom = "" + date.dateFrom.day + "." + date.dateFrom.month + "." + date.dateFrom.year;
+			String bookedTo = "" + date.dateTo.day + "." + date.dateTo.month + "." + date.dateTo.year;
+			
+			String query = "INSERT INTO ReservasjonsKalender VALUES (" +
+						   "'" + koie.getId() + "', " + 
+						   "'" + date.person + "', " +
+						   "'" + bookedFrom + "', " +
+						   "'" + bookedTo + "')";
+			makeQuery(query);
+			
+			
+		//må også oppdatere inventory osv...
+		//mangler kode
+						   
+		}
 	}
 }
