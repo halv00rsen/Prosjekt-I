@@ -1,21 +1,20 @@
 package src;
 
-import java.util.List;
-
+import src.Inventory;
 
 public class Koie {
 	private final String name;
-	private final int id, numBeds, numSeats, year;
-	private final boolean sykkel, toppTur, jakt, fiske;
+	private final String id, numBeds, numSeats, year; //trenger ikke � v�re int fordi vi bruker aldri de numeriske verdiene til noe
+	private final boolean sykkel, topptur, jakt, fiske;
 	private final String coordinates, terreng, spesialiteter;
-	private final List<Item> equipment;
+	private final Inventory inventory;
 	private final Calendar cabinRented;
 
-	public Koie(int id, String name,
-				int numBeds, int numSeats, String coordinates,
-				int year, String terreng,
-				boolean sykkel, boolean toppTur, boolean jakt, boolean fiske,
-				String spesialiteter, List<Item> equipment) {
+	public Koie(String id, String name,
+				String numBeds, String numSeats, String coordinates,
+				String year, String terreng,
+				boolean sykkel, boolean topptur, boolean jakt, boolean fiske,
+				String spesialiteter, Inventory inventory) {
 
 		this.id = id;
 		this.name = name;
@@ -25,31 +24,16 @@ public class Koie {
 		this.year = year;
 		this.terreng = terreng;
 		this.sykkel= sykkel;
-		this.toppTur = toppTur;
+		this.topptur = topptur;
 		this.jakt = jakt;
 		this.fiske = fiske;
 		this.spesialiteter = spesialiteter;
-		this.equipment = equipment;
+		this.inventory = inventory;
 			
 		cabinRented = new Calendar();
 	}
-	
-	public String toString() {
-		return name +"\t"+
-				String.valueOf(numBeds) +"\t"+
-				String.valueOf(numBeds) +"\t"+
-				coordinates +"\t"+
-				String.valueOf(year) +"\t"+
-				terreng +"\t"+
-				String.valueOf(sykkel) +"\t"+
-				String.valueOf(toppTur) +"\t"+
-				String.valueOf(jakt) +"\t"+
-				String.valueOf(fiske) +"\t"+
-				spesialiteter;
-	}
-			
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	
@@ -57,11 +41,11 @@ public class Koie {
 		return name;
 	}
 
-	public int getNumBeds() {
+	public String getNumBeds() {
 		return numBeds;
 	}
 
-	public int getNumSeats() {
+	public String getNumSeats() {
 		return numSeats;
 	}
 	
@@ -69,19 +53,19 @@ public class Koie {
 		return coordinates;
 	}
 
-	public boolean isToppTur() {
-		return toppTur;
+	public boolean hasTopptur() {
+		return topptur;
 	}
 
-	public boolean isJakt() {
+	public boolean hasJakt() {
 		return jakt;
 	}
 
-	public boolean isFiske() {
+	public boolean hasFiske() {
 		return fiske;
 	}
 
-	public boolean isSykkel() {
+	public boolean hasSykkel() {
 		return sykkel;
 	}
 
@@ -93,15 +77,29 @@ public class Koie {
 		return spesialiteter;
 	}
 	
-	public List<Item> getEquipment() {
-		return equipment;
+	public Inventory getInventory() {
+		return inventory;
 	}
 
-	public void reserveCabin(int dayFrom, int monthFrom, int numOfDays, String name){
-		if (cabinRented.validDate(dayFrom,monthFrom)) {
+//	public void reserveCabin(int dayFrom, int monthFrom, int numOfDays, String name){
+//		if (cabinRented.validDate(dayFrom,monthFrom)) {
 //			cabinRented.reservePeriod( dayFrom, monthFrom, numOfDays)
-			}
+//			}
 //		else
+//	}
+
+	public String toString() {
+		return name +"\t"+
+				String.valueOf(numBeds) +"\t"+
+				String.valueOf(numBeds) +"\t"+
+				coordinates +"\t"+
+				String.valueOf(year) +"\t"+
+				terreng +"\t"+
+				String.valueOf(sykkel) +"\t"+
+				String.valueOf(topptur) +"\t"+
+				String.valueOf(jakt) +"\t"+
+				String.valueOf(fiske) +"\t"+
+				spesialiteter;
 	}
 }
 	

@@ -1,4 +1,5 @@
-package map;
+//package map;
+package src;
 
 import java.awt.EventQueue;
 import java.awt.Panel;
@@ -7,7 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import com.jgoodies.forms.factories.DefaultComponentFactory;
+//import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 import java.awt.BorderLayout;
 
@@ -16,7 +17,7 @@ import javax.swing.JButton;
 
 import java.awt.FlowLayout;
 
-import net.miginfocom.swing.MigLayout;
+//import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JDesktopPane;

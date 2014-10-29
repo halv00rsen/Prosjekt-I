@@ -10,9 +10,12 @@ public class Inventory {
 		items = new ArrayList<Item>();
 	}
 	
-	public void addItem(String name) {
+	public void addItem(Item item) {
+		items.add(item);
+	}
+
+	public void addItemByName(String name) {
 		items.add(new Item(name));
-		
 	}
 	
 	public void removeItem(Item item) {
@@ -21,16 +24,19 @@ public class Inventory {
 		}
 	}
 
-	public boolean hasItem(String name) {
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public Item getItemById(int id) {
 		for (Item item : items) {
-			if (item.getName().equals(name)) {
-				return true;
+			if (item.getId() == id) {
+				return item;
 			}
 		}
-		return false;
-		
+		return null;
 	}
-	
+
 	public Item getItemByName(String name) {
 		for (Item item : items) {
 			if (item.getName().equals(name)) {
@@ -39,8 +45,13 @@ public class Inventory {
 		}
 		return null;
 	}
-	
-	public List<Item> getItems() {
-		return items;
+
+	public boolean hasItemByName(String name) {
+		for (Item item : items) {
+			if (item.getName().equals(name)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

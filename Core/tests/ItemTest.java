@@ -9,25 +9,38 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class ItemTest {
-	
 	@Test
-	public void testInstantiation() {
+	public void instantiation() {
 		Item item = new Item("Gitar");
 		assertTrue(item instanceof Item);
 	}
 	
 	@Test
-	public void testGetNameAndSetName() {
+	public void getIdAndSetId() {
 		Item item = new Item("Gitar");
-		assertEquals(item.getName(), "Gitar");
+		int defaultId = 0;
+		assertEquals(item.getId(), defaultId);
 		
-		item.setName("El-gitar");
-		assertNotEquals(item.getName(), "Gitar");
-		assertEquals(item.getName(), "El-gitar");
+		int newId = 42;
+		item.setId(newId);
+		assertNotEquals(item.getId(), defaultId);
+		assertEquals(item.getId(), newId);
 	}
 	
 	@Test
-	public void testIsBrokenAndSetBroken() {
+	public void getNameAndSetName() {
+		String name = "Gitar";
+		Item item = new Item(name);
+		assertEquals(item.getName(), name);
+		
+		String newName = "El-gitar";
+		item.setName(newName);
+		assertNotEquals(item.getName(), name);
+		assertEquals(item.getName(), newName);
+	}
+	
+	@Test
+	public void isBrokenAndSetBroken() {
 		Item item = new Item("Gitar");
 		assertFalse(item.isBroken());
 		
