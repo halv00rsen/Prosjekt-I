@@ -18,12 +18,7 @@ public class GUITest implements AdminLoginListener{
 	}
 	
 	private void init(){
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add(new AdminLogin(this));
-		frame.pack();
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		GUI gui = new GUI();
 	}
 
 	public void login(String userName, char[] password) {
