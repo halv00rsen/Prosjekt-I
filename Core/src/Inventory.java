@@ -24,8 +24,44 @@ public class Inventory {
 		}
 	}
 
-	public List<Item> getItems() {
-		return items;
+	public List<Item> getAllItems() {
+		List<Item> allItems = new ArrayList<Item>();
+		for (Item item : items) {
+			if (item.getStatus() == Item.Status.BROKEN) {
+				allItems.add(item);
+			}
+		}
+		return allItems;
+	}
+
+	public List<Item> getInOrderItems() {
+		List<Item> inOrderItems = new ArrayList<Item>();
+		for (Item item : items) {
+			if (item.getStatus() == Item.Status.BROKEN) {
+				inOrderItems.add(item);
+			}
+		}
+		return inOrderItems;
+	}
+
+	public List<Item> getBrokenItems() {
+		List<Item> brokenItems = new ArrayList<Item>();
+		for (Item item : items) {
+			if (item.getStatus() == Item.Status.BROKEN) {
+				brokenItems.add(item);
+			}
+		}
+		return brokenItems;
+	}
+
+	public List<Item> getLostAndFoundItems() {
+		List<Item> lostAndFoundItems = new ArrayList<Item>();
+		for (Item item : items) {
+			if (item.getStatus() == Item.Status.LOST_AND_FOUND) {
+				lostAndFoundItems.add(item);
+			}
+		}
+		return lostAndFoundItems;
 	}
 
 	public Item getItemById(int id) {
