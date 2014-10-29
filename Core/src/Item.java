@@ -3,29 +3,35 @@ package src;
 public class Item {
 	private int id;
 	private String name;
-	private boolean broken;
+	private Status status;
+
+	public static enum Status {
+		IN_ORDER,
+		BROKEN,
+		LOST_AND_FOUND;
+	}
 
 	/**
 	 * Oppretter Item-objekt med bare navn.
 	 * <p>
 	 * {@link id} settes til 0, må endres til unik id når den lagres i databasen.
-	 * {@link broken} settes til false.
+	 * {@link status} settes til IN_ORDER.
 	 * @param name Navn
 	 */
 	public Item(String name) {
-		this(0, name, false);
+		this(0, name, Item.Status.IN_ORDER);
 	}
 
 	/**
 	 * Oppretter Item-objekt
 	 * @param id Unik id i databasen
 	 * @param name Navn
-	 * @param broken Status, true/false
+	 * @param status Tilstand, IN_ORDER, BROKEN eller LOST_AND_FOUND 
 	 */
-	public Item(int id, String name, boolean broken) {
+	public Item(int id, String name, Status status) {
 		this.id = id;
 		this.name = name;
-		this.broken = broken;
+		this.status = status;
 	}
 	
 	public int getId() {
@@ -44,18 +50,11 @@ public class Item {
 		this.name = name;
 	}
 
-	public boolean isBroken() {
-		return broken;
+	public Status getStatus() {
+		return status;
 	}
 
-	/**
-	 * Setter {@link broken} til true når verdien ikke oppgis
-	 */
-	public void setBroken() {
-		this.setBroken(true);
-	}
-
-	public void setBroken(boolean broken) {
-		this.broken = broken;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 }

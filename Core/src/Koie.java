@@ -80,6 +80,10 @@ public class Koie {
 	public Inventory getInventory() {
 		return inventory;
 	}
+	
+	public Calendar getCalendar() {
+		return cabinRented;
+	}
 
 //	public void reserveCabin(int dayFrom, int monthFrom, int numOfDays, String name){
 //		if (cabinRented.validDate(dayFrom,monthFrom)) {
