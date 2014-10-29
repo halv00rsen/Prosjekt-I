@@ -1,6 +1,7 @@
 package src;
 
 public class Item {
+	public static int DEFAULT_ID = 0;
 	private int id;
 	private String name;
 	private Status status;
@@ -14,12 +15,12 @@ public class Item {
 	/**
 	 * Oppretter Item-objekt med bare navn.
 	 * <p>
-	 * {@link id} settes til 0, må endres til unik id når den lagres i databasen.
+	 * {@link id} settes til {@link DEFAULT_ID}, må endres til unik id når den lagres i databasen.
 	 * {@link status} settes til IN_ORDER.
 	 * @param name Navn
 	 */
 	public Item(String name) {
-		this(0, name, Item.Status.IN_ORDER);
+		this(DEFAULT_ID, name, Item.Status.IN_ORDER);
 	}
 
 	/**
