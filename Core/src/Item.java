@@ -15,7 +15,7 @@ public class Item {
 	/**
 	 * Oppretter Item-objekt med bare navn.
 	 * <p>
-	 * {@link id} settes til {@link DEFAULT_ID}, må endres til unik id når den lagres i databasen.
+	 * {@link #id} settes til {@link DEFAULT_ID}, må endres til unik id når den lagres i databasen.
 	 * {@link status} settes til IN_ORDER.
 	 * @param name Navn
 	 */
@@ -24,10 +24,21 @@ public class Item {
 	}
 
 	/**
+	 * Oppretter Item-objekt med navn, og status. Ment for gjenglemte ting.
+	 * <p>
+	 * {@link #id} settes til {@link #DEFAULT_ID}, må endres til unik id når den lagres i databasen.
+	 * @param name Se {@link #Item(int, String, Status)} 
+	 * @param status 
+	 */
+	public Item(String name, Status status) {
+		this(DEFAULT_ID, name, status);
+	}
+
+	/**
 	 * Oppretter Item-objekt
 	 * @param id Unik id i databasen
 	 * @param name Navn
-	 * @param status Tilstand, IN_ORDER, BROKEN eller LOST_AND_FOUND 
+	 * @param status Status i enum {@link #Item.Status} 
 	 */
 	public Item(int id, String name, Status status) {
 		this.id = id;
