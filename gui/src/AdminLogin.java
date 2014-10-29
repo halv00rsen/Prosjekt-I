@@ -49,6 +49,11 @@ public class AdminLogin extends JPanel{
 		add(reset);
 	}
 	
+	public void resetFields(){
+		userName.setText("");
+		password.setText("");
+	}
+	
 	private class ButtonListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
@@ -80,7 +85,6 @@ public class AdminLogin extends JPanel{
 		public void keyTyped(KeyEvent arg0) {
 			if (arg0.getKeyChar() == '\n' && listener != null){
 				listener.login(userName.getText(), password.getPassword());
-				listener = null;
 			}
 		}
 	}
