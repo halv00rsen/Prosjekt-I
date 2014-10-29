@@ -33,7 +33,6 @@ public class Database {
 			while (in.hasNextLine()) {
 				String[] rader = in.nextLine().split(" ");	
 				String query = "INSERT INTO Koier VALUES (";
-				String endQuery = "VALUES (";
 				for (int i=0;i<rader.length-1; i++) {
 					query += "'"+rader[i]+"', ";
 				}
@@ -86,6 +85,7 @@ public class Database {
 	
 	//metode for å oppdatere databasen med info fra koie objektet sendt som aargument til metoden
 	public void toDatabase(Koie koie) {
-		String query = ""; 
+		String query = "";
+		
 	}
 }
