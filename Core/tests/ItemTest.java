@@ -4,7 +4,6 @@ import src.Item;
 
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -40,14 +39,26 @@ public class ItemTest {
 	}
 	
 	@Test
-	public void isBrokenAndSetBroken() {
+	public void getStatusAndSetStatus() {
 		Item item = new Item("Gitar");
-		assertFalse(item.isBroken());
+		assertEquals(item.getStatus(), Item.Status.IN_ORDER);
+		assertNotEquals(item.getStatus(), Item.Status.BROKEN);
 		
-		item.setBroken();
-		assertTrue(item.isBroken());
+		item.setStatus(Item.Status.BROKEN);
+		assertEquals(item.getStatus(), Item.Status.BROKEN);
+		assertNotEquals(item.getStatus(), Item.Status.IN_ORDER);
 		
-		item.setBroken(false);
-		assertFalse(item.isBroken());
+		item.setStatus(Item.Status.IN_ORDER);
+		assertEquals(item.getStatus(), Item.Status.IN_ORDER);
+		assertNotEquals(item.getStatus(), Item.Status.BROKEN);
+	}
+	
+	@Test
+	public void setStatusToLostAndFound() {
+		Item item = new Item("Lue");
+		item.setStatus(Item.Status.LOST_AND_FOUND);
+		assertEquals(item.getStatus(), Item.Status.LOST_AND_FOUND);
+		assertNotEquals(item.getStatus(), Item.Status.IN_ORDER);
+		assertNotEquals(item.getStatus(), Item.Status.BROKEN);
 	}
 }
