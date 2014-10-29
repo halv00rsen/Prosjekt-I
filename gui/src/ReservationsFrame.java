@@ -13,13 +13,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class ReservationsFrame extends JPanel implements LoginListener{
+public class ReservationsFrame extends JPanel implements LoginListener, ValidDatesListener{
 	
 	private ValidDates validDates;
 	private JButton reserveButton;
 	private JComboBox<String> cabins;
 	private boolean isLoggedIn;
 	private String username;
+	private final JLabel isValidDateReservation;
 	
 	public ReservationsFrame(){
 		setLayout(new GridLayout(4, 4));
@@ -36,9 +37,18 @@ public class ReservationsFrame extends JPanel implements LoginListener{
 		add(reserveButton);
 		isLoggedIn = false;
 		username = null;
+		isValidDateReservation = new JLabel("Er ledig: ");
+		add(isValidDateReservation);
+		validDates.addListener(this);
+	}
+	
+	public void isValidDate(boolean isValid){
+		isValidDateReservation.setText("Er ledig: " + (isValid ? "Ja": "Nei"));
 	}
 	
 	private boolean isValidReservation(int day, int month, int numDays){
+		String cabin = (String) cabins.getSelectedItem();
+		//skal sjekke databasen om denne er valid
 		return true;
 	}
 	
@@ -63,7 +73,8 @@ public class ReservationsFrame extends JPanel implements LoginListener{
 	
 	private void buttonPressed(){
 		if (!isLoggedIn){
-			JOptionPane.showMessageDialog(null, "Du er ikke logged inn, og kan dermed ikke reservere ei koie");
+			JOptionPane.showMessageDialog(null, "Du er ikke logged inn, og kan dermed ikke reservere ei koie."
+					+ "\nGå til innloggingsfanen for å logge inn.");
 			return;
 		}
 		int[] date = validDates.getReservation();
@@ -72,6 +83,13 @@ public class ReservationsFrame extends JPanel implements LoginListener{
 											date[2] + " dage(r), ble godkjent og lagret.");
 		}else{
 			JOptionPane.showMessageDialog(null, "Din reservasjon ble ikke godkjent.");
+		}
+	}
+	
+	private class CabinListener implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e){
+			validDates.setCabin((String) cabins.getSelectedItem()); 
 		}
 	}
 	
