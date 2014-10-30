@@ -15,19 +15,21 @@ import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
 
-public class GUI {
+public class GUI implements LoginListener{
 
-	private JFrame frame;
+	private static JFrame frame;
 	
-	private LoginPanel loginPanel;
-	private ReservationsFrame reservationFrame;
+	private final LoginPanel loginPanel;
+	private final ReservationsFrame reservationFrame;
+	private final ReservationList reservationList;
+	private final JTabbedPane tabbedPane;
 	
 	public GUI(){
 		frame = new JFrame("NTNUI-Koiene");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(500, 500);
+		frame.setSize(600, 500);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		loginPanel = new LoginPanel();
@@ -37,8 +39,9 @@ public class GUI {
 		JPanel Koier = new JPanel();
 		tabbedPane.addTab("Koier", null, Koier, null);
 		
-		JPanel reservations = new JPanel();
-		tabbedPane.addTab("Reservasjoner", null, reservations, null);
+		reservationList = new ReservationList();
+		tabbedPane.addTab("Reservasjoner", null, reservationList, null);
+		loginPanel.addListener(reservationList);
 		
 		
 		reservationFrame = new ReservationsFrame();
@@ -47,9 +50,35 @@ public class GUI {
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Kart", null, panel_2, null);
-		frame.pack();
+//		frame.pack();
+		frame.setLocationRelativeTo(null);
+//		frame.setResizable(false);
 		frame.setVisible(true);
 		
+	}
+
+	public void userHasLoggedIn(String userName) {
+		
+	}
+
+	public void userHasLoggedOut() {
+		
+	}
+
+	public void adminHasLoggedIn() {
+		
+	}
+
+	public static int getXPosition() {
+		if (frame == null)
+			return -1;
+		return frame.getX();
+	}
+
+	public static int getYPosition() {
+		if (frame == null)
+			return -1;
+		return frame.getY();
 	}
 	
 }
