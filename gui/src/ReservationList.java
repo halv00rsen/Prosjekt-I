@@ -4,10 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -19,12 +22,13 @@ public class ReservationList extends JPanel implements LoginListener{
 	private final List<String> reservations;
 	private String username;
 	private final JTextArea cabinNames, dateFrom, dateTo, comment;
+	private final JButton reportButton;
 	
 	public ReservationList(){
 		reservations = new ArrayList<String>();
-		this.setLayout(new GridLayout(2, 1));
+//		this.setLayout(new GridLayout(2, 1));
 		add(new JLabel("Dette er siden for å se dine reservasjoner."
-				+ "\n Du kan slette reservasjoner og du kan melde inn rapport om en koie du har vært på."));
+				+ "\n Du kan slette reservasjoner og du kan melde inn rapport om en koie du har vært på."), BorderLayout.NORTH);
 		cabinNames = new JTextArea(10, 10);
 		dateFrom = new JTextArea(10, 5);
 		dateTo = new JTextArea(10, 5);
@@ -38,6 +42,9 @@ public class ReservationList extends JPanel implements LoginListener{
 		setInfoTextArea(dateTo, "Til", panel, layout, c);
 		setInfoTextArea(comment, "Rapportert", panel, layout, c);
 		this.add(panel);
+		reportButton = new JButton("Skriv rapport");
+		reportButton.addActionListener(new ButtonListener());
+		this.add(reportButton, BorderLayout.SOUTH);
 	}
 	
 	private void setInfoTextArea(JTextArea area, String name, JPanel panel, GridBagLayout layout, GridBagConstraints c){
@@ -83,5 +90,11 @@ public class ReservationList extends JPanel implements LoginListener{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	private class ButtonListener implements ActionListener{
 
+		public void actionPerformed(ActionEvent arg0) {
+			new UserReport();
+		}
+	}
 }
