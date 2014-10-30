@@ -38,7 +38,7 @@ public class UserReport {
 		frame = new JFrame("Rapport");
 		frame.setSize(400, 400);
 		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		buttonListener = new ButtonListener();
 		
 		JPanel cancelOkButtons = new JPanel();
@@ -87,7 +87,7 @@ public class UserReport {
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		panel.add(scrollPane);
 		tabbedPane.addTab("Annen Info", null, panel, null);
-		
+		frame.setLocation(GUI.getXPosition(), GUI.getYPosition());
 		frame.setVisible(true);
 	}
 	
@@ -117,7 +117,6 @@ public class UserReport {
 				frame.removeAll();
 				frame.setVisible(false);
 				frame = null;
-				System.exit(0);
 			}
 			else if (arg0.getSource() == okButton){
 				System.out.println(alleKoier.getSelectedItem());
