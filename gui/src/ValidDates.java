@@ -11,7 +11,6 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 public class ValidDates {
 
 	private final Date today, maxDate;
@@ -32,7 +31,7 @@ public class ValidDates {
 		for (int a = 1; a < 11; a++){
 			numDays.addItem(a);
 		}
-		date.addItem(0);
+		date.addItem(0);//Must be here, else nullpointerexception
 		listener = new MonthChanged();
 		month.addActionListener(listener);
 		date.addActionListener(listener);
