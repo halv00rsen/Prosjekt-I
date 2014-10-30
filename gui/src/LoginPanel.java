@@ -20,6 +20,7 @@ public class LoginPanel extends JPanel{
 	private final JLabel errorLabel;
 	private final JButton logoutButton;
 	private final JCheckBox adminCheckBox;
+	private final JPanel adminBox;
 	
 	public LoginPanel(){
 		errorLabel = new JLabel("Feil brukernavn/passord");
@@ -28,12 +29,12 @@ public class LoginPanel extends JPanel{
 		listeners = new ArrayList<LoginListener>();
 		logoutButton = new JButton("Log ut");
 		logoutButton.addActionListener(new Logout());
-		this.add(loginUser, BorderLayout.CENTER);
+		this.add(loginUser);
 		adminCheckBox = new JCheckBox();
-		JPanel panel = new JPanel();
-		panel.add(new JLabel("Adminlogin: "), BorderLayout.WEST);
-		panel.add(adminCheckBox);
-		this.add(panel, BorderLayout.NORTH);
+		adminBox = new JPanel();
+		adminBox.add(new JLabel("Adminlogin: "), BorderLayout.WEST);
+		adminBox.add(adminCheckBox);
+		this.add(adminBox);
 	}
 	
 	public void addListener(LoginListener l){
@@ -62,11 +63,22 @@ public class LoginPanel extends JPanel{
 		this.repaint();
 	}
 	
+	private void adminLoggedIn(String username){
+		for (LoginListener l: listeners)
+			l.adminHasLoggedIn();
+		this.removeAll();
+		loginUser.resetFields();
+		add(new JLabel("Logget in som admin."));
+		add(logoutButton);
+		this.repaint();
+	}
+	
 	private void userLoggedOut(){
 		for (LoginListener l : listeners)
 			l.userHasLoggedOut();
 		this.removeAll();
 		this.add(loginUser);
+		add(adminBox);
 		this.repaint();
 	}
 	
@@ -83,7 +95,7 @@ public class LoginPanel extends JPanel{
 		public void login(String userName, char[] password) {
 			if (adminCheckBox.isSelected()){
 				if (isValidAdminLogin(userName, password)){
-					userLoggedIn(userName);
+					adminLoggedIn(userName);
 				}else{
 					JOptionPane.showMessageDialog(null, "Feil brukernavn/passord til adminlogin");
 					loginUser.resetFields();
