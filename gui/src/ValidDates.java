@@ -1,5 +1,7 @@
 package src;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class ValidDates extends JPanel{
+public class ValidDates {
 
 	private final Date today, maxDate;
 	private final JComboBox<Integer> date, numDays;
@@ -19,13 +21,13 @@ public class ValidDates extends JPanel{
 	private String cabin;
 	private final MonthChanged listener;
 	
-	public ValidDates(){
+	public ValidDates(JComboBox<Integer> day, JComboBox<Months> month, JComboBox<Integer> numDays){
 		Calendar calendar = new Calendar();
 		today = calendar.getTodaysDate();
 		maxDate = calendar.getMaxDate();
-		date = new JComboBox<Integer>();
-		month = new JComboBox<Months>();
-		numDays = new JComboBox<Integer>();
+		this.date = day;
+		this.month = month;
+		this.numDays = numDays;
 		listeners = new ArrayList<ValidDatesListener>();
 		for (int a = 1; a < 11; a++){
 			numDays.addItem(a);
@@ -35,22 +37,14 @@ public class ValidDates extends JPanel{
 		month.addActionListener(listener);
 		date.addActionListener(listener);
 		numDays.addActionListener(listener);
-		int month = today.month;
-		for (int a = month; a <= month + 6; a++){
+		int monthToDay = today.month;
+		for (int a = monthToDay; a <= monthToDay + 6; a++){
 			if (a % 12 == 0)
 				this.month.addItem(Months.getMonth(12));
 			else
 				this.month.addItem(Months.getMonth(a % 12));
 		}
 		updateDays();
-		this.setLayout(new GridLayout(1, 6));
-		this.add(new JLabel("Fra: "));
-		this.add(new JLabel("Dag: "));
-		this.add(date);
-		this.add(new JLabel("Måned: "));
-		this.add(this.month);
-		this.add(new JLabel("Antall dager: "));
-		this.add(numDays);
 	}
 	
 	public void setCabin(String cabin){
@@ -66,6 +60,8 @@ public class ValidDates extends JPanel{
 		if (day == 4)
 			return false;
 		if (month == 2)
+			return false;
+		if ("Koie 1".equals(cabin))
 			return false;
 		return true;
 	}
