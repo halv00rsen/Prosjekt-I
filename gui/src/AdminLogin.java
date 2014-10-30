@@ -25,7 +25,7 @@ public class AdminLogin extends JPanel{
 		if (listener == null)
 			throw new IllegalArgumentException("Listener cannot be null in AdminLogin");
 		this.listener = listener;
-		add(new JLabel("Login: "));
+		add(new JLabel("Brukernavn: "));
 		
 		KeyboardListener boardListener = new KeyboardListener();
 		userName = new JTextField();
