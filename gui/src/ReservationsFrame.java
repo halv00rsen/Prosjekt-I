@@ -82,6 +82,8 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		cabinInformation = new JTextArea(4, 4);
 		cabinInformation.setEditable(false);
 		cabinInformation.setBorder(BorderFactory.createEtchedBorder());
+		cabinInformation.setLineWrap(true);
+		cabinInformation.setWrapStyleWord(true);
 		add(cabinInformation);
 	}
 	
@@ -115,6 +117,13 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		isLoggedIn = false;
 	}
 	
+	private void setCabinInformation(String cabin){
+		String info = "Koie: " + cabin + "\n";
+		info += "Byggeår: 1948\nAntall sengeplasser: 10\nKoordinater: 34 23\nVaffelgjern: Ja\nTerreng: S\nGitar: Ja\nBadstue: Ja\n"
+				+ "Båt: Nei";
+		cabinInformation.setText(info);
+	}
+	
 	private void buttonPressed(){
 		if (!isLoggedIn){
 			JOptionPane.showMessageDialog(null, "Du er ikke logged inn, og kan dermed ikke reservere ei koie."
@@ -133,7 +142,9 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	private class CabinListener implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e){
-			validDates.setCabin((String) cabins.getSelectedItem()); 
+			String cabin = (String) cabins.getSelectedItem();
+			validDates.setCabin(cabin);
+			setCabinInformation(cabin);
 		}
 	}
 	
