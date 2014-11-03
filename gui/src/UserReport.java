@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JToolBar;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
 
 import javax.swing.JTextArea;
 
@@ -29,10 +30,10 @@ public class UserReport {
 	
 	private JFrame frame;
 	private JTextArea textArea;
-	private JComboBox<String> alleKoier;
 	private ButtonListener buttonListener;
 	private JButton okButton, cancelButton;
 	private DestroyedItems destroyedItems;
+	private ChooseCabin cabins;
 	
 	public UserReport(){
 		frame = new JFrame("Rapport");
@@ -57,16 +58,20 @@ public class UserReport {
 		frame.getContentPane().add(tabbedPane, BorderLayout.NORTH);
 		
 		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("New tab", null, panel_1, null);
-		panel_1.setLayout(new GridLayout(4, 4, 0, 0));
-		
-		panel_1.add(new JLabel("Velg Koie:"));
-		
-		alleKoier = new JComboBox<String>();
-		for (String koie : getNameCabins())
-			alleKoier.addItem(koie);
-		panel_1.add(alleKoier);
-		alleKoier.addActionListener(buttonListener);
+		tabbedPane.addTab("Koieinfo", null, panel_1, null);
+		panel_1.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		panel_1.add(new JLabel("Velg Koie: "), c);
+		cabins = new ChooseCabin();
+		c.gridx = 1;
+		panel_1.add(cabins.getComboBox(), c);
+		cabins.addActionListener(buttonListener);
+		c.gridx = 0;
+		c.gridy = 1;
+		panel_1.add(new JLabel("Vedstatus: "), c);
 		
 		JLabel lbldelagtUtstyr = new JLabel("\u00D8delagt utstyr");
 		panel_1.add(lbldelagtUtstyr);
@@ -91,12 +96,8 @@ public class UserReport {
 		frame.setVisible(true);
 	}
 	
-	private String[] getNameCabins(){
-		return new String[] {"Koie 1", "Koie 2", "Koie 3"};
-	}
-	
 	private void updateEquipmentInCabin(){
-		String cabin = (String) alleKoier.getSelectedItem();
+		String cabin = cabins.getSelectedItem();
 		if (cabin.equals("Koie 1")){
 			String[] a = new String[] {"Gitar", "Stol", "Bord"};
 			destroyedItems.setInventory(a);
@@ -119,11 +120,11 @@ public class UserReport {
 				frame = null;
 			}
 			else if (arg0.getSource() == okButton){
-				System.out.println(alleKoier.getSelectedItem());
+				System.out.println(cabins.getSelectedItem());
 				for (String a : destroyedItems.getDestroyedElements())
 					System.out.println(a);
 				System.out.println(textArea.getText());
-			}else if (arg0.getSource() == alleKoier){
+			}else if (arg0.getSource() == cabins.getComboBox()){
 				updateEquipmentInCabin();
 			}
 		}
