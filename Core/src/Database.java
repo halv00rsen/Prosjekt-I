@@ -7,8 +7,13 @@ import java.util.Scanner;
 
 
 public class Database {
+	private static String driver = "com.mysql.jdbc.Driver";
+	private static String url = "jdbc:mysql://mysql.stud.ntnu.no/";
+	private static String dbName = "alekh_prosjekt1";
+	private static String userName = "alekh_IT1901";
+	private static String password = "abcd1234";
 	
-	//konstrukt�r som lager koie tabell og reservasjonstabell i databasen
+	// Metode som lager koie tabell og reservasjonstabell i databasen
 	//og fyller koietabellen med data fra initialiseringAvKoier.txt fila
 	public void initializeDatabase(String datapath) {
 		try {
@@ -58,12 +63,6 @@ public class Database {
 	//metode som �pner en connection mot databasen
 	private Connection connection() {
 		try {		
-			String url = "jdbc:mysql://mysql.stud.ntnu.no/";
-			String dbName = "alekh_prosjekt1";
-			String driver = "com.mysql.jdbc.Driver";
-			String userName = "alekh_IT1901";
-			String password = "abcd1234";
-				
 			Class.forName(driver).newInstance();
 			Connection conn = DriverManager.getConnection(url+dbName,userName,password);
 			return conn;
