@@ -9,8 +9,8 @@ public class Main {
 	private Database database;
 	
 	private void init(){
-		textGui = new textGUI();
-		textGui.Alternativer("bruker");
+		//textGui = new textGUI();
+		//textGui.Alternativer("bruker");
 //		database = new Database();
 		
 		//legger til koieinfo fra "initialiseringAvKoier.dat"

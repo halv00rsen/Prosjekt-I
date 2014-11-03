@@ -81,7 +81,7 @@ public class Database {
 	}
 
 	//metode som �pner en connection mot databasen
-	private Connection connection() {
+	private Connection getConnection() {
 		try {		
 			Class.forName(driver).newInstance();
 			Connection conn = DriverManager.getConnection(url+dbName,userName,password);
@@ -96,7 +96,7 @@ public class Database {
 	//metode for � utf�re query mot databasen
 	public void makeQuery(String query) {
 		try {
-			Connection conn = connection();
+			Connection conn = getConnection();
 			Statement st = conn.createStatement();
 			int res = st.executeUpdate(query);
 			if (res == 1) {
