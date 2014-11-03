@@ -22,7 +22,8 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	
 	private ValidDates validDates;
 	private JButton reserveButton;
-	private JComboBox<String> cabins;
+//	private JComboBox<String> cabins;
+	private ChooseCabin cabins;
 	private JComboBox<Integer> day, numDays;
 	private JComboBox<Months> month;
 	private boolean isLoggedIn;
@@ -41,11 +42,8 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		c.gridx = 0;
 		c.gridy = 0;
 		panel.add(new JLabel("Velg Koie: "), c);
-		cabins = new JComboBox<String>();
 		c.gridx = 3;
-		panel.add(cabins, c);
-		for (String name : getNameCabins())
-			cabins.addItem(name);
+		panel.add(cabins.getComboBox(), c);
 		c.gridy = 1;
 		c.gridx = 0;
 		panel.add(new JLabel("Velg dag: "), c);
@@ -98,15 +96,6 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		return true;
 	}
 	
-	private List<String> getNameCabins(){
-		List<String> koie = new ArrayList<String>();
-		koie.add("Koie 1");
-		koie.add("Koie 2");
-		koie.add("Koie 3");
-		koie.add("Koie 4");
-		return koie;
-	}
-	
 	public void userHasLoggedIn(String username){
 		this.username = username;
 		isLoggedIn = true;
@@ -142,7 +131,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	private class CabinListener implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e){
-			String cabin = (String) cabins.getSelectedItem();
+			String cabin = cabins.getSelectedItem();
 			validDates.setCabin(cabin);
 			setCabinInformation(cabin);
 		}
