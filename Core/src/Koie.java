@@ -9,12 +9,14 @@ public class Koie {
 	private final String coordinates, terreng, spesialiteter;
 	private final Inventory inventory;
 	private final Calendar cabinRented;
+	private final float vedMax;
+	private float ved;
 
 	public Koie(String id, String name,
 				String numBeds, String numSeats, String coordinates,
 				String year, String terreng,
 				boolean sykkel, boolean topptur, boolean jakt, boolean fiske,
-				String spesialiteter, Inventory inventory) {
+				String spesialiteter, Inventory inventory, float vedMax, float ved) {
 
 		this.id = id;
 		this.name = name;
@@ -29,6 +31,8 @@ public class Koie {
 		this.fiske = fiske;
 		this.spesialiteter = spesialiteter;
 		this.inventory = inventory;
+		this.vedMax = vedMax;
+		this.ved = ved;
 			
 		cabinRented = new Calendar();
 	}
@@ -83,6 +87,18 @@ public class Koie {
 	
 	public Calendar getCalendar() {
 		return cabinRented;
+	}
+	
+	public float getVedMax() {
+		return vedMax;
+	}
+	
+	public float getVed() {
+		return ved;
+	}
+	
+	public void setVed(float ved) {
+		this.ved = ved;
 	}
 
 //	public void reserveCabin(int dayFrom, int monthFrom, int numOfDays, String name){
