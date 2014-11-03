@@ -37,6 +37,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		GridBagConstraints c = new GridBagConstraints();
 		JPanel panel = new JPanel();
 		panel.setLayout(layout);
+		cabins = new ChooseCabin();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weighty = 0.1;
 		c.gridx = 0;
