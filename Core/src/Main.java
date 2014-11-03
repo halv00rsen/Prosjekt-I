@@ -22,7 +22,8 @@ public class Main {
 //		in.close();
 		//textGui = new textGUI();
 		//textGui.Alternativer("bruker");
-		database = new Database("Core/src/initialiseringAvKoier.txt");
+		database = new Database();
+		database.initializeDatabase("Core/src/initialiseringAvKoier.txt");
 	}
 	
 	private void run(){
