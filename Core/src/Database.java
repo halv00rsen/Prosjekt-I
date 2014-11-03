@@ -11,17 +11,18 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Database {
-	private static String driver = "com.mysql.jdbc.Driver";
-	private static String url = "jdbc:mysql://mysql.stud.ntnu.no/";
-	private static String dbName = "alekh_prosjekt1";
-	private static String userName = "alekh_IT1901";
-	private static String password = "abcd1234";
+	private String driver = "com.mysql.jdbc.Driver";
+	private String url = "jdbc:mysql://mysql.stud.ntnu.no/";
+	private String dbName = "alekh_prosjekt1";
+	private String userName = "alekh_IT1901";
+	private String password = "abcd1234";
 	
 	// Metode som lager koie tabell og reservasjonstabell i databasen
 	//og fyller koietabellen med data fra initialiseringAvKoier.txt fila
 	public void initializeDatabase(String datapath) {
 		try {
 			// Oppretter tabellene koie, bruker, item, vedrapport og reservasjon
+			/*
 			makeQuery("CREATE TABLE koie" +
 					  "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
 					  "name VARCHAR(255) NOT NULL, " +
@@ -30,7 +31,7 @@ public class Database {
 					  "num_seats SMALLINT, " +
 					  "year SMALLINT, " +
 					  "coordinates VARCHAR(255))");
-			
+			/*
 			makeQuery("CREATE TABLE bruker" +
 					  "(id VARCHAR(255) NOT NULL PRIMARY KEY, " +
 					  "password_hash VARCHAR(255) NOT NULL, " +
@@ -55,7 +56,7 @@ public class Database {
 					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
 					  "dato DATE NOT NULL, " +
 					  "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id)))");
-			
+			*/
 			
 			// Fyller inn koie-tabellen fra fil
 			Scanner in = new Scanner(new FileReader(datapath));

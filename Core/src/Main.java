@@ -23,7 +23,7 @@ public class Main {
 		//textGui = new textGUI();
 		//textGui.Alternativer("bruker");
 		database = new Database();
-		database.initializeDatabase("Core/src/initialiseringAvKoier.txt");
+		database.initializeDatabase("Core/src/initialiseringAvKoier.dat");
 	}
 	
 	private void run(){
