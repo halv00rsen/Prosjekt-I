@@ -1,10 +1,14 @@
 package src;
 
 import java.io.FileReader;
-import java.sql.*;
+
+//import java.sql.*;
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.Statement;
+
 import java.util.List;
 import java.util.Scanner;
-
 
 public class Database {
 	private static String driver = "com.mysql.jdbc.Driver";
