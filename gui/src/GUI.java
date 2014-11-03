@@ -24,6 +24,11 @@ public class GUI implements LoginListener{
 	private final ReservationList reservationList;
 	private final JTabbedPane tabbedPane;
 	
+	private ItemStatus itemStatus;
+	private WoodStatus woodStatus;
+	private MessageAdmin messageAdmin;
+	private RemoveReservationsAdmin removeReservations;
+	
 	public GUI(){
 		frame = new JFrame("NTNUI-Koiene");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,6 +52,7 @@ public class GUI implements LoginListener{
 		reservationFrame = new ReservationsFrame();
 		tabbedPane.addTab("Reserver Koie", null, reservationFrame, null);
 		loginPanel.addListener(reservationFrame);
+		loginPanel.addListener(this);
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Kart", null, panel_2, null);
@@ -62,11 +68,26 @@ public class GUI implements LoginListener{
 	}
 
 	public void userHasLoggedOut() {
-		
+		tabbedPane.remove(itemStatus);
+		itemStatus = null;
+		tabbedPane.remove(woodStatus);
+		woodStatus = null;
+		tabbedPane.remove(messageAdmin);
+		messageAdmin = null;
+		tabbedPane.remove(removeReservations);
+		removeReservations = null;
 	}
 
 	public void adminHasLoggedIn() {
-		
+//		Utstyrstatus, legg inn nytt utstyr, sjekk vedstatus, veddugnad, 
+		itemStatus = new ItemStatus();
+		tabbedPane.addTab("Utstyrstatus", null, itemStatus, null);
+		woodStatus = new WoodStatus();
+		tabbedPane.addTab("Vedstatus", null, woodStatus, null);
+		messageAdmin = new MessageAdmin();
+		tabbedPane.addTab("Meldinger", null, messageAdmin, null);
+		removeReservations = new RemoveReservationsAdmin();
+		tabbedPane.addTab("Fjern reservasjoner", null, removeReservations, null);
 	}
 
 	public static int getXPosition() {
