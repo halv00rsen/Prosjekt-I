@@ -8,9 +8,9 @@ import java.util.Scanner;
 
 public class Database {
 	
-	//konstruktør som lager koie tabell og reservasjonstabell i databasen
+	//konstruktï¿½r som lager koie tabell og reservasjonstabell i databasen
 	//og fyller koietabellen med data fra initialiseringAvKoier.txt fila
-	public Database(String datapath) {
+	public void initializeDatabase(String datapath) {
 		try {
 			//lager koie tabellen.
 			makeQuery("CREATE TABLE Koier" +
@@ -34,7 +34,7 @@ public class Database {
 			//...
 			
 			Scanner in = new Scanner(new FileReader(datapath));
-			in.nextLine(); //hopper over første linje som beskriver data
+			in.nextLine(); //hopper over fï¿½rste linje som beskriver data
 			//lager en insert query from hver linje i initialisertinAvKoier.txt
 			while (in.hasNextLine()) {
 				String[] rader = in.nextLine().split(" ");	
@@ -55,7 +55,7 @@ public class Database {
 		}
 	}
 
-	//metode som åpner en connection mot databasen
+	//metode som ï¿½pner en connection mot databasen
 	private Connection connection() {
 		try {		
 			String url = "jdbc:mysql://mysql.stud.ntnu.no/";
@@ -74,14 +74,14 @@ public class Database {
 		}
 	}
 	
-	//metode for å utføre query mot databasen
+	//metode for ï¿½ utfï¿½re query mot databasen
 	public void makeQuery(String query) {
 		try {
 			Connection conn = connection();
 			Statement st = conn.createStatement();
 			int res = st.executeUpdate(query);
 			if (res == 1) {
-				System.out.println("query utført");
+				System.out.println("query utfï¿½rt");
 			}
 			conn.close();
 		} catch (Exception e) {
@@ -89,14 +89,14 @@ public class Database {
 		}
 	}
 	
-	//metode for å oppdatere databasen med info fra koie objektet sendt som argument til metoden
+	//metode for ï¿½ oppdatere databasen med info fra koie objektet sendt som argument til metoden
 	public void toDatabase(Koie koie) {
 		
 		//oppdaterer datoene koien er reservert for.
 		Calendar calendar = koie.getCalendar();
 		List<BookingDate> datesBooked = calendar.getDatesBooked();
 		
-		//må kanskje gjøre et query for å slette allerede reserverte datoer først
+		//mï¿½ kanskje gjï¿½re et query for ï¿½ slette allerede reserverte datoer fï¿½rst
 		//har ikke helt tenkt gjennom dette enda... vet ikke hvordan det blir seende ut i databasen.
 		
 		for (BookingDate date : datesBooked) {
@@ -111,7 +111,7 @@ public class Database {
 			makeQuery(query);
 			
 			
-		//må også oppdatere inventory osv...
+		//mï¿½ ogsï¿½ oppdatere inventory osv...
 		//mangler kode
 						   
 		}
