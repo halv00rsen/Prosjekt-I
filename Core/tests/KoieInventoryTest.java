@@ -12,13 +12,13 @@ public class KoieInventoryTest {
 		Inventory inventory = new Inventory();
 		inventory.addItemByName("Gitar");
 		inventory.addItemByName("Vaffeljern");
-		Koie koie = new Koie("1", "Koia",
-							 "6", "10", "71N 10E", 
-							 "1968", "terreng", 
-							 false, false, false, false, 
-							 "spes", inventory);
-		assertTrue(koie instanceof Koie);
+//		Koie koie = new Koie("1", "Koia",
+//							 "6", "10", "71N 10E", 
+//							 "1968", "terreng", 
+//							 false, false, false, false, 
+//							 "spes", inventory);
+//		assertTrue(koie instanceof Koie);
 
-		System.out.println(koie.toString());
+//		System.out.println(koie.toString());
 	}
 }
