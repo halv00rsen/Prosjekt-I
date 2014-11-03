@@ -21,33 +21,49 @@ public class Database {
 	//og fyller koietabellen med data fra initialiseringAvKoier.txt fila
 	public void initializeDatabase(String datapath) {
 		try {
-			//lager koie tabellen.
-			makeQuery("CREATE TABLE Koier" +
-					  "(koieID VARCHAR(255), " +
-					  "name VARCHAR(255), " +
-					  "numBeds VARCHAR(255), " +
-					  "numSeats VARCHAR(255), " +
-					  "year VARCHAR(255), " +
-					  "coordinate VARCHAR(255), " +
-					  "PRIMARY KEY ( koieID ))");
+			// Oppretter tabellene koie, bruker, item, vedrapport og reservasjon
+			makeQuery("CREATE TABLE koie" +
+					  "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+					  "name VARCHAR(255) NOT NULL, " +
+					  "vedkapasitet FLOAT NOT NULL, " +
+					  "num_beds SMALLINT NOT NULL, " +
+					  "num_seats SMALLINT, " +
+					  "year SMALLINT, " +
+					  "coordinates VARCHAR(255))");
 			
-			//lager reservasjons
-			makeQuery("CREATE TABLE ReservasjonsKalender" +
-					  "(koieID VARCHAR(255), " +
-					  "person VARCHAR(255), " +
-					  "dateFrom VARCHAR(255), " + 
-					  "dateTo VARCHAR(255), " +
-					  "PRIMARY KEY ( koieID ))");
+			makeQuery("CREATE TABLE bruker" +
+					  "(id VARCHAR(255) NOT NULL PRIMARY KEY, " +
+					  "password_hash VARCHAR(255) NOT NULL, " +
+					  "bruker_status VARCHAR(255) NOT NULL)");
 			
-			//evt andre tabeller
-			//...
+			makeQuery("CREATE TABLE item" +
+					  "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
+					  "item_navn VARCHAR(255) NOT NULL, " +
+					  "status VARCHAR(255) NOT NULL, " +
+					  "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
 			
+			makeQuery("CREATE TABLE vedrapport" +
+					  "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
+					  "vedmengde FLOAT NOT NULL, " +
+					  "dato DATE NOT NULL, " +
+					  "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
+			
+			makeQuery("CREATE TABLE reservasjon" +
+					  "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
+					  "dato DATE NOT NULL, " +
+					  "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id)))");
+			
+			
+			// Fyller inn koie-tabellen fra fil
 			Scanner in = new Scanner(new FileReader(datapath));
 			in.nextLine(); //hopper over f�rste linje som beskriver data
 			//lager en insert query from hver linje i initialisertinAvKoier.txt
 			while (in.hasNextLine()) {
 				String[] rader = in.nextLine().split(" ");	
-				String query = "INSERT INTO Koier VALUES (";
+				String query = "INSERT INTO koie VALUES (";
 				for (int i=0;i<rader.length-1; i++) {
 					query += "'"+rader[i]+"', ";
 				}
