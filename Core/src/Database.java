@@ -31,7 +31,7 @@ public class Database {
 					  "num_seats SMALLINT, " +
 					  "year SMALLINT, " +
 					  "coordinates VARCHAR(255))");
-			/*
+
 			makeQuery("CREATE TABLE bruker" +
 					  "(id VARCHAR(255) NOT NULL PRIMARY KEY, " +
 					  "password_hash VARCHAR(255) NOT NULL, " +
@@ -56,7 +56,6 @@ public class Database {
 					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
 					  "dato DATE NOT NULL, " +
 					  "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id)))");
-			*/
 			
 			// Fyller inn koie-tabellen fra fil
 			Scanner in = new Scanner(new FileReader(datapath));
