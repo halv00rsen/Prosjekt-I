@@ -3,24 +3,34 @@ package src;
 import src.Inventory;
 
 public class Koie {
+	private final int id;
 	private final String name;
-	private final String id, numBeds, numSeats, year; //trenger ikke � v�re int fordi vi bruker aldri de numeriske verdiene til noe
-	private final boolean sykkel, topptur, jakt, fiske;
-	private final String coordinates, terreng, spesialiteter;
+	private final float vedkapasitet;
+	private float vedmengde;
+	private final int numBeds;
 	private final Inventory inventory;
 	private final Calendar cabinRented;
-	private final float vedMax;
-	private float ved;
+	/*
+	private final String numSeats, year; //trenger ikke � v�re int fordi vi bruker aldri de numeriske verdiene til noe
+	private final boolean sykkel, topptur, jakt, fiske;
+	private final String coordinates, terreng, spesialiteter;
+	*/
 
-	public Koie(String id, String name,
+	public Koie(int id, String name, float vedkapasitet, float vedmengde, int numBeds, Inventory inventory) {
+				/*
 				String numBeds, String numSeats, String coordinates,
 				String year, String terreng,
 				boolean sykkel, boolean topptur, boolean jakt, boolean fiske,
 				String spesialiteter, Inventory inventory, float vedMax, float ved) {
+				*/
 
 		this.id = id;
 		this.name = name;
+		this.vedkapasitet = vedkapasitet;
+		this.vedmengde = vedmengde;
 		this.numBeds = numBeds;
+		this.inventory = inventory;
+		/*
 		this.numSeats = numSeats;
 		this.coordinates = coordinates;
 		this.year = year;
@@ -30,25 +40,43 @@ public class Koie {
 		this.jakt = jakt;
 		this.fiske = fiske;
 		this.spesialiteter = spesialiteter;
-		this.inventory = inventory;
-		this.vedMax = vedMax;
-		this.ved = ved;
+		*/
 			
 		cabinRented = new Calendar();
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 	
 	public String getName() {
 		return name;
 	}
-
-	public String getNumBeds() {
-		return numBeds;
+	
+	public float getVedkapasitet() {
+		return vedkapasitet;
+	}
+	
+	public float getVedmengde() {
+		return vedmengde;
+	}
+	
+	public void setVedmengde(float vedmengde) {
+		this.vedmengde = vedmengde;
 	}
 
+	public int getNumBeds() {
+		return numBeds;
+	}
+	
+	public Inventory getInventory() {
+		return inventory;
+	}
+	
+	public Calendar getCalendar() {
+		return cabinRented;
+	}
+/*
 	public String getNumSeats() {
 		return numSeats;
 	}
@@ -80,34 +108,14 @@ public class Koie {
 	public String getSpesialiteter() {
 		return spesialiteter;
 	}
-	
-	public Inventory getInventory() {
-		return inventory;
-	}
-	
-	public Calendar getCalendar() {
-		return cabinRented;
-	}
-	
-	public float getVedMax() {
-		return vedMax;
-	}
-	
-	public float getVed() {
-		return ved;
-	}
-	
-	public void setVed(float ved) {
-		this.ved = ved;
-	}
-
+*/
 //	public void reserveCabin(int dayFrom, int monthFrom, int numOfDays, String name){
 //		if (cabinRented.validDate(dayFrom,monthFrom)) {
 //			cabinRented.reservePeriod( dayFrom, monthFrom, numOfDays)
 //			}
 //		else
 //	}
-
+/*
 	public String toString() {
 		return name +"\t"+
 				String.valueOf(numBeds) +"\t"+
@@ -121,6 +129,7 @@ public class Koie {
 				String.valueOf(fiske) +"\t"+
 				spesialiteter;
 	}
+	*/
 }
 	
 	
