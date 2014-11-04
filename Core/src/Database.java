@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.sql.ResultSet;
+
 
 import java.util.List;
 import java.util.Scanner;
@@ -23,7 +25,7 @@ public class Database {
 		try {
 			// Oppretter tabellene koie, bruker, item, vedrapport og reservasjon
 			
-			makeQuery("CREATE TABLE koie" +
+			makeStatement("CREATE TABLE koie" +
 					  "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
 					  "name VARCHAR(255) NOT NULL, " +
 					  "vedkapasitet FLOAT NOT NULL, " +
@@ -32,26 +34,26 @@ public class Database {
 					  "year SMALLINT, " +
 					  "coordinates VARCHAR(255))");
 
-			makeQuery("CREATE TABLE bruker" +
+			makeStatement("CREATE TABLE bruker" +
 					  "(id VARCHAR(255) NOT NULL PRIMARY KEY, " +
 					  "password_hash VARCHAR(255) NOT NULL, " +
 					  "bruker_status VARCHAR(255) NOT NULL)");
 			
-			makeQuery("CREATE TABLE item" +
+			makeStatement("CREATE TABLE item" +
 					  "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
 					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
 					  "item_navn VARCHAR(255) NOT NULL, " +
 					  "status VARCHAR(255) NOT NULL, " +
 					  "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
 			
-			makeQuery("CREATE TABLE vedrapport" +
+			makeStatement("CREATE TABLE vedrapport" +
 					  "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
 					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
 					  "vedmengde FLOAT NOT NULL, " +
 					  "dato DATE NOT NULL, " +
 					  "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
 			
-			makeQuery("CREATE TABLE reservasjon" +
+			makeStatement("CREATE TABLE reservasjon" +
 					  "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
 					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
 					  "dato DATE NOT NULL, " +
@@ -63,13 +65,13 @@ public class Database {
 			//lager en insert query from hver linje i initialisertinAvKoier.txt
 			while (in.hasNextLine()) {
 				String[] rader = in.nextLine().split(" ");	
-				String query = "INSERT INTO koie VALUES (";
+				String statement = "INSERT INTO koie VALUES (";
 				for (int i=0;i<rader.length-1; i++) {
-					query += "'"+rader[i]+"', ";
+					statement += "'"+rader[i]+"', ";
 				}
-				query += "'"+rader[rader.length-1]+"')";
-				//System.out.println(query);
-				makeQuery(query);
+				statement += "'"+rader[rader.length-1]+"')";
+				//System.out.println(statement);
+				makeStatement(statement);
 			}
 			in.close();
 					
@@ -80,34 +82,6 @@ public class Database {
 		}
 	}
 
-	//metode som �pner en connection mot databasen
-	private Connection getConnection() {
-		try {		
-			Class.forName(driver).newInstance();
-			Connection conn = DriverManager.getConnection(url+dbName,userName,password);
-			return conn;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	//metode for � utf�re query mot databasen
-	public void makeQuery(String query) {
-		try {
-			Connection conn = getConnection();
-			Statement st = conn.createStatement();
-			int res = st.executeUpdate(query);
-			if (res == 1) {
-				System.out.println("query utf�rt");
-			}
-			conn.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	//metode for � oppdatere databasen med info fra koie objektet sendt som argument til metoden
 	public void toDatabase(Koie koie) {
 		
@@ -122,12 +96,12 @@ public class Database {
 			String bookedFrom = "" + date.dateFrom.day + "." + date.dateFrom.month + "." + date.dateFrom.year;
 			String bookedTo = "" + date.dateTo.day + "." + date.dateTo.month + "." + date.dateTo.year;
 			
-			String query = "INSERT INTO ReservasjonsKalender VALUES (" +
+			String statement = "INSERT INTO ReservasjonsKalender VALUES (" +
 						   "'" + koie.getId() + "', " + 
 						   "'" + date.person + "', " +
 						   "'" + bookedFrom + "', " +
 						   "'" + bookedTo + "')";
-			makeQuery(query);
+			makeStatement(statement);
 			
 			
 		//m� ogs� oppdatere inventory osv...
@@ -135,4 +109,46 @@ public class Database {
 						   
 		}
 	}
+
+	private ResultSet makeQuery(String query) {
+		ResultSet res = null;
+		try {
+			Connection conn = getConnection();
+			Statement st = conn.createStatement();
+			res = st.executeQuery(query);
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	//metode for � utf�re statement mot databasen
+	private void makeStatement(String statement) {
+		try {
+			Connection conn = getConnection();
+			Statement st = conn.createStatement();
+			int res = st.executeUpdate(statement);
+			if (res == 1) {
+				System.out.println("statement utf�rt");
+			}
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//metode som �pner en connection mot databasen
+	private Connection getConnection() {
+		try {		
+			Class.forName(driver).newInstance();
+			Connection conn = DriverManager.getConnection(url+dbName,userName,password);
+			return conn;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 }
