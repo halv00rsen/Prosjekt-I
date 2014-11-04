@@ -27,9 +27,7 @@ public class Inventory {
 	public List<Item> getAllItems() {
 		List<Item> allItems = new ArrayList<Item>();
 		for (Item item : items) {
-			if (item.getStatus() == Item.Status.BROKEN) {
-				allItems.add(item);
-			}
+			allItems.add(item);
 		}
 		return allItems;
 	}
@@ -37,7 +35,7 @@ public class Inventory {
 	public List<Item> getInOrderItems() {
 		List<Item> inOrderItems = new ArrayList<Item>();
 		for (Item item : items) {
-			if (item.getStatus() == Item.Status.BROKEN) {
+			if (item.getStatus() == Item.Status.IN_ORDER) {
 				inOrderItems.add(item);
 			}
 		}
