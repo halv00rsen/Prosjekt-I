@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Database {
-	private String driver = "com.mysql.jdbc.Driver";
 	private String url = "jdbc:mysql://mysql.stud.ntnu.no/";
 	private String dbName = "alekh_prosjekt1";
+	private String driver = "com.mysql.jdbc.Driver";
 	private String userName = "alekh_IT1901";
 	private String password = "abcd1234";
 	
@@ -22,7 +22,7 @@ public class Database {
 	public void initializeDatabase(String datapath) {
 		try {
 			// Oppretter tabellene koie, bruker, item, vedrapport og reservasjon
-			/*
+			
 			makeQuery("CREATE TABLE koie" +
 					  "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
 					  "name VARCHAR(255) NOT NULL, " +
