@@ -18,42 +18,55 @@ public class Database {
 	private String password = "abcd1234";
 	
 	public Koie getKoie(int koie_id) {
-		String koie_query = "SELECT id, name, vedkapasitet, num_beds " + 
-							"FROM koie " + 
-				            "WHERE id =" + String.valueOf(koie_id);
-		ResultSet koie_res = makeQuery(koie_query);
-		while (koie_res.next()) {
-			int id  = koie_res.getInt("id");
-			String name = koie_res.getString("name");
-			float vedkapasitet = koie_res.getFloat("vedkapasitet");
-			int numBeds = koie_res.getInt("num_beds");
+		try {
+			int id = 0;
+			String name = "";
+			float vedkapasitet = 0;
+			float vedmengde = 0;
+			int numBeds = 0;
+			String koie_query = "SELECT id, name, vedkapasitet, num_beds " + 
+								"FROM koie " + 
+					            "WHERE id =" + String.valueOf(koie_id);
+			ResultSet koie_res = makeQuery(koie_query);
+			if (koie_res.next()) {
+				id = koie_res.getInt("id");
+				name = koie_res.getString("name");
+				vedkapasitet = koie_res.getFloat("vedkapasitet");
+				numBeds = koie_res.getInt("num_beds");
+			}
+	
+			String ved_query = "SELECT id, mengde, dato, koie_id " +
+			                   "FROM ved " +
+					           "WHERE koie_id =" + String.valueOf(koie_id) + " " +
+					           "ORDER BY dato DESC";
+			ResultSet ved_res = makeQuery(ved_query);
+			if (ved_res.next()) {
+				vedmengde = ved_res.getFloat("mengde");
+			}
+	
+			String item_query = "SELECT id, name, status " +
+			                   "FROM item " +
+					           "WHERE koie_id =" + String.valueOf(koie_id);
+			ResultSet item_res = makeQuery(item_query);
+			Inventory inventory = new Inventory();
+			while (item_res.next()) {
+				int itemId = item_res.getInt("id");
+				String itemName = item_res.getString("name");
+				String itemStatusString = item_res.getString("status");
+				Item.Status itemStatus = Item.getItemStatus(itemStatusString);
+				Item item = new Item(itemId, itemName, itemStatus);
+				inventory.addItem(item);
+			}
+			if (!(id == 0 || name.equals("") || vedkapasitet == 0 || vedmengde == 0 || numBeds == 0 || inventory == null)) {
+				Koie koie = new Koie(id, name, vedkapasitet, vedmengde, numBeds, inventory);
+				return koie;
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
-
-		String ved_query = "SELECT id, mengde, dato, koie_id " +
-		                   "FROM ved " +
-				           "WHERE koie_id =" + String.valueOf(koie_id) + " " +
-				           "ORDER BY dato DESC";
-		ResultSet ved_res = makeQuery(ved_query);
-		if (ved_res.next()) {
-			float vedmengde = ved_res.getFloat("mengde");
-		}
-
-		String item_query = "SELECT id, name, status " +
-		                   "FROM item " +
-				           "WHERE koie_id =" + String.valueOf(koie_id);
-		ResultSet item_res = makeQuery(item_query);
-		Inventory inventory = new Inventory();
-		while (item_res.next()) {
-			int itemId = item_res.getInt("id");
-			String itemName = item_res.getString("name");
-			String itemStatusString = item_res.getString("status");
-			Item.Status itemStatus = Item.getItemStatus(itemStatusString);
-			Item item = new Item(itemId, itemName, itemStatus);
-			inventory.addItem(item);
-		}
-
-		Koie koie = new Koie(id, name, vedkapasitet, numBeds, vedmengde, inventory);
-		return koie;
 	}
 
 	// Metode som lager koie tabell og reservasjonstabell i databasen
