@@ -1,16 +1,14 @@
 package src;
 
 import java.io.FileReader;
+import java.util.List;
+import java.util.Scanner;
 
 //import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
-
-
-import java.util.List;
-import java.util.Scanner;
 
 public class Database {
 	private String url = "jdbc:mysql://mysql.stud.ntnu.no/";
@@ -19,6 +17,19 @@ public class Database {
 	private String userName = "alekh_IT1901";
 	private String password = "abcd1234";
 	
+	public Koie getKoie(int koie_id) {
+		String query = "SELECT " + String.valueOf(koie_id) + "FROM koie";
+		ResultSet res = makeQuery(query);
+		while (res.next()) {
+			int id  = res.getInt("id");
+			String name = res.getString("name");
+			float vedkapasitet = res.getFloat("vedkapasitet");
+			int numBeds = res.getInt("num_beds");
+		}
+		Koie koie = new Koie(id, name, vedkapasitet, numBeds);
+		return koie
+	}
+
 	// Metode som lager koie tabell og reservasjonstabell i databasen
 	//og fyller koietabellen med data fra initialiseringAvKoier.txt fila
 	public void initializeDatabase(String datapath) {
@@ -41,22 +52,22 @@ public class Database {
 			
 			makeStatement("CREATE TABLE item" +
 					  "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
-					  "item_navn VARCHAR(255) NOT NULL, " +
+					  "name VARCHAR(255) NOT NULL, " +
 					  "status VARCHAR(255) NOT NULL, " +
+					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
 					  "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
 			
 			makeStatement("CREATE TABLE vedrapport" +
 					  "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
-					  "vedmengde FLOAT NOT NULL, " +
+					  "mengde FLOAT NOT NULL, " +
 					  "dato DATE NOT NULL, " +
+					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
 					  "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
 			
 			makeStatement("CREATE TABLE reservasjon" +
 					  "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
 					  "dato DATE NOT NULL, " +
+					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
 					  "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id)))");
 			
 			// Fyller inn koie-tabellen fra fil
@@ -150,5 +161,4 @@ public class Database {
 			return null;
 		}
 	}
-	
 }
