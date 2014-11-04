@@ -11,6 +11,20 @@ public class Item {
 		BROKEN,
 		LOST_AND_FOUND;
 	}
+	
+	public static Item.Status getItemStatus(String statusString) {
+		Item.Status returnStatus;
+		if (statusString.equals("IN_ORDER")) {
+			returnStatus = Item.Status.IN_ORDER;
+		} else if (statusString.equals("BROKEN")) {
+			returnStatus = Item.Status.BROKEN;
+		} else if (statusString.equals("LOST_AND_FOUND")) {
+			returnStatus = Item.Status.LOST_AND_FOUND;
+		} else {
+			returnStatus = null;
+		}
+		return returnStatus;
+	}
 
 	/**
 	 * Oppretter Item-objekt med bare navn.
