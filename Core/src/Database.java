@@ -11,12 +11,17 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 
 public class Database {
-	private String url = "jdbc:mysql://mysql.stud.ntnu.no/";
-	private String dbName = "alekh_prosjekt1";
-	private String driver = "com.mysql.jdbc.Driver";
-	private String userName = "alekh_IT1901";
-	private String password = "abcd1234";
+	private static String url = "jdbc:mysql://mysql.stud.ntnu.no/";
+	private static String dbName = "alekh_prosjekt1";
+	private static String driver = "com.mysql.jdbc.Driver";
+	private static String userName = "alekh_IT1901";
+	private static String password = "abcd1234";
 	
+	/**
+	 * Returnerer et Koie-objekt fra databasen med en Koie-id.
+	 * @param koie_id
+	 * @return Et Koie-objekt
+	 */
 	public Koie getKoie(int koie_id) {
 		try {
 			int id = 0;
@@ -24,6 +29,7 @@ public class Database {
 			float vedkapasitet = 0;
 			float vedmengde = 0;
 			int numBeds = 0;
+
 			String koie_query = "SELECT id, name, vedkapasitet, num_beds " + 
 								"FROM koie " + 
 					            "WHERE id =" + String.valueOf(koie_id);
