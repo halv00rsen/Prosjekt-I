@@ -3,12 +3,10 @@ package src;
 import java.util.List;
 
 public class Main {
-	private static Database database;
 	//private textGUI textGui;
 	
 	private void init(){
-		database = new Database();
-		database.initializeDatabase("Core/src/initialiseringAvKoier.dat");
+		Database.initializeDatabase("Core/src/initialiseringAvKoier.dat");
 
 		//textGui = new textGUI();
 		//textGui.Alternativer("bruker");
