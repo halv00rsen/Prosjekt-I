@@ -1,5 +1,7 @@
 package src;
 
+import java.util.List;
+
 public class Main {
 	private static Database database;
 	//private textGUI textGui;
@@ -19,5 +21,13 @@ public class Main {
 		Main program = new Main();
 		program.init();
 		program.run();
+	}
+	
+	private int[] getKoieIdArray() {
+		return database.getKoieIdArray();
+	}
+	
+	private String[] getKoieNameArray(int[] koieIds) {
+		return database.getKoieNameArray(koieIds);
 	}
 }
