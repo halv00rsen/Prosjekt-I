@@ -3,6 +3,7 @@ package src;
 import java.io.FileReader;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 //import java.sql.*;
@@ -18,40 +19,6 @@ public class Database {
 	private static String userName = "alekh_IT1901";
 	private static String password = "abcd1234";
 	
-	
-	public static List<Integer> getKoieIdList() {
-		try {
-			List<Integer> ids = new ArrayList<Integer>();
-			String query = "SELECT id "
-						 + "FROM koier "
-						 + "ORDER BY id";
-			ResultSet res = makeQuery(query);
-			while (res.next()) {
-				ids.add(res.getInt("id"));
-			}
-			return ids;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public static List<String> getKoieNameList(List<Integer> koieIds) {
-		try {
-			List<String> names = new ArrayList<String>();
-			String query = "SELECT name "
-						 + "FROM koier "
-						 + "ORDER BY id";
-			ResultSet res = makeQuery(query);
-			while (res.next()) {
-				names.add(res.getString("name"));
-			}
-			return names;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 
 	/**
 	 * Returnerer et Koie-objekt fra databasen med en Koie-id.
@@ -117,6 +84,13 @@ public class Database {
 		try {
 			// Oppretter tabellene koie, bruker, item, vedrapport og reservasjon
 			
+			//sletter alle tidligere tabeller
+			makeStatement("DROP TABLE koie");
+			makeStatement("DROP TABLE bruker");
+			makeStatement("DROP TABLE item");
+			makeStatement("DROP TABLE vedrapport");
+			makeStatement("DROP TABLE reservasjon");
+			
 			makeStatement("CREATE TABLE koie"
 						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "name VARCHAR(255) NOT NULL, "
@@ -149,7 +123,7 @@ public class Database {
 						+ "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "dato DATE NOT NULL, "
 						+ "koie_id SMALLINT NOT NULL REFERENCES koie(id), " 
-						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id)))");
+						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
 			
 			// Fyller inn koie-tabellen fra fil
 			Scanner in = new Scanner(new FileReader(datapath));
@@ -208,7 +182,7 @@ public class Database {
 			Connection conn = getConnection();
 			Statement st = conn.createStatement();
 			res = st.executeQuery(query);
-			conn.close();
+			//conn.close(); må kommenteres ut for at getIdNameMap skal fungere...
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -237,6 +211,20 @@ public class Database {
 			Connection conn = DriverManager.getConnection(url+dbName,userName,password);
 			return conn;
 			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static HashMap<Integer,String> getIdNameMap() {
+		try {
+			ResultSet res = makeQuery("SELECT id, name FROM koie");
+			HashMap<Integer, String> idNameMap = new HashMap<Integer, String>();
+			while (res.next()){
+				idNameMap.put(res.getInt("id"), res.getString("name"));
+			}
+			return idNameMap;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
