@@ -25,7 +25,7 @@ public class Main {
 		return Database.getKoieIdList();
 	}
 	
-	private List<String> getKoieNameList(List<Integer> koieIds) {
-		return Database.getKoieNameList(koieIds);
+	private List<String> getKoieNameList() {
+		return Database.getKoieNameList();
 	}
 }
