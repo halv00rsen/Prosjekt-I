@@ -17,72 +17,47 @@ import javax.swing.JTextArea;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
-public class ReservationList extends JPanel implements LoginListener{
+public class ReservationList extends JPanel implements LoginListener, ReservationRowListener{
 	
-	private final List<String> reservations;
 	private String username;
-	private final JTextArea cabinNames, dateFrom, dateTo, comment;
-	private final JButton reportButton;
+	private final List<ReservationRow> reservations;
+	private final GridBagConstraints c;
 	
 	public ReservationList(){
-		reservations = new ArrayList<String>();
 //		this.setLayout(new GridLayout(2, 1));
-		add(new JLabel("Dette er siden for å se dine reservasjoner."
-				+ "\n Du kan slette reservasjoner og du kan melde inn rapport om en koie du har vært på."), BorderLayout.NORTH);
-		cabinNames = new JTextArea(10, 10);
-		dateFrom = new JTextArea(10, 5);
-		dateTo = new JTextArea(10, 5);
-		comment = new JTextArea(10, 10);
-		JPanel panel = new JPanel();
-		GridBagLayout layout = new GridBagLayout();
-		panel.setLayout(layout);
-		GridBagConstraints c = new GridBagConstraints();
-		setInfoTextArea(cabinNames, "Koie", panel, layout, c);
-		setInfoTextArea(dateFrom, "Fra", panel, layout, c);
-		setInfoTextArea(dateTo, "Til", panel, layout, c);
-		setInfoTextArea(comment, "Rapportert", panel, layout, c);
-		this.add(panel);
-		reportButton = new JButton("Skriv rapport");
-		reportButton.addActionListener(new ButtonListener());
-		this.add(reportButton, BorderLayout.SOUTH);
-	}
-	
-	private void setInfoTextArea(JTextArea area, String name, JPanel panel, GridBagLayout layout, GridBagConstraints c){
-		area.setBorder(BorderFactory.createTitledBorder(name));
-		area.setEditable(false);
-		layout.setConstraints(area, c);
-		panel.add(area);
+		setLayout(new GridBagLayout());
+		reservations = new ArrayList<ReservationRow>();
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		add(new JLabel("Dine reservasjoner: "));
+		c.gridy = 1;
 	}
 	
 	private void getReservations(){
 		//Skal bruke databasen for å hente alle reservasjoner til brukeren
-		reservations.add("Koie 1:21.10:29.10:Nei");
-		reservations.add("Koie 2:10.2:17.2:Ikke relevant");
+//		reservations.add("Koie 1:21.10:29.10:Nei");
+//		reservations.add("Koie 2:10.2:17.2:Ikke relevant");
+		reservations.add(new ReservationRow("Kollekula", 19, 10, 27, 10, "Something", false, this));
+		reservations.add(new ReservationRow("Kingestua", 10, 11, 14, 11, "Ikke relevant", true, this));
+		for (ReservationRow row : reservations){
+			add(row, c);
+			c.gridy++;
+		}
 	}
 
 	public void userHasLoggedIn(String username) {
 		this.username = username;
 		getReservations();
-		String cabins = "", from = "", to = "", comment = "";
-		for (String res : reservations){
-			String[] splittedRes = res.split(":");
-			cabins += splittedRes[0] + "\n";
-			from += splittedRes[1] + "\n";
-			to += splittedRes[2] + "\n";
-			comment += splittedRes[3] + "\n";
-		}
-		cabinNames.setText(cabins);
-		dateFrom.setText(from);
-		dateTo.setText(to);
-		this.comment.setText(comment);
 	}
 
 	public void userHasLoggedOut() {
+		c.gridy = 1;
+		for (ReservationRow row : reservations){
+			this.remove(row);
+		}
 		reservations.clear();
-		cabinNames.setText("");
-		dateFrom.setText("");
-		dateTo.setText("");
-		comment.setText("");
 	}
 
 	@Override
@@ -90,11 +65,9 @@ public class ReservationList extends JPanel implements LoginListener{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	private class ButtonListener implements ActionListener{
 
-		public void actionPerformed(ActionEvent arg0) {
-			new UserReport();
-		}
+	public void removeReservation(ReservationRow reservation) {
+		reservations.remove(reservation);
+		this.remove(reservation);
 	}
 }
