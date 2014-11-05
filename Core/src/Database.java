@@ -2,6 +2,7 @@ package src;
 
 import java.io.FileReader;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 //import java.sql.*;
@@ -17,12 +18,47 @@ public class Database {
 	private static String userName = "alekh_IT1901";
 	private static String password = "abcd1234";
 	
+	
+	public static List<Integer> getKoieIdList() {
+		try {
+			List<Integer> ids = new ArrayList<Integer>();
+			String query = "SELECT id "
+						 + "FROM koier "
+						 + "ORDER BY id";
+			ResultSet res = makeQuery(query);
+			while (res.next()) {
+				ids.add(res.getInt("id"));
+			}
+			return ids;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static List<String> getKoieNameList(List<Integer> koieIds) {
+		try {
+			List<String> names = new ArrayList<String>();
+			String query = "SELECT name "
+						 + "FROM koier "
+						 + "ORDER BY id";
+			ResultSet res = makeQuery(query);
+			while (res.next()) {
+				names.add(res.getString("name"));
+			}
+			return names;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	/**
 	 * Returnerer et Koie-objekt fra databasen med en Koie-id.
 	 * @param koie_id
 	 * @return Et Koie-objekt
 	 */
-	public Koie getKoie(int koie_id) {
+	public static Koie getKoie(int koie_id) {
 		try {
 			int id = 0;
 			String name = "";
@@ -30,9 +66,9 @@ public class Database {
 			float vedmengde = 0;
 			int numBeds = 0;
 
-			String koie_query = "SELECT id, name, vedkapasitet, num_beds " + 
-								"FROM koie " + 
-					            "WHERE id =" + String.valueOf(koie_id);
+			String koie_query = "SELECT id, name, vedkapasitet, num_beds "
+			                  +	"FROM koie "
+			                  + "WHERE id =" + String.valueOf(koie_id);
 			ResultSet koie_res = makeQuery(koie_query);
 			if (koie_res.next()) {
 				id = koie_res.getInt("id");
@@ -41,18 +77,18 @@ public class Database {
 				numBeds = koie_res.getInt("num_beds");
 			}
 	
-			String ved_query = "SELECT id, mengde, dato, koie_id " +
-			                   "FROM ved " +
-					           "WHERE koie_id =" + String.valueOf(koie_id) + " " +
-					           "ORDER BY dato DESC";
+			String ved_query = "SELECT id, mengde, dato, koie_id "
+							 + "FROM ved "
+							 + "WHERE koie_id =" + String.valueOf(koie_id) + " "
+							 + "ORDER BY dato DESC";
 			ResultSet ved_res = makeQuery(ved_query);
 			if (ved_res.next()) {
 				vedmengde = ved_res.getFloat("mengde");
 			}
 	
-			String item_query = "SELECT id, name, status " +
-			                   "FROM item " +
-					           "WHERE koie_id =" + String.valueOf(koie_id);
+			String item_query = "SELECT id, name, status "
+							  + "FROM item "
+							  + "WHERE koie_id =" + String.valueOf(koie_id);
 			ResultSet item_res = makeQuery(item_query);
 			Inventory inventory = new Inventory();
 			while (item_res.next()) {
@@ -77,43 +113,43 @@ public class Database {
 
 	// Metode som lager koie tabell og reservasjonstabell i databasen
 	//og fyller koietabellen med data fra initialiseringAvKoier.txt fila
-	public void initializeDatabase(String datapath) {
+	public static void initializeDatabase(String datapath) {
 		try {
 			// Oppretter tabellene koie, bruker, item, vedrapport og reservasjon
 			
-			makeStatement("CREATE TABLE koie" +
-					  "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-					  "name VARCHAR(255) NOT NULL, " +
-					  "vedkapasitet FLOAT NOT NULL, " +
-					  "num_beds SMALLINT NOT NULL, " +
-					  "num_seats SMALLINT, " +
-					  "year SMALLINT, " +
-					  "coordinates VARCHAR(255))");
+			makeStatement("CREATE TABLE koie"
+						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "name VARCHAR(255) NOT NULL, "
+						+ "vedkapasitet FLOAT NOT NULL, "
+						+ "num_beds SMALLINT NOT NULL, "
+						+ "num_seats SMALLINT, "
+						+ "year SMALLINT, "
+						+ "coordinates VARCHAR(255))");
 
-			makeStatement("CREATE TABLE bruker" +
-					  "(id VARCHAR(255) NOT NULL PRIMARY KEY, " +
-					  "password_hash VARCHAR(255) NOT NULL, " +
-					  "bruker_status VARCHAR(255) NOT NULL)");
+			makeStatement("CREATE TABLE bruker"
+						+ "(id VARCHAR(255) NOT NULL PRIMARY KEY, "
+						+ "password_hash VARCHAR(255) NOT NULL, "
+						+ "bruker_status VARCHAR(255) NOT NULL)");
 			
-			makeStatement("CREATE TABLE item" +
-					  "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-					  "name VARCHAR(255) NOT NULL, " +
-					  "status VARCHAR(255) NOT NULL, " +
-					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
-					  "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
+			makeStatement("CREATE TABLE item"
+						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "name VARCHAR(255) NOT NULL, "
+						+ "status VARCHAR(255) NOT NULL, "
+						+ "koie_id SMALLINT NOT NULL REFERENCES koie(id), "
+						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
 			
-			makeStatement("CREATE TABLE vedrapport" +
-					  "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-					  "mengde FLOAT NOT NULL, " +
-					  "dato DATE NOT NULL, " +
-					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
-					  "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
+			makeStatement("CREATE TABLE vedrapport"
+						+ "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "mengde FLOAT NOT NULL, "
+						+ "dato DATE NOT NULL, "
+						+ "koie_id SMALLINT NOT NULL REFERENCES koie(id), "
+						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
 			
-			makeStatement("CREATE TABLE reservasjon" +
-					  "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-					  "dato DATE NOT NULL, " +
-					  "koie_id SMALLINT NOT NULL REFERENCES koie(id), " +
-					  "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id)))");
+			makeStatement("CREATE TABLE reservasjon"
+						+ "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "dato DATE NOT NULL, "
+						+ "koie_id SMALLINT NOT NULL REFERENCES koie(id), " 
+						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id)))");
 			
 			// Fyller inn koie-tabellen fra fil
 			Scanner in = new Scanner(new FileReader(datapath));
@@ -139,7 +175,7 @@ public class Database {
 	}
 
 	//metode for � oppdatere databasen med info fra koie objektet sendt som argument til metoden
-	public void toDatabase(Koie koie) {
+	public static void toDatabase(Koie koie) {
 		
 		//oppdaterer datoene koien er reservert for.
 		Calendar calendar = koie.getCalendar();
@@ -166,7 +202,7 @@ public class Database {
 		}
 	}
 
-	private ResultSet makeQuery(String query) {
+	private static ResultSet makeQuery(String query) {
 		ResultSet res = null;
 		try {
 			Connection conn = getConnection();
@@ -180,7 +216,7 @@ public class Database {
 	}
 
 	//metode for � utf�re statement mot databasen
-	private void makeStatement(String statement) {
+	private static void makeStatement(String statement) {
 		try {
 			Connection conn = getConnection();
 			Statement st = conn.createStatement();
@@ -195,7 +231,7 @@ public class Database {
 	}
 	
 	//metode som �pner en connection mot databasen
-	private Connection getConnection() {
+	private static Connection getConnection() {
 		try {		
 			Class.forName(driver).newInstance();
 			Connection conn = DriverManager.getConnection(url+dbName,userName,password);
