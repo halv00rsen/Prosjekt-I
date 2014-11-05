@@ -10,12 +10,12 @@ public class Inventory {
 		items = new ArrayList<Item>();
 	}
 	
+	/**
+	 * Adds item to inventory
+	 * @param item Item to be added to inventory
+	 */
 	public void addItem(Item item) {
 		items.add(item);
-	}
-
-	public void addItemByName(String name) {
-		items.add(new Item(name));
 	}
 	
 	public void removeItem(Item item) {
