@@ -7,7 +7,7 @@ public class Item {
 	private Status status;
 
 	/**
-	 * IN_ORDER or BROKEN or LOST_AND_FOUND 
+	 * IN_ORDER eller BROKEN eller LOST_AND_FOUND 
 	 */
 	public static enum Status {
 		IN_ORDER,
