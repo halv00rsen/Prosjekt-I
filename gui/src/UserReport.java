@@ -33,9 +33,10 @@ public class UserReport {
 	private ButtonListener buttonListener;
 	private JButton okButton, cancelButton;
 	private DestroyedItems destroyedItems;
-	private ChooseCabin cabins;
 	
-	public UserReport(){
+	private UserReportListener listener;
+	
+	public UserReport(String cabin, int dayFrom, int monthFrom, int dayTo, int monthTo){
 		frame = new JFrame("Rapport");
 		frame.setSize(400, 400);
 		frame.setResizable(false);
@@ -61,16 +62,14 @@ public class UserReport {
 		tabbedPane.addTab("Koieinfo", null, panel_1, null);
 		panel_1.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		panel_1.add(new JLabel("Velg Koie: "), c);
-		cabins = new ChooseCabin();
-		c.gridx = 1;
-		panel_1.add(cabins.getComboBox(), c);
-		cabins.addActionListener(buttonListener);
+		panel_1.add(new JLabel("Rapport for " + cabin + "."), c);
 		c.gridx = 0;
 		c.gridy = 1;
+		panel_1.add(new JLabel("Leid fra " + dayFrom + "." + monthFrom + " til " + dayTo + ". " + monthTo));
+		c.gridy = 2;
 		panel_1.add(new JLabel("Vedstatus: "), c);
 		
 		JLabel lbldelagtUtstyr = new JLabel("\u00D8delagt utstyr");
@@ -78,7 +77,6 @@ public class UserReport {
 		
 		destroyedItems = new DestroyedItems();
 		tabbedPane.addTab("Ødelagt utsyr", null, destroyedItems, null);
-		updateEquipmentInCabin();
 		
 		
 		JPanel panel = new JPanel();
@@ -96,38 +94,23 @@ public class UserReport {
 		frame.setVisible(true);
 	}
 	
-	private void updateEquipmentInCabin(){
-		String cabin = cabins.getSelectedItem();
-		if (cabin.equals("Koie 1")){
-			String[] a = new String[] {"Gitar", "Stol", "Bord"};
-			destroyedItems.setInventory(a);
-//			for (String b : a)
-//				equipmentCabin.addItem(b);
-		}else{
-			String[] a = new String[] {"Ski", "Sofa", "TV"};
-			destroyedItems.setInventory(a);
-//			for (String b : a)
-//				equipmentCabin.addItem(b);
-		}
+	public void setListener(UserReportListener listener){
+		this.listener = listener;
 	}
+	
 	
 	private class ButtonListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == cancelButton){
-				frame.removeAll();
-				frame.setVisible(false);
-				frame = null;
+				listener.cancelPressed();
 			}
 			else if (arg0.getSource() == okButton){
-				System.out.println(cabins.getSelectedItem());
-				for (String a : destroyedItems.getDestroyedElements())
-					System.out.println(a);
-				System.out.println(textArea.getText());
-			}else if (arg0.getSource() == cabins.getComboBox()){
-				updateEquipmentInCabin();
+				listener.okPressed(textArea.getText(), destroyedItems.getDestroyedElements());
 			}
+			frame.removeAll();
+			frame.setVisible(false);
+			frame = null;
 		}
-		
 	}
 }
