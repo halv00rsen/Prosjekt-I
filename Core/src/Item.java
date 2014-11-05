@@ -6,12 +6,20 @@ public class Item {
 	private String name;
 	private Status status;
 
+	/**
+	 * IN_ORDER or BROKEN or LOST_AND_FOUND 
+	 */
 	public static enum Status {
 		IN_ORDER,
 		BROKEN,
 		LOST_AND_FOUND;
 	}
 	
+	/**
+	 * Returnerer en Item.Status basert på en streng
+	 * @param statusString Tekststreng
+	 * @return returnStatus Status i enum {@link Item.Status} 
+	 */
 	public static Item.Status getItemStatus(String statusString) {
 		Item.Status returnStatus;
 		if (statusString.equals("IN_ORDER")) {
@@ -30,7 +38,7 @@ public class Item {
 	 * Oppretter Item-objekt med bare navn.
 	 * <p>
 	 * {@link #id} settes til {@link DEFAULT_ID}, må endres til unik id når den lagres i databasen.
-	 * {@link status} settes til IN_ORDER.
+	 * {@link status} settes til {@link Status.IN_ORDER}.
 	 * @param name Navn
 	 */
 	public Item(String name) {
@@ -38,11 +46,11 @@ public class Item {
 	}
 
 	/**
-	 * Oppretter Item-objekt med navn, og status. Ment for gjenglemte ting.
+	 * Oppretter Item-objekt med navn og status. Ment for gjenglemte ting.
 	 * <p>
 	 * {@link #id} settes til {@link #DEFAULT_ID}, må endres til unik id når den lagres i databasen.
-	 * @param name Se {@link #Item(int, String, Status)} 
-	 * @param status 
+	 * @param name Navn
+	 * @param status Status i enum {@link Item.Status} 
 	 */
 	public Item(String name, Status status) {
 		this(DEFAULT_ID, name, status);
@@ -52,7 +60,7 @@ public class Item {
 	 * Oppretter Item-objekt
 	 * @param id Unik id i databasen
 	 * @param name Navn
-	 * @param status Status i enum {@link #Item.Status} 
+	 * @param status Status i enum {@link Item.Status} 
 	 */
 	public Item(int id, String name, Status status) {
 		this.id = id;
