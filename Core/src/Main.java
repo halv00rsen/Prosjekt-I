@@ -23,11 +23,11 @@ public class Main {
 		program.run();
 	}
 	
-	private int[] getKoieIdArray() {
-		return database.getKoieIdArray();
+	private List<Integer> getKoieIdList() {
+		return Database.getKoieIdList();
 	}
 	
-	private String[] getKoieNameArray(int[] koieIds) {
-		return database.getKoieNameArray(koieIds);
+	private List<String> getKoieNameList(List<Integer> koieIds) {
+		return Database.getKoieNameList(koieIds);
 	}
 }
