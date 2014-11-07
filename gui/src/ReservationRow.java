@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -14,14 +15,16 @@ import javax.swing.JPanel;
 public class ReservationRow extends JPanel{
 	
 	private final int fromDay, fromMonth, toDay, toMonth;
-	private final String name, comment;
+	private final String name;
 	private boolean isReported;
 	private JButton button, delete;
 	private final ReservationRowListener listener;
+	private JLabel isReportedString;
 	
-	public ReservationRow(String name, int fromDay, int fromMonth, int toDay, int toMonth, String comment, boolean isReported,
+	public ReservationRow(String name, int fromDay, int fromMonth, int toDay, int toMonth, boolean isReported,
 			ReservationRowListener listener){
 		setLayout(new GridBagLayout());
+		this.setBorder(BorderFactory.createEtchedBorder());
 		this.listener = listener;
 		GridBagConstraints c = new GridBagConstraints();
 		this.fromDay = fromDay;
@@ -29,24 +32,30 @@ public class ReservationRow extends JPanel{
 		this.toDay = toDay;
 		this.toMonth = toMonth;
 		this.name = name;
-		this.comment = comment;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		add(new JLabel("Koie: " + name + " "), c);
-		c.gridx++;
-		add(new JLabel("Fra: " + fromDay + "." + fromMonth + " "), c);
-		c.gridx++;
-		add(new JLabel("Til: " + toDay + "." + toMonth + " "), c);
-		c.gridx++;
-		add(new JLabel("Kommentar: " + comment + " "), c);
-		c.gridx++;
+		c.gridx = 0;
+		c.gridy = 1;
+		add(new JLabel("Fra: " + fromDay + "." + fromMonth), c);
+		c.gridx = 1;
+		add(new JLabel("Til: " + toDay + "." + toMonth + "  "), c);
+		c.gridy = 2;
+		c.gridx = 0;
+		add(new JLabel("Rapportert:"), c);
+		c.gridy = 2;
+		c.gridx = 1;
+		isReportedString = new JLabel((isReported ? "Ja" : "Nei"));
+		add(isReportedString, c);
+		c.gridy = 1;
+		c.gridx = 3;
 		ButtonListener l = new ButtonListener();
 		delete = new JButton("Slett");
 		delete.addActionListener(l);
 		add(delete, c);
 		if (!isReported){
-			c.gridx++;
+			c.gridy++;
 			button = new JButton("Rapport");
 			add(button, c);
 			button.addActionListener(l);
@@ -86,6 +95,7 @@ public class ReservationRow extends JPanel{
 		public void okPressed(String comment, List<String> brokenInventory) {
 			removeButton();
 			isReported = true;
+			isReportedString.setText("Ja");
 //			Send til databasen
 		}
 

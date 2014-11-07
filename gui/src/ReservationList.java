@@ -39,8 +39,8 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 		//Skal bruke databasen for å hente alle reservasjoner til brukeren
 //		reservations.add("Koie 1:21.10:29.10:Nei");
 //		reservations.add("Koie 2:10.2:17.2:Ikke relevant");
-		reservations.add(new ReservationRow("Kollekula", 19, 10, 27, 10, "Something", false, this));
-		reservations.add(new ReservationRow("Kingestua", 10, 11, 14, 11, "Ikke relevant", true, this));
+		reservations.add(new ReservationRow("Kollekula", 19, 10, 27, 10, false, this));
+		reservations.add(new ReservationRow("Kingestua", 10, 11, 14, 11, true, this));
 		for (ReservationRow row : reservations){
 			add(row, c);
 			c.gridy++;

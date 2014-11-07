@@ -22,6 +22,8 @@ public class LoginPanel extends JPanel{
 	private final JCheckBox adminCheckBox;
 	private final JPanel adminBox;
 	
+	private LoginPanelListener listener;
+	
 	public LoginPanel(){
 		errorLabel = new JLabel("Feil brukernavn/passord");
 //		this.setLayout(new GridLayout(2, 1));
@@ -35,6 +37,10 @@ public class LoginPanel extends JPanel{
 		adminBox.add(new JLabel("Adminlogin: "), BorderLayout.WEST);
 		adminBox.add(adminCheckBox);
 		this.add(adminBox);
+	}
+	
+	public void setLoginPanelListener(LoginPanelListener l){
+		listener = l;
 	}
 	
 	public void addListener(LoginListener l){

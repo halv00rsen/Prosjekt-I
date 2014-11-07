@@ -36,8 +36,8 @@ public class ItemStatus extends JPanel{
 		setKoieInformation(cabins.getSelectedItem());
 	}
 	
-	private void setKoieInformation(String cabinName){
-		itemInformation.setText(cabinName + "\nSomething cool.");
+	private void setKoieInformation(int cabin){
+		itemInformation.setText(cabin + "\nSomething cool.");
 	}
 	
 	private class CabinListener implements ActionListener{
