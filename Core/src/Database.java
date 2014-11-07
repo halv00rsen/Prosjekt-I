@@ -2,7 +2,6 @@ package src;
 
 import java.io.FileReader;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -98,16 +97,21 @@ public class Database {
 						+ "num_beds SMALLINT NOT NULL, "
 						+ "num_seats SMALLINT, "
 						+ "year SMALLINT, "
-						+ "coordinates VARCHAR(255))");
+						+ "coordinates VARCHAR(255), "
+						+ "terreng VARCHAR(255), "
+						+ "sykkel VARCHAR(255), " 
+						+ "topptur VARCHAR(255), "
+						+ "jaktOgFiske VARCHAR(255), "
+						+ "spesialiteter VARCHAR(255))");
 
 			makeStatement("CREATE TABLE bruker"
 						+ "(id VARCHAR(255) NOT NULL PRIMARY KEY, "
 						+ "password_hash VARCHAR(255) NOT NULL, "
-						+ "bruker_status VARCHAR(255) NOT NULL)");
+						+ "person VARCHAR(255) NOT NULL)");
 			
 			makeStatement("CREATE TABLE item"
 						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-						+ "name VARCHAR(255) NOT NULL, "
+						+ "item VARCHAR(255) NOT NULL, "
 						+ "status VARCHAR(255) NOT NULL, "
 						+ "koie_id SMALLINT NOT NULL REFERENCES koie(id), "
 						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
@@ -120,23 +124,23 @@ public class Database {
 						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
 			
 			makeStatement("CREATE TABLE reservasjon"
-						+ "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-						+ "dato DATE NOT NULL, "
-						+ "koie_id SMALLINT NOT NULL REFERENCES koie(id), " 
-						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
+						+ "(koie_id SMALLINT NOT NULL PRIMARY KEY, "
+						+ "fromDate DATE NOT NULL, "
+						+ "toDate DATE NOT NULL, "
+						+ "person VARCHAR(255) NOT NULL REFERENCES bruker(person))");
 			
 			// Fyller inn koie-tabellen fra fil
 			Scanner in = new Scanner(new FileReader(datapath));
 			in.nextLine(); //hopper over f�rste linje som beskriver data
 			//lager en insert query from hver linje i initialisertinAvKoier.txt
 			while (in.hasNextLine()) {
-				String[] rader = in.nextLine().split(" ");	
+				String[] rader = in.nextLine().split("#");	
 				String statement = "INSERT INTO koie VALUES (";
 				for (int i=0;i<rader.length-1; i++) {
 					statement += "'"+rader[i]+"', ";
 				}
 				statement += "'"+rader[rader.length-1]+"')";
-				//System.out.println(statement);
+				System.out.println(statement);
 				makeStatement(statement);
 			}
 			in.close();
@@ -159,14 +163,15 @@ public class Database {
 		//har ikke helt tenkt gjennom dette enda... vet ikke hvordan det blir seende ut i databasen.
 		
 		for (BookingDate date : datesBooked) {
-			String bookedFrom = "" + date.dateFrom.day + "." + date.dateFrom.month + "." + date.dateFrom.year;
-			String bookedTo = "" + date.dateTo.day + "." + date.dateTo.month + "." + date.dateTo.year;
+			String bookedFrom = "" + date.dateFrom.year + "-" + date.dateFrom.month + "-" + date.dateFrom.day; 
+			String bookedTo = "" + date.dateTo.year + "-" + date.dateTo.month + "-" + date.dateTo.day;
 			
 			String statement = "INSERT INTO ReservasjonsKalender VALUES (" +
-						   "'" + koie.getId() + "', " + 
-						   "'" + date.person + "', " +
-						   "'" + bookedFrom + "', " +
-						   "'" + bookedTo + "')";
+							   "'" + koie.getId() + "', " + 
+							   "'" + bookedFrom + "', " +
+							   "'" + bookedTo + "', " +
+							   "'" + date.person + "')";
+			
 			makeStatement(statement);
 			
 			
@@ -230,4 +235,18 @@ public class Database {
 			return null;
 		}
 	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

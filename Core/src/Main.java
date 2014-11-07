@@ -1,6 +1,5 @@
 package src;
 
-import java.util.List;
 import java.util.HashMap;
 
 public class Main {
@@ -14,6 +13,7 @@ public class Main {
 	}
 	
 	private void run(){
+		//test av hashmap
 		HashMap<Integer, String> idNameMap = Database.getIdNameMap();
 		System.out.println(idNameMap.get(18));
 	}
