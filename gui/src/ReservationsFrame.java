@@ -30,6 +30,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	private String username;
 	private final JLabel isValidDateReservation;
 	private final JTextArea cabinInformation;
+	private ReservationsFrameListener listener;
 	
 	public ReservationsFrame(){
 		setLayout(new GridLayout(1,2));
@@ -86,13 +87,17 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		add(cabinInformation);
 	}
 	
+	public void addListener(ReservationsFrameListener l){
+		listener = l;
+	}
+	
 	public void isValidDate(boolean isValid){
 		isValidDateReservation.setForeground(isValid ? Color.green: Color.red);
 		isValidDateReservation.setText((isValid ? "Ja": "Nei"));
 	}
 	
 	private boolean isValidReservation(int day, int month, int numDays){
-		String cabin = (String) cabins.getSelectedItem();
+		int cabinId = cabins.getSelectedItem();
 		//skal sjekke databasen om denne er valid
 		return true;
 	}
@@ -107,7 +112,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		isLoggedIn = false;
 	}
 	
-	private void setCabinInformation(String cabin){
+	private void setCabinInformation(int cabin){
 		String info = "Koie: " + cabin + "\n";
 		info += "Byggeår: 1948\nAntall sengeplasser: 10\nKoordinater: 34 23\nVaffelgjern: Ja\nTerreng: S\nGitar: Ja\nBadstue: Ja\n"
 				+ "Båt: Nei";
@@ -132,9 +137,10 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	private class CabinListener implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e){
-			String cabin = cabins.getSelectedItem();
-			validDates.setCabin(cabin);
-			setCabinInformation(cabin);
+			int cabinId = cabins.getSelectedItem();
+			System.out.println(cabinId);
+			validDates.setCabin(cabinId);
+			setCabinInformation(cabinId);
 		}
 	}
 	

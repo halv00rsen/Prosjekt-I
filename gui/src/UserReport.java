@@ -33,6 +33,7 @@ public class UserReport {
 	private ButtonListener buttonListener;
 	private JButton okButton, cancelButton;
 	private DestroyedItems destroyedItems;
+	private final String cabin;
 	
 	private UserReportListener listener;
 	
@@ -42,6 +43,7 @@ public class UserReport {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		buttonListener = new ButtonListener();
+		this.cabin = cabin;
 		
 		JPanel cancelOkButtons = new JPanel();
 		frame.getContentPane().add(cancelOkButtons, BorderLayout.SOUTH);
@@ -65,7 +67,7 @@ public class UserReport {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
-		panel_1.add(new JLabel("Rapport for " + cabin + "."), c);
+		panel_1.add(new JLabel("Rapport for " + cabin + ". "), c);
 		c.gridx = 0;
 		c.gridy = 1;
 		panel_1.add(new JLabel("Leid fra " + dayFrom + "." + monthFrom + " til " + dayTo + ". " + monthTo));
@@ -98,6 +100,12 @@ public class UserReport {
 		this.listener = listener;
 	}
 	
+	private void updateEquipmentInCabin(){
+		if (cabin.equals("Koie 1")){
+			String[] a = new String[] {"Gitar", "Stol", "Bord"};
+			destroyedItems.setInventory(a);
+		}
+	}
 	
 	private class ButtonListener implements ActionListener{
 

@@ -17,7 +17,7 @@ public class ValidDates {
 	private final JComboBox<Integer> date, numDays;
 	private final JComboBox<Months> month;
 	private final List<ValidDatesListener> listeners;
-	private String cabin;
+	private int cabinId;
 	private final MonthChanged listener;
 	
 	public ValidDates(JComboBox<Integer> day, JComboBox<Months> month, JComboBox<Integer> numDays){
@@ -46,8 +46,10 @@ public class ValidDates {
 		updateDays();
 	}
 	
-	public void setCabin(String cabin){
-		this.cabin = cabin;
+	public void setCabin(int cabinId){
+		this.cabinId = cabinId;
+		int[] res = getReservation();
+		callValidDate(isValidDate(res[0], res[1], res[2]));
 	}
 	
 	private void callValidDate(boolean isValid){
@@ -60,7 +62,8 @@ public class ValidDates {
 			return false;
 		if (month == 2)
 			return false;
-		if ("Koie 1".equals(cabin))
+		System.out.println(cabinId);
+		if (cabinId == 3)
 			return false;
 		return true;
 	}
