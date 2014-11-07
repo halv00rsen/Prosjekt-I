@@ -127,7 +127,7 @@ public class Database {
 						+ "(koie_id SMALLINT NOT NULL PRIMARY KEY, "
 						+ "fromDate DATE NOT NULL, "
 						+ "toDate DATE NOT NULL, "
-						+ "person VARCHAR(255) NOT NULL REFERENCES bruker(person))");
+						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
 			
 			// Fyller inn koie-tabellen fra fil
 			Scanner in = new Scanner(new FileReader(datapath));
