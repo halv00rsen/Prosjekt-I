@@ -17,6 +17,8 @@ import javax.swing.JComboBox;
 
 public class GUI implements LoginListener{
 
+	public static boolean DEBUG = true;
+	
 	private static JFrame frame;
 	
 	private final LoginPanel loginPanel;
@@ -63,11 +65,12 @@ public class GUI implements LoginListener{
 		
 	}
 
-	public void userHasLoggedIn(String userName) {
-		
+	public void userHasLoggedIn(String username) {
+		frame.setTitle("NTNUI-Koiene (" + username + ")");
 	}
 
 	public void userHasLoggedOut() {
+		frame.setTitle("NTNUI-Koiene");
 		tabbedPane.remove(itemStatus);
 		itemStatus = null;
 		tabbedPane.remove(woodStatus);
@@ -80,6 +83,7 @@ public class GUI implements LoginListener{
 
 	public void adminHasLoggedIn() {
 //		Utstyrstatus, legg inn nytt utstyr, sjekk vedstatus, veddugnad, 
+		frame.setTitle("NTNUI-Koiene (admin)");
 		itemStatus = new ItemStatus();
 		tabbedPane.addTab("Utstyrstatus", null, itemStatus, null);
 		woodStatus = new WoodStatus();
