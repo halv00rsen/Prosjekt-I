@@ -343,6 +343,18 @@ public class Database {
 		}
 	}
 
+	public void addItem(Item item, int koie_id) {
+		try {
+			String statement = "INSERT INTO item (id, item, status, koie_id) "
+							 + "VALUES("+item.getId()+", "+item.getName()+", "+item.getStatus()+", "+koie_id+");";
+
+			makeStatement(statement);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 }
 
 
