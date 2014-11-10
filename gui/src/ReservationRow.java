@@ -21,16 +21,16 @@ public class ReservationRow extends JPanel{
 	private final ReservationRowListener listener;
 	private JLabel isReportedString;
 	
-	public ReservationRow(String name, int fromDay, int fromMonth, int toDay, int toMonth, boolean isReported,
+	public ReservationRow(String name, Date from, Date to, boolean isReported, boolean isAdmin,
 			ReservationRowListener listener){
 		setLayout(new GridBagLayout());
 		this.setBorder(BorderFactory.createEtchedBorder());
 		this.listener = listener;
 		GridBagConstraints c = new GridBagConstraints();
-		this.fromDay = fromDay;
-		this.fromMonth = fromMonth;
-		this.toDay = toDay;
-		this.toMonth = toMonth;
+		this.fromDay = from.day;
+		this.fromMonth = from.month;
+		this.toDay = to.day;
+		this.toMonth = to.month;
 		this.name = name;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -54,7 +54,7 @@ public class ReservationRow extends JPanel{
 		delete = new JButton("Slett");
 		delete.addActionListener(l);
 		add(delete, c);
-		if (!isReported){
+		if (!isReported && !isAdmin){
 			c.gridy++;
 			button = new JButton("Rapport");
 			add(button, c);

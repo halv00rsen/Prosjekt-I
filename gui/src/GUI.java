@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 public class GUI implements LoginListener{
 
 	public static boolean DEBUG = true;
+	public static int WIDTH = 600, HEIGHT = 500;
 	
 	private static JFrame frame;
 	
@@ -25,6 +26,7 @@ public class GUI implements LoginListener{
 	private final ReservationsFrame reservationFrame;
 	private final ReservationList reservationList;
 	private final JTabbedPane tabbedPane;
+	private final CreateUser createUser;
 	
 	private ItemStatus itemStatus;
 	private WoodStatus woodStatus;
@@ -34,7 +36,7 @@ public class GUI implements LoginListener{
 	public GUI(){
 		frame = new JFrame("NTNUI-Koiene");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(600, 500);
+		frame.setSize(WIDTH, HEIGHT);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
@@ -42,6 +44,8 @@ public class GUI implements LoginListener{
 		loginPanel = new LoginPanel();
 		tabbedPane.addTab("Innlogging", null, loginPanel, null);
 		
+		createUser = new CreateUser();
+		tabbedPane.addTab("Ny bruker", null, createUser, null);
 		
 		JPanel Koier = new JPanel();
 		tabbedPane.addTab("Koier", null, Koier, null);
@@ -67,6 +71,7 @@ public class GUI implements LoginListener{
 
 	public void userHasLoggedIn(String username) {
 		frame.setTitle("NTNUI-Koiene (" + username + ")");
+		tabbedPane.remove(createUser);
 	}
 
 	public void userHasLoggedOut() {
@@ -79,6 +84,7 @@ public class GUI implements LoginListener{
 		messageAdmin = null;
 		tabbedPane.remove(removeReservations);
 		removeReservations = null;
+		tabbedPane.addTab("Ny bruker", createUser);
 	}
 
 	public void adminHasLoggedIn() {
@@ -92,6 +98,7 @@ public class GUI implements LoginListener{
 		tabbedPane.addTab("Meldinger", null, messageAdmin, null);
 		removeReservations = new RemoveReservationsAdmin();
 		tabbedPane.addTab("Fjern reservasjoner", null, removeReservations, null);
+		tabbedPane.remove(createUser);
 	}
 
 	public static int getXPosition() {

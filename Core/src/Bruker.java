@@ -6,49 +6,24 @@ import java.math.BigInteger;
 public class Bruker {
 	private final String id;
 	private String passwordHash;
-	private Status status;
-	
-	/**
-	 * BRUKER eller ADMIN
-	 */
-	public static enum Status {
-		BRUKER,
-		ADMIN;
-	}
-
-	/**
-	 * Returnerer en Item.Status basert på en streng
-	 * @param statusString Tekststreng
-	 * @return returnStatus Status i enum {@link Item.Status} 
-	 */
-	public static Bruker.Status getBrukerStatus(String statusString) {
-		Bruker.Status returnStatus;
-		if (statusString.equals("BRUKER")) {
-			returnStatus = Bruker.Status.BRUKER;
-		} else if (statusString.equals("ADMIN")) {
-			returnStatus = Bruker.Status.ADMIN;
-		} else {
-			returnStatus = null;
-		}
-		return returnStatus;
-	}
+	private boolean isAdmin;
 
 	/**
 	 * Oppretter Bruker-objekt
 	 * @param id Brukernavn (unikt i databasen)
 	 * @param passwordHash MD5-hash av passordet
-	 * @param status Status i enum {@link Bruker.Status}
+	 * @param isAdmin Om brukeren er admin eller ikke
 	 */
-	public Bruker(String id, String passwordHash, Status status) {
+	public Bruker(String id, String passwordHash, boolean isAdmin) {
 		this.id = id;
 		this.passwordHash = passwordHash;
-		this.status = status;
+		this.isAdmin = isAdmin;
 	}
 	
 	/**
-	 * Hashes a password
-	 * @param password
-	 * @return An MD5-hash of the password
+	 * Hasher et passord
+	 * @param passord
+	 * @return En MD5-hash av passordet
 	 */
 	public static String hashPassword(String password) {
 		try {
@@ -90,11 +65,11 @@ public class Bruker {
 		this.passwordHash = hashPassword(password);
 	}
 
-	public Status getStatus() {
-		return status;
+	public boolean isAdmin() {
+		return isAdmin;
 	}
 	
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 }

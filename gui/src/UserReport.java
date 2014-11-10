@@ -34,6 +34,7 @@ public class UserReport {
 	private JButton okButton, cancelButton;
 	private DestroyedItems destroyedItems;
 	private final String cabin;
+	private JComboBox<Integer> numWood;
 	
 	private UserReportListener listener;
 	
@@ -72,10 +73,13 @@ public class UserReport {
 		c.gridy = 1;
 		panel_1.add(new JLabel("Leid fra " + dayFrom + "." + monthFrom + " til " + dayTo + ". " + monthTo));
 		c.gridy = 2;
-		panel_1.add(new JLabel("Vedstatus: "), c);
-		
-		JLabel lbldelagtUtstyr = new JLabel("\u00D8delagt utstyr");
-		panel_1.add(lbldelagtUtstyr);
+		panel_1.add(new JLabel("Antall vedsekker: "), c);
+		c.gridx = 1;
+		numWood = new JComboBox<Integer>();
+		for (int a = 0; a < 10; a++){
+			numWood.addItem(a);
+		}
+		panel_1.add(numWood, c);
 		
 		destroyedItems = new DestroyedItems();
 		tabbedPane.addTab("Ødelagt utsyr", null, destroyedItems, null);

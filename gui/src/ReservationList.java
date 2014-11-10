@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
@@ -21,30 +22,39 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 	
 	private String username;
 	private final List<ReservationRow> reservations;
-	private final GridBagConstraints c;
+	private final GridBagConstraints futureC, hasVisitedC;
+	private final JPanel futureReservations, hasVisitedReservations;
 	
 	public ReservationList(){
 //		this.setLayout(new GridLayout(2, 1));
-		setLayout(new GridBagLayout());
+		setLayout(new GridLayout(1,2));
 		reservations = new ArrayList<ReservationRow>();
-		c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		add(new JLabel("Dine reservasjoner: "));
-		c.gridy = 1;
+		futureReservations = new JPanel();
+		futureReservations.setLayout(new GridBagLayout());
+		futureReservations.setBorder(BorderFactory.createTitledBorder("Reservasjoner"));
+		JScrollPane pane1 = new JScrollPane(futureReservations);
+		pane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		pane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		hasVisitedReservations = new JPanel();
+		hasVisitedReservations.setLayout(new GridBagLayout());
+		hasVisitedReservations.setBorder(BorderFactory.createTitledBorder("Historie"));
+		JScrollPane pane2 = new JScrollPane(hasVisitedReservations);
+		pane2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		pane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		futureC = new GridBagConstraints();
+		hasVisitedC = new GridBagConstraints();
+		add(pane1);
+		add(pane2);
 	}
 	
 	private void getReservations(){
 		//Skal bruke databasen for å hente alle reservasjoner til brukeren
 //		reservations.add("Koie 1:21.10:29.10:Nei");
 //		reservations.add("Koie 2:10.2:17.2:Ikke relevant");
-		reservations.add(new ReservationRow("Kollekula", 19, 10, 27, 10, false, this));
-		reservations.add(new ReservationRow("Kingestua", 10, 11, 14, 11, true, this));
-		for (ReservationRow row : reservations){
-			add(row, c);
-			c.gridy++;
-		}
+		reservations.add(new ReservationRow("Kollekula", new Date(19, 10), new Date(27, 10), false, true, this));
+		reservations.add(new ReservationRow("Kongestue", new Date(10, 11), new Date(14, 11), false, false, this));
+		futureReservations.add(reservations.get(1), futureC);
+		hasVisitedReservations.add(reservations.get(0), hasVisitedC);
 	}
 
 	public void userHasLoggedIn(String username) {
@@ -53,10 +63,9 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 	}
 
 	public void userHasLoggedOut() {
-		c.gridy = 1;
-		for (ReservationRow row : reservations){
-			this.remove(row);
-		}
+//		c.gridy = 1;
+		futureReservations.removeAll();
+		hasVisitedReservations.removeAll();
 		reservations.clear();
 	}
 
@@ -68,6 +77,7 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 
 	public void removeReservation(ReservationRow reservation) {
 		reservations.remove(reservation);
-		this.remove(reservation);
+		futureReservations.remove(reservation);
+		hasVisitedReservations.remove(reservation);
 	}
 }
