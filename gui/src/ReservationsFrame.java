@@ -34,6 +34,10 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	private boolean adminLogin;
 	private Koie cabinChosen;
 	
+	/**
+	 * Oppretter et panel der man kan reservere nye koier med dato fra og antall dager reservasjonen skal telle
+	 * 
+	 */
 	public ReservationsFrame(){
 		setLayout(new GridLayout(1,2));
 		GridBagLayout layout = new GridBagLayout();
@@ -93,15 +97,16 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		listener = l;
 	}
 	
-	public void isValidDate(boolean isValid){
+	public void updateField(int day, int month, int numDays){
+		if (cabinChosen == null)
+			return;
+		boolean isValid = cabinChosen.getCalendar().reservationIsOk(new Date(day, month), numDays);
 		isValidDateReservation.setForeground(isValid ? Color.green: Color.red);
 		isValidDateReservation.setText((isValid ? "Ja": "Nei"));
 	}
 	
 	private boolean isValidReservation(int day, int month, int numDays){
-		int cabinId = cabins.getSelectedItem();
-		//skal sjekke databasen om denne er valid
-		return true;
+		return cabinChosen.getCalendar().reservationIsOk(new Date(day, month), numDays);
 	}
 	
 	public void userHasLoggedIn(String username){
@@ -128,6 +133,10 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		info += "\nTopptur: " + cabinChosen.getTopptur();
 		info += "\nJakt og fiske: " + cabinChosen.getJaktOgFiske();
 		info += "\nSpesialiteter: " + cabinChosen.getSpesialiteter();
+		info += "\n\nKoia er reservert på følgende dager:";
+		for (BookingDate bookings : cabinChosen.getCalendar().getDatesBooked()){
+			info += "\n" + bookings.dateFrom.toString() + " til " + bookings.dateTo.toString();
+		}
 		cabinInformation.setText(info);
 	}
 	
@@ -143,8 +152,10 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		}
 		int[] date = validDates.getReservation();
 		if (isValidReservation(date[0], date[1], date[2])){
+			cabinChosen.getCalendar().reservePeriod(new Date(date[0], date[1]), date[2], username);
+			Database.toDatabase(cabinChosen);
 			JOptionPane.showMessageDialog(null, "Din reservasjon til " + cabins.getSelectedItem() + " den " + date[0] + "." + date[1] + " i " + 
-											date[2] + " dage(r), ble godkjent og lagret.");
+											date[2] + " dag(er), ble godkjent og lagret.");
 		}else{
 			JOptionPane.showMessageDialog(null, "Din reservasjon ble ikke godkjent.");
 		}
