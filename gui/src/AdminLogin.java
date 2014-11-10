@@ -19,6 +19,10 @@ public class AdminLogin extends JPanel{
 	private JButton ok, reset;
 	private AdminLoginListener listener;
 	
+	/**
+	 * Oppretter et loginfelt for bruker.
+	 * @param listener En AdminLoginListener som lytter til om noen har logget inn
+	 */
 	public AdminLogin(AdminLoginListener listener){
 		setLayout(new GridLayout(3, 2, 0, 0));
 		ButtonListener buttonListener = new ButtonListener();
@@ -49,13 +53,22 @@ public class AdminLogin extends JPanel{
 		add(reset);
 	}
 	
+	/**
+	 * Fjerner all tekst som er skrevet inn
+	 */
 	public void resetFields(){
 		userName.setText("");
 		password.setText("");
 	}
 	
+	/**
+	 * Lytter til ok og avbrytknappene
+	 */
 	private class ButtonListener implements ActionListener{
 
+		/**
+		 * @param e en av knappene har blitt trykket på
+		 */
 		public void actionPerformed(ActionEvent e) {
 			if (listener == null)
 				return;
@@ -67,11 +80,10 @@ public class AdminLogin extends JPanel{
 			}
 		}
 	}
-	
-	public void setListener(AdminLoginListener l){
-		listener = l;
-	}
-	
+
+	/**
+	 * Lytter til tastaturet, hvis enter, da kan man logge inn
+	 */
 	private class KeyboardListener implements KeyListener{
 
 		public void keyPressed(KeyEvent arg0) {
