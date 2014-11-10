@@ -33,6 +33,9 @@ public class DestroyedItems extends JPanel{
 	  private JButton addButton, removeButton;
 	  private SortedListModel inventoryListModel, brokenInventoryListModel;
 
+	  /**
+	   * Oppretter ødelagt utstyr-panelet i rapporten.
+	   */
 	  public DestroyedItems() {
 		  setBorder(BorderFactory.createEtchedBorder());
 		  setLayout(new GridBagLayout());
@@ -58,6 +61,9 @@ public class DestroyedItems extends JPanel{
 		      1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, EMPTY_INSETS, 0, 0));
 	  }
 	  
+	  /**
+	   * @return items en liste med alt ødelagt utstyr på koia
+	   */
 	  public List<String> getDestroyedElements(){
 		  List<String> items = new ArrayList<String> ();
 		  for (int a = 0; a < brokenInventoryListModel.getSize(); a++)
@@ -65,23 +71,37 @@ public class DestroyedItems extends JPanel{
 		  return items;
 	  }
 	  
+	  /**
+	   * Sletter alt utstyr som ligger i lista
+	   * @param inventory en liste med alt utstyr i koia
+	   */
 	  public void setInventory(String[] inventory){
 		  inventoryListModel.clear();
 		  brokenInventoryListModel.clear();
 		  for (String i : inventory)
 			  inventoryListModel.add(i);
 	  }
-	  
+	  /**
+	   * 
+	   * @param inventory legges til lista til utstyr
+	   */
 	  private void addInventory(List<String> inventory){
 		  for (String i : inventory)
 			  inventoryListModel.add(i);
 	  }
 	  
+	  /**
+	   * 
+	   * @param inventory legges til i ødelagt utstyr lista
+	   */
 	  private void addBrokenInventory(List<String> inventory){
 		  for (String i : inventory)
 			  brokenInventoryListModel.add(i);
 	  }
 	  
+	  /**
+	   * sletter alle elementer som er valgt i utstyrlista
+	   */
 	  private void clearInventorySelected() {
 	    List<String> selected = inventory.getSelectedValuesList();
 	    for (String value : selected)
@@ -89,6 +109,9 @@ public class DestroyedItems extends JPanel{
 	    inventory.getSelectionModel().clearSelection();
 	  }
 
+	  /**
+	   * Sletter alle elementer som er valgt i den ødelagte utstyrslista
+	   */
 	  private void clearBrokenInventorySelected() {
 		  List<String> seleceted = brokenInventory.getSelectedValuesList();
 		  for (String value : seleceted)
@@ -96,7 +119,10 @@ public class DestroyedItems extends JPanel{
 		  brokenInventory.getSelectionModel().clearSelection();
 	  }
 
-
+	  /**
+	   * 
+	   * En listener som lytter til legg-til-knappen, og flytter utstyr til ødelagt utstyr
+	   */
 	  private class AddListener implements ActionListener {
 	    public void actionPerformed(ActionEvent e) {
 	    	List<String> selected = inventory.getSelectedValuesList();
@@ -105,6 +131,10 @@ public class DestroyedItems extends JPanel{
 	    }
 	  }
 
+	  /**
+	   * 
+	   * En lytter som lytter til fjernknappen, flytter fra ødelagt til ikke-ødelagt lista
+	   */
 	  private class RemoveListener implements ActionListener {
 	    public void actionPerformed(ActionEvent e) {
 	    	List<String> selected = brokenInventory.getSelectedValuesList();
@@ -114,6 +144,10 @@ public class DestroyedItems extends JPanel{
 	  }
 	}
 
+	/**
+	 * 
+	 * Klassen håndterer elementene i listene
+	 */
 	class SortedListModel extends AbstractListModel {
 
 	  private SortedSet model;
