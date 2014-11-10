@@ -86,7 +86,7 @@ public class Inventory {
 	}
 
 	/**
-	 * Returnerer alle Item-objekter som nylig lagt til (dvs. ikke har fått en unik ID i databasen enda).
+	 * Returnerer alle Item-objekter som er nylig lagt til (dvs. ikke har fått en unik ID i databasen enda).
 	 * @return Liste med Item-objekter
 	 */
 	public List<Item> getNewItems() {
@@ -97,6 +97,20 @@ public class Inventory {
 			}
 		}
 		return newItems;
+	}
+
+	/**
+	 * Returnerer alle Item-objekter som ikke er nylig lagt til (dvs. har en unik ID i databasen).
+	 * @return Liste med Item-objekter
+	 */
+	public List<Item> getOldItems() {
+		List<Item> oldItems = new ArrayList<Item>();
+		for (Item item : items) {
+			if (item.getId() != Item.DEFAULT_ID) {
+				oldItems.add(item);
+			}
+		}
+		return oldItems;
 	}
 
 	/**
