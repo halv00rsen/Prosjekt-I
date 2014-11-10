@@ -300,7 +300,30 @@ public class Database {
 			return null;
 		}
 	}
-	
+		
+	/**
+	 * Henter et Bruker-objekt fra databasen
+	 * @param id Bruker-ID
+	 * @return Et Bruker-objekt
+	 */
+	public Bruker getBruker(String id) {
+		try {
+			String bruker_query = "SELECT person, password_hash, is_admin "
+							 	+ "FROM bruker "
+							 	+ "WHERE id =" + String.valueOf(id);
+			ResultSet bruker_res = makeQuery(bruker_query);
+			if (bruker_res.next()) {
+				String passwordHash = bruker_res.getString("password_hash");
+				boolean isAdmin = bruker_res.getBoolean("is_admin");
+				return new Bruker(id, passwordHash, isAdmin);
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 }
 
