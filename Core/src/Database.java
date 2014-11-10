@@ -67,7 +67,8 @@ public class Database {
 						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
 			
 			makeStatement("CREATE TABLE reservasjon"
-						+ "(koie_id SMALLINT NOT NULL PRIMARY KEY, "
+						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "koie_id SMALLINT NOT NULL, "
 						+ "fromDate VARCHAR(255) NOT NULL, "
 						+ "toDate VARCHAR(255) NOT NULL, "
 						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
@@ -243,7 +244,8 @@ public class Database {
 			koie.setSpesialiteter(spesialiteter);
 			
 			//fyller koieobjektet med reservasjonene:
-			ResultSet reservasjoner = makeQuery("SELECT * FROM reservasjon WHERE koie_id =" + koie_id);
+			ResultSet reservasjoner = makeQuery("SELECT bruker_id, fromDate, toDate "
+									+ "FROM reservasjon WHERE koie_id =" + koie_id);
 			Calendar cabinRented = koie.getCalendar();
 			while (reservasjoner.next()) {
 				String person = reservasjoner.getString("bruker_id");
