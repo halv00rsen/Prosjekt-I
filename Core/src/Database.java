@@ -19,11 +19,13 @@ public class Database {
 	private static String userName = "alekh_IT1901";
 	private static String password = "abcd1234";
 	
-	
+	private static String initKoie = "Core/src/initialiseringAvKoier.txt";
+	private static String initItem = "Core/src/dbinit_item.txt";
+	private static String initBruker = "Core/src/dbinit_bruker.txt";
 
 	// Metode som lager koie tabell og reservasjonstabell i databasen
 	//og fyller koietabellen med data fra initialiseringAvKoier.txt fila
-	public static void initializeDatabase(String datapath) {
+	public static void initializeDatabase() {
 		try {
 			// Oppretter tabellene koie, bruker, item, vedrapport og reservasjon
 			
@@ -49,14 +51,15 @@ public class Database {
 
 			makeStatement("CREATE TABLE bruker"
 						+ "(person VARCHAR(255) NOT NULL PRIMARY KEY, "
-						+ "password_hash VARCHAR(255) NOT NULL)");
+						+ "password_hash VARCHAR(255) NOT NULL, "
+						+ "is_admin BOOL NOT NULL)");
 
 			makeStatement("CREATE TABLE item"
 						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "item VARCHAR(255) NOT NULL, "
 						+ "status VARCHAR(255) NOT NULL, "
 						+ "koie_id SMALLINT NOT NULL, "
-						+ "bruker_id VARCHAR(255) NOT NULL)");
+						+ "bruker_id VARCHAR(255))");
 			
 			makeStatement("CREATE TABLE vedrapport"
 						+ "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
@@ -73,7 +76,7 @@ public class Database {
 						+ "bruker_id VARCHAR(255) NOT NULL)");
 			
 			// Fyller inn koie-tabellen fra fil
-			Scanner in = new Scanner(new FileReader(datapath));
+			Scanner in = new Scanner(new FileReader(initKoie));
 			in.nextLine(); //hopper over fï¿½rste linje som beskriver data
 			//lager en insert query from hver linje i initialisertinAvKoier.txt
 			while (in.hasNextLine()) {
@@ -87,7 +90,37 @@ public class Database {
 				makeStatement(statement);
 			}
 			in.close();
-					
+			
+			// Fyller item-tabellen med data fra fil
+			in = new Scanner(new FileReader(initItem));
+			in.nextLine();
+			while (in.hasNextLine()) {
+				String[] fields = in.nextLine().split(", ");	
+				String koieId = fields[0];
+				String itemNavn = fields[1];
+
+				String statement = "INSERT INTO item (item, status, koie_id) "
+								 + "VALUES("+itemNavn+", IN_ORDER, "+koieId+");";
+
+				makeStatement(statement);
+			}
+			in.close();
+
+			// Fyller bruker-tabellen med data fra fil
+			in = new Scanner(new FileReader(initBruker));
+			in.nextLine();
+			while (in.hasNextLine()) {
+				String[] fields = in.nextLine().split(", ");	
+				String person = fields[0];
+				String password = fields[1];
+				String isAdmin = fields[2];
+
+				String statement = "INSERT INTO bruker (person, password_hash, is_admin) "
+								 + "VALUES("+person+", "+Bruker.hashPassword(password)+", "+isAdmin+");";
+
+				makeStatement(statement);
+			}
+			in.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -130,7 +163,7 @@ public class Database {
 			Connection conn = getConnection();
 			Statement st = conn.createStatement();
 			res = st.executeQuery(query);
-			//conn.close(); må kommenteres ut for at getIdNameMap skal fungere...
+			//conn.close(); mï¿½ kommenteres ut for at getIdNameMap skal fungere...
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
