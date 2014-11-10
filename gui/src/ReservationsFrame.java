@@ -91,6 +91,8 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		cabinInformation.setLineWrap(true);
 		cabinInformation.setWrapStyleWord(true);
 		add(cabinInformation);
+		cabinChosen = Database.getKoie(0);
+		setCabinInformation();
 	}
 	
 	public void addListener(ReservationsFrameListener l){
