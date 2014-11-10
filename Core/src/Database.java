@@ -149,10 +149,18 @@ public class Database {
 							   "'" + date.person + "')";
 			
 			makeStatement(statement);
-			
-		//m� ogs� oppdatere inventory osv...
-		//mangler kode
-						   
+		}
+		
+		Inventory inventory = koie.getInventory();
+		List<Item> newItems = inventory.getNewItems();
+		List<Item> oldItems = inventory.getOldItems();
+		
+		for (Item item : newItems) {
+			addItem(item, koie.getId());
+		}
+		
+		for (Item item : oldItems) {
+			updateItem(item);
 		}
 	}
 
@@ -302,7 +310,7 @@ public class Database {
 	 * @param id Bruker-ID
 	 * @return Et Bruker-objekt
 	 */
-	public Bruker getBruker(String id) {
+	public static Bruker getBruker(String id) {
 		try {
 			String bruker_query = "SELECT person, password_hash, is_admin "
 							 	+ "FROM bruker "
@@ -327,7 +335,7 @@ public class Database {
 	 * @param password Passord som blir hashet 
 	 * @param isAdmin
 	 */
-	public void addBruker(String id, String password, boolean isAdmin) {
+	public static void addBruker(String id, String password, boolean isAdmin) {
 		try {
 			String statement = "INSERT INTO bruker (person, password_hash, is_admin) "
 							 + "VALUES("+id+", "+Bruker.hashPassword(password)+", "+isAdmin+") "
@@ -343,7 +351,7 @@ public class Database {
 	 * @param item Et Item-objekt
 	 * @param koie_id ID-en til koia som Item-objektet hører til
 	 */
-	public void addItem(Item item, int koie_id) {
+	public static void addItem(Item item, int koie_id) {
 		try {
 			String statement = "INSERT INTO item (item, status, koie_id) "
 							 + "VALUES("+item.getName()+", "+item.getStatus()+", "+koie_id+");";
@@ -357,7 +365,7 @@ public class Database {
 	 * Oppdaterer statusen til et Item i databasen
 	 * @param item Et Item-objekt
 	 */
-	public void updateItem(Item item) {
+	public static void updateItem(Item item) {
 		try {
 			String statement = "INSERT INTO item (id, status) "
 							 + "VALUES("+item.getId()+", "+item.getStatus()+") "
@@ -368,16 +376,3 @@ public class Database {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
