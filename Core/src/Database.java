@@ -324,7 +324,25 @@ public class Database {
 			return null;
 		}
 	}
-	
+		
+	/**
+	 * Legger en ny bruker til databasen
+	 * @param id Bruker-ID
+	 * @param password Passord som blir hashet 
+	 * @param isAdmin
+	 */
+	public void addBruker(String id, String password, boolean isAdmin) {
+		try {
+			String statement = "INSERT INTO bruker (person, password_hash, is_admin) "
+							 + "VALUES("+id+", "+Bruker.hashPassword(password)+", "+isAdmin+") "
+							 + "ON DUPLICATE KEY UPDATE;";
+
+			makeStatement(statement);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
 
 
