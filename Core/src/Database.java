@@ -336,7 +336,6 @@ public class Database {
 			String statement = "INSERT INTO bruker (person, password_hash, is_admin) "
 							 + "VALUES("+id+", "+Bruker.hashPassword(password)+", "+isAdmin+") "
 							 + "ON DUPLICATE KEY UPDATE;";
-
 			makeStatement(statement);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -345,9 +344,8 @@ public class Database {
 
 	public void addItem(Item item, int koie_id) {
 		try {
-			String statement = "INSERT INTO item (id, item, status, koie_id) "
-							 + "VALUES("+item.getId()+", "+item.getName()+", "+item.getStatus()+", "+koie_id+");";
-
+			String statement = "INSERT INTO item (item, status, koie_id) "
+							 + "VALUES("+item.getName()+", "+item.getStatus()+", "+koie_id+");";
 			makeStatement(statement);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -355,6 +353,16 @@ public class Database {
 		
 	}
 
+	public void updateItem(Item item) {
+		try {
+			String statement = "INSERT INTO item (id, status) "
+							 + "VALUES("+item.getId()+", "+item.getStatus()+") "
+							 + "ON DUPLICATE KEY UPDATE;";
+			makeStatement(statement);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
 
 
