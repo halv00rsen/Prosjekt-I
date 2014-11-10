@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 public class GUI implements LoginListener{
 
 	public static boolean DEBUG = true;
+	public static int WIDTH = 600, HEIGHT = 500;
 	
 	private static JFrame frame;
 	
@@ -34,7 +35,7 @@ public class GUI implements LoginListener{
 	public GUI(){
 		frame = new JFrame("NTNUI-Koiene");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(600, 500);
+		frame.setSize(WIDTH, HEIGHT);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
