@@ -1,0 +1,5 @@
+bruker_id, passord (må hashes), adminstatus
+b1@d.org, abc123, false
+b2@d.org, abc321, false
+admin1, xyz456, true
+admin2, xyz654, true
