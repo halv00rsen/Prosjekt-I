@@ -48,30 +48,29 @@ public class Database {
 						+ "spesialiteter VARCHAR(255))");
 
 			makeStatement("CREATE TABLE bruker"
-						+ "(id VARCHAR(255) NOT NULL PRIMARY KEY, "
-						+ "password_hash VARCHAR(255) NOT NULL, "
-						+ "person VARCHAR(255) NOT NULL)");
-			
+						+ "(person VARCHAR(255) NOT NULL PRIMARY KEY, "
+						+ "password_hash VARCHAR(255) NOT NULL)");
+
 			makeStatement("CREATE TABLE item"
 						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "item VARCHAR(255) NOT NULL, "
 						+ "status VARCHAR(255) NOT NULL, "
-						+ "koie_id SMALLINT NOT NULL REFERENCES koie(id), "
-						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
+						+ "koie_id SMALLINT NOT NULL, "
+						+ "bruker_id VARCHAR(255) NOT NULL)");
 			
 			makeStatement("CREATE TABLE vedrapport"
 						+ "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "mengde FLOAT NOT NULL, "
 						+ "dato VARCHAR(255) NOT NULL, "
-						+ "koie_id SMALLINT NOT NULL REFERENCES koie(id), "
-						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
+						+ "koie_id SMALLINT NOT NULL, "
+						+ "bruker_id VARCHAR(255) NOT NULL)");
 			
 			makeStatement("CREATE TABLE reservasjon"
 						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "koie_id SMALLINT NOT NULL, "
 						+ "fromDate VARCHAR(255) NOT NULL, "
 						+ "toDate VARCHAR(255) NOT NULL, "
-						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
+						+ "bruker_id VARCHAR(255) NOT NULL)");
 			
 			// Fyller inn koie-tabellen fra fil
 			Scanner in = new Scanner(new FileReader(datapath));
