@@ -186,16 +186,16 @@ public class Database {
 	 */
 	public static Koie getKoie(int koie_id) {
 		try {
-			String name;
-			String coordinate;
-			int year;
-			int numBeds;
-			int numSeats;
-			String terreng;
-			String sykkel;
-			String topptur;
-			String jaktOgFiske;
-			String spesialiteter;
+			String name = "";
+			String coordinate = "";
+			int year = 0;
+			int numBeds = 0;
+			int numSeats = 0;
+			String terreng = "";
+			String sykkel = "";
+			String topptur = "";
+			String jaktOgFiske = "";
+			String spesialiteter = "";
 			
 
 			String koie_query = "SELECT name, num_beds, num_seats, year, coordinates, terreng, sykkel, "
@@ -205,7 +205,7 @@ public class Database {
 			ResultSet koie_res = makeQuery(koie_query);
 			if (koie_res.next()) {
 				name = koie_res.getString("name");
-				coordinate = koie_res.getString("coordinate");
+				coordinate = koie_res.getString("coordinates");
 				year = koie_res.getInt("year");
 				numBeds = koie_res.getInt("num_beds");
 				numSeats = koie_res.getInt("num_seats");
@@ -217,7 +217,7 @@ public class Database {
 			}
 	
 	
-			String item_query = "SELECT id, name, status "
+			String item_query = "SELECT id, item, status "
 							  + "FROM item "
 							  + "WHERE koie_id =" + String.valueOf(koie_id);
 			ResultSet item_res = makeQuery(item_query);
