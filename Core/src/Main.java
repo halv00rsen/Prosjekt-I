@@ -6,7 +6,7 @@ public class Main {
 	//private textGUI textGui;
 	
 	private void init(){
-		Database.initializeDatabase("Core/src/initialiseringAvKoier.txt");
+		Database.initializeDatabase();
 
 		//textGui = new textGUI();
 		//textGui.Alternativer("bruker");
@@ -22,8 +22,5 @@ public class Main {
 		Main program = new Main();
 		program.init();
 		program.run();
-		
-		
 	}
-	
 }
