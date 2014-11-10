@@ -2,5 +2,5 @@ package src;
 
 public interface ValidDatesListener {
 
-	public void isValidDate(boolean valid);
+	public void updateField(int day, int month, int numDays);
 }
