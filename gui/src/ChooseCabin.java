@@ -12,6 +12,10 @@ public class ChooseCabin {
 	private JComboBox<String> cabins;
 	private HashMap<Integer, String> cabinsIdName;
 	
+	/**
+	 * Oppretter ChooseCabin
+	 * Objektet henter navnet på alle koiene i databasen og lagrer disse i en JComboBox
+	 */
 	public ChooseCabin(){
 		cabins = new JComboBox<String>();
 		cabinsIdName = Database.getIdNameMap();
@@ -19,11 +23,18 @@ public class ChooseCabin {
 			cabins.addItem(name);
 	}
 	
+	/**
+	 * 
+	 * @return cabins for at andre skal få legge til komboboksen til sitt panel
+	 */
 	public JComboBox<String> getComboBox(){
 		return cabins;
 	}
 	
-//	Skal kommunisere med databasen
+	/**
+	 * 
+	 * @return cabinNames en liste med alle navnene til koiene
+	 */
 	private List<String> getNameCabins(){
 		List<String> cabinNames = new ArrayList<String>();
 		for (Integer id : cabinsIdName.keySet()){
@@ -32,10 +43,19 @@ public class ChooseCabin {
 		return cabinNames;
 	}
 	
+	/**
+	 * 
+	 * @param id idverdien til ei koie
+	 * @return cabinsIdName stringen til koie med verdi id
+	 */
 	public String getCabinWith(int id){
 		return cabinsIdName.get(id);
 	}
 	
+	/**
+	 * 
+	 * @return cabinId returnerer idverdien til koia som er valgt
+	 */
 	public int getSelectedItem(){
 		String item = (String) cabins.getSelectedItem();
 		int cabinId = -1;
@@ -48,6 +68,10 @@ public class ChooseCabin {
 		return cabinId;
 	}
 	
+	/**
+	 * 
+	 * @param l setter en actionlistener til comboboksen
+	 */
 	public void addActionListener(ActionListener l){
 		cabins.addActionListener(l);
 	}

@@ -32,6 +32,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	private final JTextArea cabinInformation;
 	private ReservationsFrameListener listener;
 	private boolean adminLogin;
+	private Koie cabinChosen;
 	
 	public ReservationsFrame(){
 		setLayout(new GridLayout(1,2));
@@ -114,10 +115,19 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		adminLogin = false;
 	}
 	
-	private void setCabinInformation(int cabin){
-		String info = "Koie: " + cabin + "\n";
-		info += "Byggeår: 1948\nAntall sengeplasser: 10\nKoordinater: 34 23\nVaffelgjern: Ja\nTerreng: S\nGitar: Ja\nBadstue: Ja\n"
-				+ "Båt: Nei";
+	private void setCabinInformation(){
+		if (cabinChosen == null)
+			return;
+		String info = "Navn: " + cabinChosen.getName();
+		info += "\nKoordinat: " + cabinChosen.getCoordinate();
+		info += "\nBygget: " + cabinChosen.getYear();
+		info += "\nSengeplasser: " + cabinChosen.getNumBeds();
+		info += "\nSitteplasser: " + cabinChosen.getNumSeats();
+		info += "\nTerreng: " + cabinChosen.getTerreng();
+		info += "\nSykkel: " + cabinChosen.getSykkel();
+		info += "\nTopptur: " + cabinChosen.getTopptur();
+		info += "\nJakt og fiske: " + cabinChosen.getJaktOgFiske();
+		info += "\nSpesialiteter: " + cabinChosen.getSpesialiteter();
 		cabinInformation.setText(info);
 	}
 	
@@ -144,8 +154,9 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		
 		public void actionPerformed(ActionEvent e){
 			int cabinId = cabins.getSelectedItem();
+			cabinChosen = Database.getKoie(cabinId);
 			validDates.setCabin(cabinId);
-			setCabinInformation(cabinId);
+			setCabinInformation();
 		}
 	}
 	
