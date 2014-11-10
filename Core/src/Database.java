@@ -150,7 +150,6 @@ public class Database {
 			
 			makeStatement(statement);
 			
-			
 		//m� ogs� oppdatere inventory osv...
 		//mangler kode
 						   
@@ -212,10 +211,9 @@ public class Database {
 		}
 	}
 	
-	
 	/**
 	 * Returnerer et Koie-objekt fra databasen med en Koie-id.
-	 * @param koie_id
+	 * @param koie_id Koias unike ID i databasen
 	 * @return Et Koie-objekt
 	 */
 	public static Koie getKoie(int koie_id) {
@@ -230,7 +228,6 @@ public class Database {
 			String topptur = "";
 			String jaktOgFiske = "";
 			String spesialiteter = "";
-			
 
 			String koie_query = "SELECT name, num_beds, num_seats, year, coordinates, terreng, sykkel, "
 							  + "topptur, jaktOgfiske, spesialiteter "
@@ -249,7 +246,6 @@ public class Database {
 				jaktOgFiske = koie_res.getString("jaktOgFiske");
 				spesialiteter = koie_res.getString("spesialiteter");
 			}
-	
 	
 			String item_query = "SELECT id, item, status "
 							  + "FROM item "
@@ -342,6 +338,11 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Legger et Item-objekt inn i databasen
+	 * @param item Et Item-objekt
+	 * @param koie_id ID-en til koia som Item-objektet hører til
+	 */
 	public void addItem(Item item, int koie_id) {
 		try {
 			String statement = "INSERT INTO item (item, status, koie_id) "
@@ -350,9 +351,12 @@ public class Database {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 
+	/**
+	 * Oppdaterer statusen til et Item i databasen
+	 * @param item Et Item-objekt
+	 */
 	public void updateItem(Item item) {
 		try {
 			String statement = "INSERT INTO item (id, status) "
