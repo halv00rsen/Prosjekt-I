@@ -28,10 +28,10 @@ public class AdminLogin extends JPanel{
 		add(new JLabel("Brukernavn: "));
 		
 		KeyboardListener boardListener = new KeyboardListener();
-		userName = new JTextField();
+		userName = new JTextField(20);
 		userName.addKeyListener(boardListener);
 		add(userName);
-		userName.setColumns(10);
+//		userName.setColumns(10);
 		
 		add(new JLabel("Passord: "));
 		
