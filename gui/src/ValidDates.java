@@ -49,23 +49,12 @@ public class ValidDates {
 	public void setCabin(int cabinId){
 		this.cabinId = cabinId;
 		int[] res = getReservation();
-		callValidDate(isValidDate(res[0], res[1], res[2]));
+		callValidDate(res[0], res[1], res[2]);
 	}
 	
-	private void callValidDate(boolean isValid){
+	private void callValidDate(int day, int month, int numDays){
 		for (ValidDatesListener l: listeners)
-			l.isValidDate(isValid);
-	}
-	
-	private boolean isValidDate(int day, int month, int numDays){
-		if (day == 4)
-			return false;
-		if (month == 2)
-			return false;
-		System.out.println(cabinId);
-		if (cabinId == 3)
-			return false;
-		return true;
+			l.updateField(day, month, numDays);
 	}
 	
 	public void addListener(ValidDatesListener l){
@@ -109,7 +98,7 @@ public class ValidDates {
 			if (arg0.getSource() == month)
 				updateDays();
 			int[] res = getReservation();
-			callValidDate(isValidDate(res[0], res[1], res[2]));
+			callValidDate(res[0], res[1], res[2]);
 		}
 	}
 }
