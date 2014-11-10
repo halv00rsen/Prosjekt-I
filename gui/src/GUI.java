@@ -26,6 +26,7 @@ public class GUI implements LoginListener{
 	private final ReservationsFrame reservationFrame;
 	private final ReservationList reservationList;
 	private final JTabbedPane tabbedPane;
+	private final CreateUser createUser;
 	
 	private ItemStatus itemStatus;
 	private WoodStatus woodStatus;
@@ -43,6 +44,8 @@ public class GUI implements LoginListener{
 		loginPanel = new LoginPanel();
 		tabbedPane.addTab("Innlogging", null, loginPanel, null);
 		
+		createUser = new CreateUser();
+		tabbedPane.addTab("Ny bruker", null, createUser, null);
 		
 		JPanel Koier = new JPanel();
 		tabbedPane.addTab("Koier", null, Koier, null);
@@ -68,6 +71,7 @@ public class GUI implements LoginListener{
 
 	public void userHasLoggedIn(String username) {
 		frame.setTitle("NTNUI-Koiene (" + username + ")");
+		tabbedPane.remove(createUser);
 	}
 
 	public void userHasLoggedOut() {
@@ -80,6 +84,7 @@ public class GUI implements LoginListener{
 		messageAdmin = null;
 		tabbedPane.remove(removeReservations);
 		removeReservations = null;
+		tabbedPane.addTab("Ny bruker", createUser);
 	}
 
 	public void adminHasLoggedIn() {
@@ -93,6 +98,7 @@ public class GUI implements LoginListener{
 		tabbedPane.addTab("Meldinger", null, messageAdmin, null);
 		removeReservations = new RemoveReservationsAdmin();
 		tabbedPane.addTab("Fjern reservasjoner", null, removeReservations, null);
+		tabbedPane.remove(createUser);
 	}
 
 	public static int getXPosition() {
