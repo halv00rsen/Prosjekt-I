@@ -31,6 +31,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	private final JLabel isValidDateReservation;
 	private final JTextArea cabinInformation;
 	private ReservationsFrameListener listener;
+	private boolean adminLogin;
 	
 	public ReservationsFrame(){
 		setLayout(new GridLayout(1,2));
@@ -43,12 +44,12 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		c.weighty = 0.1;
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(new JLabel("Velg Koie: "), c);
+		panel.add(new JLabel("Koie: "), c);
 		c.gridx = 3;
 		panel.add(cabins.getComboBox(), c);
 		c.gridy = 1;
 		c.gridx = 0;
-		panel.add(new JLabel("Velg dag: "), c);
+		panel.add(new JLabel("Dag: "), c);
 		day = new JComboBox<Integer>();
 		month = new JComboBox<Months>();
 		numDays = new JComboBox<Integer>();
@@ -59,9 +60,9 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		c.gridy = 2;
 		panel.add(month, c);
 		c.gridx = 0;
-		panel.add(new JLabel("Velg måned:"), c);
+		panel.add(new JLabel("Måned:"), c);
 		c.gridy = 3;
-		panel.add(new JLabel("Velg antall dager:"), c);
+		panel.add(new JLabel("Antall dager:"), c);
 		c.gridx = 3;
 		panel.add(numDays, c);
 		isLoggedIn = false;
@@ -110,6 +111,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	public void userHasLoggedOut(){
 		this.username = null;
 		isLoggedIn = false;
+		adminLogin = false;
 	}
 	
 	private void setCabinInformation(int cabin){
@@ -120,6 +122,10 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	}
 	
 	private void buttonPressed(){
+		if (adminLogin){
+			JOptionPane.showMessageDialog(null, "Kan ikke reservere koie som admin.");
+			return;
+		}
 		if (!isLoggedIn){
 			JOptionPane.showMessageDialog(null, "Du er ikke logged inn, og kan dermed ikke reservere ei koie."
 					+ "\nGå til innloggingsfanen for å logge inn.");
@@ -138,7 +144,6 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		
 		public void actionPerformed(ActionEvent e){
 			int cabinId = cabins.getSelectedItem();
-			System.out.println(cabinId);
 			validDates.setCabin(cabinId);
 			setCabinInformation(cabinId);
 		}
@@ -152,9 +157,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		
 	}
 
-	@Override
 	public void adminHasLoggedIn() {
-		// TODO Auto-generated method stub
-		
+		adminLogin = true;
 	}
 }
