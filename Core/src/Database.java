@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Scanner;
 
+
 //import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.Connection;
@@ -61,14 +62,14 @@ public class Database {
 			makeStatement("CREATE TABLE vedrapport"
 						+ "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "mengde FLOAT NOT NULL, "
-						+ "dato DATE NOT NULL, "
+						+ "dato VARCHAR(255) NOT NULL, "
 						+ "koie_id SMALLINT NOT NULL REFERENCES koie(id), "
 						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
 			
 			makeStatement("CREATE TABLE reservasjon"
 						+ "(koie_id SMALLINT NOT NULL PRIMARY KEY, "
-						+ "fromDate DATE NOT NULL, "
-						+ "toDate DATE NOT NULL, "
+						+ "fromDate VARCHAR(255) NOT NULL, "
+						+ "toDate VARCHAR(255) NOT NULL, "
 						+ "bruker_id VARCHAR(255) NOT NULL REFERENCES bruker(id))");
 			
 			// Fyller inn koie-tabellen fra fil
@@ -108,7 +109,7 @@ public class Database {
 			String bookedFrom = "" + date.dateFrom.year + "-" + date.dateFrom.month + "-" + date.dateFrom.day; 
 			String bookedTo = "" + date.dateTo.year + "-" + date.dateTo.month + "-" + date.dateTo.day;
 			
-			String statement = "INSERT INTO ReservasjonsKalender VALUES (" +
+			String statement = "INSERT INTO reservasjon VALUES (" +
 							   "'" + koie.getId() + "', " + 
 							   "'" + bookedFrom + "', " +
 							   "'" + bookedTo + "', " +
@@ -240,6 +241,23 @@ public class Database {
 			koie.setTopptur(topptur);
 			koie.setJaktOgFiske(jaktOgFiske);
 			koie.setSpesialiteter(spesialiteter);
+			
+			//fyller koieobjektet med reservasjonene:
+			ResultSet reservasjoner = makeQuery("SELECT * FROM reservasjon WHERE koie_id =" + koie_id);
+			Calendar cabinRented = koie.getCalendar();
+			while (reservasjoner.next()) {
+				String person = reservasjoner.getString("bruker_id");
+				
+				String fromDate = reservasjoner.getString("fromDate");
+				String toDate = reservasjoner.getString("toDate");			
+				String[] fromParts = fromDate.split("-");
+				String[] toParts = toDate.split("-");
+				
+				Date from = new Date(Integer.valueOf(fromParts[2]), Integer.valueOf(fromParts[1]));
+				Date to = new Date(Integer.valueOf(toParts[2]), Integer.valueOf(toParts[1]));
+				
+				cabinRented.reservePeriod(from, to, person);
+			}
 			
 			return koie;
 			
