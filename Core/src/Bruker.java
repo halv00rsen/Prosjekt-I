@@ -21,9 +21,9 @@ public class Bruker {
 	}
 	
 	/**
-	 * Hashes a password
-	 * @param password
-	 * @return An MD5-hash of the password
+	 * Hasher et passord
+	 * @param passord
+	 * @return En MD5-hash av passordet
 	 */
 	public static String hashPassword(String password) {
 		try {
