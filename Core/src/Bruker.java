@@ -5,8 +5,8 @@ import java.math.BigInteger;
 
 public class Bruker {
 	private final String id;
-	private final String passwordHash;
-	private final Status status;
+	private String passwordHash;
+	private Status status;
 	
 	/**
 	 * BRUKER eller ADMIN
@@ -14,18 +14,6 @@ public class Bruker {
 	public static enum Status {
 		BRUKER,
 		ADMIN;
-	}
-
-	/**
-	 * Oppretter Bruker-objekt
-	 * @param id Brukernavn (unikt i databasen)
-	 * @param passwordHash MD5-hash av passordet
-	 * @param status Status i enum {@link Bruker.Status}
-	 */
-	public Bruker(String id, String passwordHash, Status status) {
-		this.id = id;
-		this.passwordHash = passwordHash;
-		this.status = status;
 	}
 
 	/**
@@ -44,7 +32,24 @@ public class Bruker {
 		}
 		return returnStatus;
 	}
+
+	/**
+	 * Oppretter Bruker-objekt
+	 * @param id Brukernavn (unikt i databasen)
+	 * @param passwordHash MD5-hash av passordet
+	 * @param status Status i enum {@link Bruker.Status}
+	 */
+	public Bruker(String id, String passwordHash, Status status) {
+		this.id = id;
+		this.passwordHash = passwordHash;
+		this.status = status;
+	}
 	
+	/**
+	 * Hashes a password
+	 * @param password
+	 * @return An MD5-hash of the password
+	 */
 	public static String hashPassword(String password) {
 		try {
 			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
@@ -57,5 +62,39 @@ public class Bruker {
 		} catch (java.security.NoSuchAlgorithmException e) {
 			return null;
 		}
+	}
+	
+	/**
+	 * Sjekker om et passord er riktig for denne brukeren
+	 * @param password
+	 * @return true eller false
+	 */
+	public boolean isPasswordCorrect(String password) {
+		String hash = hashPassword(password);
+		return passwordHash.equals(hash);
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+	
+	/**
+	 * Hasher et passordet og lagrer hashen
+	 * @param password
+	 */
+	public void setPassword(String password) {
+		this.passwordHash = hashPassword(password);
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+	
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 }
