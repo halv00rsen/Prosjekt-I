@@ -58,7 +58,7 @@ public class Bruker {
 	}
 	
 	/**
-	 * Hasher et passordet og lagrer hashen
+	 * Hasher et passord og lagrer hashen i databasen
 	 * @param password
 	 */
 	public void setPassword(String password) {
