@@ -91,7 +91,7 @@ public class Calendar {
 	}
 	
 	//reserverer ei koie
-	private void reservePeriod(Date dateFrom, Date dateTo, String person){
+	public void reservePeriod(Date dateFrom, Date dateTo, String person){
 		if (!reservationIsOk(dateFrom, dateTo))
 			return;
 		BookingDate booking = new BookingDate(dateFrom, dateTo, person);
