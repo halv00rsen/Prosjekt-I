@@ -18,64 +18,7 @@ public class Database {
 	private static String userName = "alekh_IT1901";
 	private static String password = "abcd1234";
 	
-
-	/**
-	 * Returnerer et Koie-objekt fra databasen med en Koie-id.
-	 * @param koie_id
-	 * @return Et Koie-objekt
-	 */
-	public static Koie getKoie(int koie_id) {
-		try {
-			int id = 0;
-			String name = "";
-			float vedkapasitet = 0;
-			float vedmengde = 0;
-			int numBeds = 0;
-
-			String koie_query = "SELECT id, name, vedkapasitet, num_beds "
-			                  +	"FROM koie "
-			                  + "WHERE id =" + String.valueOf(koie_id);
-			ResultSet koie_res = makeQuery(koie_query);
-			if (koie_res.next()) {
-				id = koie_res.getInt("id");
-				name = koie_res.getString("name");
-				vedkapasitet = koie_res.getFloat("vedkapasitet");
-				numBeds = koie_res.getInt("num_beds");
-			}
 	
-			String ved_query = "SELECT id, mengde, dato, koie_id "
-							 + "FROM ved "
-							 + "WHERE koie_id =" + String.valueOf(koie_id) + " "
-							 + "ORDER BY dato DESC";
-			ResultSet ved_res = makeQuery(ved_query);
-			if (ved_res.next()) {
-				vedmengde = ved_res.getFloat("mengde");
-			}
-	
-			String item_query = "SELECT id, name, status "
-							  + "FROM item "
-							  + "WHERE koie_id =" + String.valueOf(koie_id);
-			ResultSet item_res = makeQuery(item_query);
-			Inventory inventory = new Inventory();
-			while (item_res.next()) {
-				int itemId = item_res.getInt("id");
-				String itemName = item_res.getString("name");
-				String itemStatusString = item_res.getString("status");
-				Item.Status itemStatus = Item.getItemStatus(itemStatusString);
-				Item item = new Item(itemId, itemName, itemStatus);
-				inventory.addItem(item);
-			}
-			if (!(id == 0 || name.equals("") || vedkapasitet == 0 || vedmengde == 0 || numBeds == 0 || inventory == null)) {
-				Koie koie = new Koie(id, name, vedkapasitet, vedmengde, numBeds, inventory);
-				return koie;
-			} else {
-				return null;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 
 	// Metode som lager koie tabell og reservasjonstabell i databasen
 	//og fyller koietabellen med data fra initialiseringAvKoier.txt fila
@@ -93,7 +36,6 @@ public class Database {
 			makeStatement("CREATE TABLE koie"
 						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "name VARCHAR(255) NOT NULL, "
-						+ "vedkapasitet FLOAT NOT NULL, "
 						+ "num_beds SMALLINT NOT NULL, "
 						+ "num_seats SMALLINT, "
 						+ "year SMALLINT, "
@@ -235,6 +177,78 @@ public class Database {
 			return null;
 		}
 	}
+	
+	
+	/**
+	 * Returnerer et Koie-objekt fra databasen med en Koie-id.
+	 * @param koie_id
+	 * @return Et Koie-objekt
+	 */
+	public static Koie getKoie(int koie_id) {
+		try {
+			String name;
+			String coordinate;
+			int year;
+			int numBeds;
+			int numSeats;
+			String terreng;
+			String sykkel;
+			String topptur;
+			String jaktOgFiske;
+			String spesialiteter;
+			
+
+			String koie_query = "SELECT name, num_beds, num_seats, year, coordinates, terreng, sykkel, "
+							  + "topptur, jaktOgfiske, spesialiteter "
+			                  +	"FROM koie "
+			                  + "WHERE id =" + koie_id;
+			ResultSet koie_res = makeQuery(koie_query);
+			if (koie_res.next()) {
+				name = koie_res.getString("name");
+				coordinate = koie_res.getString("coordinate");
+				year = koie_res.getInt("year");
+				numBeds = koie_res.getInt("num_beds");
+				numSeats = koie_res.getInt("num_seats");
+				terreng = koie_res.getString("terreng");
+				sykkel = koie_res.getString("sykkel");
+				topptur = koie_res.getString("topptur");
+				jaktOgFiske = koie_res.getString("jaktOgFiske");
+				spesialiteter = koie_res.getString("spesialiteter");
+			}
+	
+	
+			String item_query = "SELECT id, name, status "
+							  + "FROM item "
+							  + "WHERE koie_id =" + String.valueOf(koie_id);
+			ResultSet item_res = makeQuery(item_query);
+			Inventory inventory = new Inventory();
+			while (item_res.next()) {
+				int itemId = item_res.getInt("id");
+				String itemName = item_res.getString("name");
+				String itemStatusString = item_res.getString("status");
+				Item.Status itemStatus = Item.getItemStatus(itemStatusString);
+				Item item = new Item(itemId, itemName, itemStatus);
+				inventory.addItem(item);
+			}
+			
+			//lager koie objekt:
+			Koie koie = new Koie(koie_id, name, coordinate, year);
+			koie.setNumBeds(numBeds);
+			koie.setNumSeats(numSeats);
+			koie.setTerreng(terreng);
+			koie.setSykkel(sykkel);
+			koie.setTopptur(topptur);
+			koie.setJaktOgFiske(jaktOgFiske);
+			koie.setSpesialiteter(spesialiteter);
+			
+			return koie;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	
 }
 
