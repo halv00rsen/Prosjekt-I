@@ -13,8 +13,8 @@ public class Calendar {
 	public Calendar(){
 		datesBooked = new ArrayList<BookingDate>();
 		java.util.Calendar c = new GregorianCalendar();
-		int monthToDay = c.get(c.MONTH) + 1;
-		todaysDate = new Date(c.get(c.DAY_OF_MONTH), monthToDay);
+		int monthToDay = c.get(GregorianCalendar.MONTH) + 1;
+		todaysDate = new Date(c.get(GregorianCalendar.DAY_OF_MONTH), monthToDay);
 		maxDate = getLastDate(todaysDate, daysInFeature);
 	}
 	
@@ -54,7 +54,7 @@ public class Calendar {
 		return false;
 	}
 	
-	//sjekker om denne reservasjonen kan reserveres, så ikke overbooking skjer
+	//sjekker om denne reservasjonen kan reserveres, sï¿½ ikke overbooking skjer
 	public boolean reservationIsOk(Date dateFrom, int days){
 		return reservationIsOk(dateFrom, getLastDate(dateFrom, days), days);
 		
@@ -122,18 +122,18 @@ public class Calendar {
 		return new Date(day, month);
 	}
 	
-	//returnerer antall dager i denne aktuelle måneden
+	//returnerer antall dager i denne aktuelle mï¿½neden
 	public static int getDayOfMonth(int month){
 		if (month == 2){
 			java.util.Calendar c = new GregorianCalendar();
-			if (c.getWeekYear() % 4 == 0)//skuddår
+			if (c.getWeekYear() % 4 == 0)//skuddï¿½r
 				return 29;
 			return 28;
 		}else if ((month < 8 && month % 2 == 1) || (month > 7 && month % 2 == 0)){
-			return 31;//sjekker alle måneder med 31 dager
+			return 31;//sjekker alle mï¿½neder med 31 dager
 		}
 		else if ((month < 8 && month % 2 == 0) || (month > 7 && month % 2 == 1)){
-			return 30;//sjekker ralle måneder med 30 dager
+			return 30;//sjekker ralle mï¿½neder med 30 dager
 		}else
 			return -1;
 	}
@@ -164,7 +164,7 @@ public class Calendar {
 		}
 	}
 	
-	//sjekker om en dato er på riktig format, day og month er ikke 0-indeksert
+	//sjekker om en dato er pï¿½ riktig format, day og month er ikke 0-indeksert
 	//er statisk, kan brukes av andre klasser, bla. Date 
 	public static boolean validDate(int day, int month){
 		int daysInMonth = getDayOfMonth(month);
