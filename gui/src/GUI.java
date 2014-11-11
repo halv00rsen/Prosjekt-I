@@ -43,9 +43,6 @@ public class GUI implements LoginListener{
 		loginPanel = new LoginPanel();
 		tabbedPane.addTab("Innlogging", null, loginPanel, null);
 		
-		JPanel Koier = new JPanel();
-		tabbedPane.addTab("Koier", null, Koier, null);
-		
 		reservationList = new ReservationList();
 		tabbedPane.addTab("Reservasjoner", null, reservationList, null);
 		loginPanel.addListener(reservationList);
@@ -56,11 +53,9 @@ public class GUI implements LoginListener{
 		loginPanel.addListener(reservationFrame);
 		loginPanel.addListener(this);
 		
-		JPanel panel_2 = new JPanel();
-		tabbedPane.addTab("Kart", null, panel_2, null);
 //		frame.pack();
 		frame.setLocationRelativeTo(null);
-//		frame.setResizable(false);
+		frame.setResizable(false);
 		frame.setVisible(true);
 		
 	}
