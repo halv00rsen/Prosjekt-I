@@ -8,7 +8,6 @@ public class Koie {
 	private final String coordinate;
 	private final int year;
 	
-	private double vedmengde;
 	private int numBeds;
 	private int numSeats;
 	private String terreng;
@@ -19,6 +18,7 @@ public class Koie {
 	
 	private final Inventory inventory;
 	private final Calendar cabinRented;
+	private double vedmengde;
 
 
 	public Koie(int id, String name, String coordinate, int year) {

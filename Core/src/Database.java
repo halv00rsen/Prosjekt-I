@@ -21,7 +21,7 @@ public class Database {
 	
 	private static String initKoie = "Core/src/initialiseringAvKoier.txt";
 	private static String initItem = "Core/src/dbinit_item.txt";
-	private static String initBruker = "Core/src/dbinit_bruker.txt";
+	//private static String initBruker = "Core/src/dbinit_bruker.txt";
 
 	// Metode som lager koie tabell og reservasjonstabell i databasen
 	//og fyller koietabellen med data fra initialiseringAvKoier.txt fila
@@ -33,7 +33,7 @@ public class Database {
 			makeStatement("DROP TABLE koie");
 			makeStatement("DROP TABLE bruker");
 			makeStatement("DROP TABLE inventory");
-			makeStatement("DROP TABLE vedrapport");
+			makeStatement("DROP TABLE vedstatus");
 			makeStatement("DROP TABLE reservasjon");
 			
 			makeStatement("CREATE TABLE koie"
@@ -129,6 +129,9 @@ public class Database {
 		//oppdaterer datoene koien er reservert for.
 		Calendar calendar = koie.getCalendar();
 		List<BookingDate> datesBooked = calendar.getDatesBooked();
+		
+		double vedmengde = koie.getVedmengde();
+		makeStatement("INSERT INTO koie ")
 		
 		//m� kanskje gj�re et query for � slette allerede reserverte datoer f�rst
 		//har ikke helt tenkt gjennom dette enda... vet ikke hvordan det blir seende ut i databasen.
