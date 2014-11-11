@@ -1,12 +1,15 @@
 package src;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -17,30 +20,28 @@ public class LoginPanel extends JPanel{
 	
 	private final AdminLogin loginUser;
 	private final List<LoginListener> listeners;
-	private final JLabel errorLabel;
 	private final JButton logoutButton;
 	private final JCheckBox adminCheckBox;
-	private final JPanel adminBox;
-	
-	private LoginPanelListener listener;
+	private final JPanel adminBox, panel;
+	private final CreateUser newUser;
 	
 	public LoginPanel(){
-		errorLabel = new JLabel("Feil brukernavn/passord");
-//		this.setLayout(new GridLayout(2, 1));
+		panel = new JPanel();
+		panel.setBorder(BorderFactory.createTitledBorder("Innlogging"));
+		this.setLayout(new GridLayout(2, 1));
 		loginUser = new AdminLogin(new Login());
 		listeners = new ArrayList<LoginListener>();
 		logoutButton = new JButton("Log ut");
 		logoutButton.addActionListener(new Logout());
-		this.add(loginUser);
+		panel.add(loginUser);
 		adminCheckBox = new JCheckBox();
 		adminBox = new JPanel();
 		adminBox.add(new JLabel("Adminlogin: "), BorderLayout.WEST);
 		adminBox.add(adminCheckBox);
-		this.add(adminBox);
-	}
-	
-	public void setLoginPanelListener(LoginPanelListener l){
-		listener = l;
+		panel.add(adminBox);
+		add(panel);
+		newUser = new CreateUser();
+		add(newUser);
 	}
 	
 	public void addListener(LoginListener l){
@@ -64,8 +65,13 @@ public class LoginPanel extends JPanel{
 			l.userHasLoggedIn(userName);
 		this.removeAll();
 		loginUser.resetFields();
-		add(new JLabel("Innlogget som " + userName));
-		add(logoutButton);
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		add(new JLabel("Innlogget som " + userName + ".  "), c);
+		c.gridx = 1;
+		add(logoutButton, c);
 		this.repaint();
 	}
 	
@@ -73,9 +79,12 @@ public class LoginPanel extends JPanel{
 		for (LoginListener l: listeners)
 			l.adminHasLoggedIn();
 		this.removeAll();
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 		loginUser.resetFields();
-		add(new JLabel("Logget in som admin."));
-		add(logoutButton);
+		add(new JLabel("Logget in som admin.  "), c);
+		c.gridx = 1;
+		add(logoutButton,c);
 		this.repaint();
 	}
 	
@@ -83,8 +92,9 @@ public class LoginPanel extends JPanel{
 		for (LoginListener l : listeners)
 			l.userHasLoggedOut();
 		this.removeAll();
-		this.add(loginUser);
-		add(adminBox);
+		setLayout(new GridLayout(2,1));
+		this.add(panel);
+		add(newUser);
 		this.repaint();
 	}
 	
@@ -111,7 +121,7 @@ public class LoginPanel extends JPanel{
 				userLoggedIn(userName);
 			}
 			else{
-				JOptionPane.showMessageDialog(null, "Feil brukernav/passord");
+				JOptionPane.showMessageDialog(null, "Feil brukernavn/passord");
 				loginUser.resetFields();
 			}
 		}
