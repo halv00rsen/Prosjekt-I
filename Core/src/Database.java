@@ -32,7 +32,7 @@ public class Database {
 			//sletter alle tidligere tabeller
 			makeStatement("DROP TABLE koie");
 			makeStatement("DROP TABLE bruker");
-			makeStatement("DROP TABLE item");
+			makeStatement("DROP TABLE inventory");
 			makeStatement("DROP TABLE vedrapport");
 			makeStatement("DROP TABLE reservasjon");
 			
@@ -54,12 +54,11 @@ public class Database {
 						+ "password_hash VARCHAR(255) NOT NULL, "
 						+ "is_admin BOOL NOT NULL)");
 
-			makeStatement("CREATE TABLE item"
-						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-						+ "item VARCHAR(255) NOT NULL, "
+			makeStatement("CREATE TABLE inventory"
+						//+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "(item VARCHAR(255) NOT NULL, "
 						+ "status VARCHAR(255) NOT NULL, "
-						+ "koie_id SMALLINT NOT NULL, "
-						+ "bruker_id VARCHAR(255))");
+						+ "koie_id SMALLINT NOT NULL)");
 			
 			makeStatement("CREATE TABLE vedrapport"
 						+ "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
@@ -86,7 +85,7 @@ public class Database {
 					statement += "'"+rader[i]+"', ";
 				}
 				statement += "'"+rader[rader.length-1]+"')";
-				System.out.println(statement);
+				//System.out.println(statement);
 				makeStatement(statement);
 			}
 			in.close();
@@ -99,13 +98,12 @@ public class Database {
 				String koieId = fields[0];
 				String itemNavn = fields[1];
 
-				String statement = "INSERT INTO item (item, status, koie_id) "
-								 + "VALUES("+itemNavn+", IN_ORDER, "+koieId+");";
+				String statement = "INSERT INTO inventory VALUES ('"+itemNavn+"', 'IN_ORDER', '"+koieId+"')";
 
 				makeStatement(statement);
 			}
 			in.close();
-
+/*
 			// Fyller bruker-tabellen med data fra fil
 			in = new Scanner(new FileReader(initBruker));
 			in.nextLine();
@@ -121,6 +119,7 @@ public class Database {
 				makeStatement(statement);
 			}
 			in.close();
+*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
