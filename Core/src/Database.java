@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 
 //import java.sql.*;
@@ -337,7 +338,7 @@ public class Database {
 	public static void addBruker(String id, String password, boolean isAdmin) {
 		try {
 			String statement = "INSERT INTO bruker (person, password_hash, is_admin) "
-							 + "VALUES('"+id+"', "+Bruker.hashPassword(password)+"', '"+isAdmin+"')";
+							 + "VALUES('"+id+"', '"+Bruker.hashPassword(password)+"', '"+(isAdmin?1:0)+"')";
 			makeStatement(statement);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -373,4 +374,28 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void getReservasjonBruker(String person) {
+		ArrayList<Date> dates = new ArrayList<Date>();
+		
+		String query = "SELECT koie_id, fromDate, toDate FROM reservasjon WHERE bruker_id =" + person;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
