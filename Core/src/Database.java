@@ -337,8 +337,7 @@ public class Database {
 	public static void addBruker(String id, String password, boolean isAdmin) {
 		try {
 			String statement = "INSERT INTO bruker (person, password_hash, is_admin) "
-							 + "VALUES("+id+", "+Bruker.hashPassword(password)+", "+isAdmin+") "
-							 + "ON DUPLICATE KEY UPDATE;";
+							 + "VALUES("+id+", "+Bruker.hashPassword(password)+", "+isAdmin+")";
 			makeStatement(statement);
 		} catch (Exception e) {
 			e.printStackTrace();
