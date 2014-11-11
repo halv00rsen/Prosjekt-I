@@ -8,7 +8,7 @@ public class Koie {
 	private final String coordinate;
 	private final int year;
 	
-	private float vedmengde;
+	private double vedmengde;
 	private int numBeds;
 	private int numSeats;
 	private String terreng;
@@ -48,7 +48,7 @@ public class Koie {
 		return year;
 	}
 	
-	public float getVedmengde() {
+	public double getVedmengde() {
 		return vedmengde;
 	}
 	
@@ -90,7 +90,7 @@ public class Koie {
 	
 	
 	
-	public void setVedmengde(float ved) {
+	public void setVedmengde(double ved) {
 		this.vedmengde = ved;
 	}
 	

@@ -7,7 +7,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 
-//import java.sql.*;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -60,12 +59,9 @@ public class Database {
 						+ "status VARCHAR(255) NOT NULL, "
 						+ "koie_id SMALLINT NOT NULL)");
 			
-			makeStatement("CREATE TABLE vedrapport"
-						+ "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-						+ "mengde FLOAT NOT NULL, "
-						+ "dato VARCHAR(255) NOT NULL, "
-						+ "koie_id SMALLINT NOT NULL, "
-						+ "bruker_id VARCHAR(255) NOT NULL)");
+			makeStatement("CREATE TABLE vedstatus"
+						+ "(koie_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "mengde DOUBLE NOT NULL)");
 			
 			makeStatement("CREATE TABLE reservasjon"
 						+ "(ID int NOT NULL AUTO_INCREMENT PRIMARY KEY, "
@@ -141,11 +137,6 @@ public class Database {
 			String bookedFrom = "" + date.dateFrom.year + "-" + date.dateFrom.month + "-" + date.dateFrom.day; 
 			String bookedTo = "" + date.dateTo.year + "-" + date.dateTo.month + "-" + date.dateTo.day;
 			
-//			String statement = "INSERT INTO reservasjon VALUES (" +
-//							   "'" + koie.getId() + "', " + 
-//							   "'" + bookedFrom + "', " +
-//							   "'" + bookedTo + "', " +
-//							   "'" + date.person + "')";
 			String statement = "INSERT INTO reservasjon (koie_id, fromDate, toDate, bruker_id) "
 							 + "VALUES ('"+ koie.getId() + "','" + bookedFrom + "','" + bookedTo + "','" + date.person +"')";
 			
@@ -269,6 +260,13 @@ public class Database {
 				inventory.addItem(item);
 			}
 			
+			//vedmengde
+			ResultSet vedmengde_res = makeQuery("SELECT mengde FROM vedmengde");
+			double mengde = 0.0;
+			while (vedmengde_res.next()) {
+				mengde = vedmengde_res.getDouble("mengde");
+			}			
+			
 			//lager koie objekt:
 			Koie koie = new Koie(koie_id, name, coordinate, year);
 			koie.setNumBeds(numBeds);
@@ -278,6 +276,7 @@ public class Database {
 			koie.setTopptur(topptur);
 			koie.setJaktOgFiske(jaktOgFiske);
 			koie.setSpesialiteter(spesialiteter);
+			koie.setVedmengde(mengde);
 			
 			//fyller koieobjektet med reservasjonene:
 			ResultSet reservasjoner = makeQuery("SELECT bruker_id, fromDate, toDate "
@@ -378,7 +377,7 @@ public class Database {
 	public static ArrayList<UserDatesBooked> getReservasjonBruker(String person) {
 		ArrayList<UserDatesBooked> dates = new ArrayList<UserDatesBooked>();
 		try {
-			String query = "SELECT koie_id, fromDate, toDate FROM reservasjon WHERE bruker_id =" + person;
+			String query = "SELECT koie_id, fromDate, toDate FROM reservasjon WHERE bruker_id =" + "'"+person+"'";
 			ResultSet res = makeQuery(query);
 			while (res.next()) {
 				String fromDate = res.getString("fromDate");
