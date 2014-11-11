@@ -130,8 +130,9 @@ public class Database {
 		Calendar calendar = koie.getCalendar();
 		List<BookingDate> datesBooked = calendar.getDatesBooked();
 		
-		double vedmengde = koie.getVedmengde();
-		makeStatement("INSERT INTO koie ")
+		// ikke ferdig kode
+		//double vedmengde = koie.getVedmengde();
+		//makeStatement("INSERT INTO koie ")
 		
 		//m� kanskje gj�re et query for � slette allerede reserverte datoer f�rst
 		//har ikke helt tenkt gjennom dette enda... vet ikke hvordan det blir seende ut i databasen.
