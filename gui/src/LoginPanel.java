@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 
 public class LoginPanel extends JPanel{
 	
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 	private final AdminLogin loginUser;
 	private final List<LoginListener> listeners;
 	private final JButton logoutButton;
