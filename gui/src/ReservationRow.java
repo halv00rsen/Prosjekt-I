@@ -35,7 +35,9 @@ public class ReservationRow extends JPanel{
 		c.gridx = 0;
 		c.gridy = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridwidth = 3;
 		add(new JLabel("Koie: " + name + " "), c);
+		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 1;
 		add(new JLabel("Fra: " + fromDay + "." + fromMonth), c);
