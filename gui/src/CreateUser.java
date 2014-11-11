@@ -75,11 +75,11 @@ public class CreateUser extends JPanel{
 	 * @return boolean 
 	 */
 	private boolean validEmail(){
-		String email = username.getText().toLowerCase().trim();
-		if (email.indexOf("@") == -1 || email.indexOf(".") == -1){
-			JOptionPane.showMessageDialog(null, "Feil format på email");
-			return false;
-		}
+//		String email = username.getText().toLowerCase().trim();
+//		if (email.indexOf("@") == -1 || email.indexOf(".") == -1){
+//			JOptionPane.showMessageDialog(null, "Feil format på email");
+//			return false;
+//		}
 //		check database for email
 		return true;
 	}
@@ -106,7 +106,13 @@ public class CreateUser extends JPanel{
 	}
 	
 	private void createUserInDatabase(){
-		
+		String pass = "";
+		for (char c : password.getPassword()){
+			pass += c;
+		}
+		String username = this.username.getText().trim().toLowerCase();
+		System.out.println(username + "  " + this.username.getText() + "  "  + this.username.getText().trim());
+		Database.addBruker(username, pass, false);
 	}
 	
 	/**
