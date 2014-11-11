@@ -377,7 +377,7 @@ public class Database {
 	public static ArrayList<UserDatesBooked> getReservasjonBruker(String person) {
 		ArrayList<UserDatesBooked> dates = new ArrayList<UserDatesBooked>();
 		try {
-			String query = "SELECT koie_id, fromDate, toDate FROM reservasjon WHERE bruker_id =" + person;
+			String query = "SELECT koie_id, fromDate, toDate FROM reservasjon WHERE bruker_id =" + "'"+person+"'";
 			ResultSet res = makeQuery(query);
 			while (res.next()) {
 				String fromDate = res.getString("fromDate");
