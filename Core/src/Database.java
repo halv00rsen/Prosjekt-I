@@ -314,7 +314,7 @@ public class Database {
 		try {
 			String bruker_query = "SELECT person, password_hash, is_admin "
 							 	+ "FROM bruker "
-							 	+ "WHERE id =" + String.valueOf(id);
+							 	+ "WHERE id = '" + id +"'";
 			ResultSet bruker_res = makeQuery(bruker_query);
 			if (bruker_res.next()) {
 				String passwordHash = bruker_res.getString("password_hash");
@@ -353,7 +353,7 @@ public class Database {
 	public static void addItem(Item item, int koie_id) {
 		try {
 			String statement = "INSERT INTO item (item, status, koie_id) "
-							 + "VALUES("+item.getName()+", "+item.getStatus()+", "+koie_id+");";
+							 + "VALUES('"+item.getName()+"', '"+item.getStatus()+"', '"+koie_id+"')";
 			makeStatement(statement);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -367,18 +367,27 @@ public class Database {
 	public static void updateItem(Item item) {
 		try {
 			String statement = "INSERT INTO item (id, status) "
-							 + "VALUES("+item.getId()+", "+item.getStatus()+") "
-							 + "ON DUPLICATE KEY UPDATE;";
+							 + "VALUES('"+item.getId()+"', '"+item.getStatus()+"') "
+							 + "ON DUPLICATE KEY UPDATE";
 			makeStatement(statement);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static void getReservasjonBruker(String person) {
+	public static ArrayList<Date> getReservasjonBruker(String person) {
 		ArrayList<Date> dates = new ArrayList<Date>();
+		try {
+			String query = "SELECT koie_id, fromDate, toDate FROM reservasjon WHERE bruker_id =" + person;
+			ResultSet res = makeQuery(query);
+			while (res.next()) {
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		String query = "SELECT koie_id, fromDate, toDate FROM reservasjon WHERE bruker_id =" + person;
+		return dates;
 	}
 	
 }
