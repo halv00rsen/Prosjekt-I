@@ -91,7 +91,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		cabinInformation.setLineWrap(true);
 		cabinInformation.setWrapStyleWord(true);
 		add(cabinInformation);
-		cabinChosen = Database.getKoie(0);
+		cabinChosen = Database.getKoie(1);
 		setCabinInformation();
 	}
 	
@@ -136,9 +136,12 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		info += "\nJakt og fiske: " + cabinChosen.getJaktOgFiske();
 		info += "\nSpesialiteter: " + cabinChosen.getSpesialiteter();
 		info += "\n\nKoia er reservert på følgende dager:";
-		for (BookingDate bookings : cabinChosen.getCalendar().getDatesBooked()){
-			info += "\n" + bookings.dateFrom.toString() + " til " + bookings.dateTo.toString();
-		}
+		if (cabinChosen.getCalendar().getDatesBooked().size() == 0){
+			info += "\nIngen reservasjoner for denne koia.";
+		}else
+			for (BookingDate bookings : cabinChosen.getCalendar().getDatesBooked()){
+				info += "\n" + bookings.dateFrom.toString() + " til " + bookings.dateTo.toString();
+			}
 		cabinInformation.setText(info);
 	}
 	
