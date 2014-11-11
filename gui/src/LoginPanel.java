@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 public class LoginPanel extends JPanel{
 	
+	public static final boolean DEBUG = true;
 	private final AdminLogin loginUser;
 	private final List<LoginListener> listeners;
 	private final JButton logoutButton;
@@ -52,12 +53,31 @@ public class LoginPanel extends JPanel{
 		listeners.remove(l);
 	}
 	
-	private boolean isValidLogin(String userName, char[] password){
-		return !userName.equals("admin");
+	private boolean isValidLogin(String username, char[] password){
+		if (!DEBUG){
+			Bruker user = Database.getBruker(username);
+			if (user == null)
+				return false;
+			return user.isPasswordCorrect(convertPassword(password)) && !user.isAdmin();
+		}
+		return true;
+	}
+	
+	private String convertPassword(char[] password){
+		String pass = "";
+		for (char c : password)
+			pass += c;
+		return pass;
 	}
 	
 	private boolean isValidAdminLogin(String username, char[] password){
-		return username.equals("admin");
+		if (!DEBUG){
+			Bruker user = Database.getBruker(username);
+			if (user == null)
+				return false;
+			return user.isPasswordCorrect(convertPassword(password)) && user.isAdmin();
+		}
+		return true;
 	}
 	
 	private void userLoggedIn(String userName){
