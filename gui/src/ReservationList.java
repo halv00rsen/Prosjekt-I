@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -51,10 +52,15 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 		//Skal bruke databasen for å hente alle reservasjoner til brukeren
 //		reservations.add("Koie 1:21.10:29.10:Nei");
 //		reservations.add("Koie 2:10.2:17.2:Ikke relevant");
-		reservations.add(new ReservationRow("Kollekula", new Date(19, 10), new Date(27, 10), false, true, this));
-		reservations.add(new ReservationRow("Kongestue", new Date(10, 11), new Date(14, 11), false, false, this));
-		futureReservations.add(reservations.get(1), futureC);
-		hasVisitedReservations.add(reservations.get(0), hasVisitedC);
+		List<UserDatesBooked> bookings = Database.getReservasjonBruker(username);
+		HashMap<Integer, String> cabins = Database.getIdNameMap();
+		for (UserDatesBooked b: bookings){
+			reservations.add(new ReservationRow(cabins.get(b.cabinId), b.from, b.to, false, false, this));
+		}
+		for (ReservationRow r : reservations){
+			futureReservations.add(r, futureC);
+			futureC.gridy++;
+		}
 	}
 
 	public void userHasLoggedIn(String username) {
