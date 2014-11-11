@@ -55,7 +55,6 @@ public class Database {
 						+ "is_admin BOOL NOT NULL)");
 
 			makeStatement("CREATE TABLE inventory"
-						//+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "(item VARCHAR(255) NOT NULL, "
 						+ "status VARCHAR(255) NOT NULL, "
 						+ "koie_id SMALLINT NOT NULL)");
@@ -68,7 +67,7 @@ public class Database {
 						+ "bruker_id VARCHAR(255) NOT NULL)");
 			
 			makeStatement("CREATE TABLE reservasjon"
-						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "(ID int NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "koie_id SMALLINT NOT NULL, "
 						+ "fromDate VARCHAR(255) NOT NULL, "
 						+ "toDate VARCHAR(255) NOT NULL, "
@@ -141,11 +140,13 @@ public class Database {
 			String bookedFrom = "" + date.dateFrom.year + "-" + date.dateFrom.month + "-" + date.dateFrom.day; 
 			String bookedTo = "" + date.dateTo.year + "-" + date.dateTo.month + "-" + date.dateTo.day;
 			
-			String statement = "INSERT INTO reservasjon VALUES (" +
-							   "'" + koie.getId() + "', " + 
-							   "'" + bookedFrom + "', " +
-							   "'" + bookedTo + "', " +
-							   "'" + date.person + "')";
+//			String statement = "INSERT INTO reservasjon VALUES (" +
+//							   "'" + koie.getId() + "', " + 
+//							   "'" + bookedFrom + "', " +
+//							   "'" + bookedTo + "', " +
+//							   "'" + date.person + "')";
+			String statement = "INSERT INTO reservasjon (koie_id, fromDate, toDate, bruker_id) "
+							 + "VALUES ('"+ koie.getId() + "','" + bookedFrom + "','" + bookedTo + "','" + date.person +"')";
 			
 			makeStatement(statement);
 		}
