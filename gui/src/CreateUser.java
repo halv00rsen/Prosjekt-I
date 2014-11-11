@@ -157,7 +157,9 @@ public class CreateUser extends JPanel{
 			}else{
 				panel.remove(adminCode);
 				panel.remove(adminKode);
+				adminCode.setText("");
 			}
+			panel.revalidate();
 			panel.repaint();
 		}
 	}
