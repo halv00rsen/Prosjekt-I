@@ -12,10 +12,10 @@ public class Date {
 		this.day = day;
 		this.month = month;
 		java.util.Calendar c = new GregorianCalendar();
-		int actualMonth = c.get(c.MONTH) + 1;
-		//sjekker om datoen satt er neste år, ut ifra at dagsspennet kun kan være 180 dager
+		int actualMonth = c.get(GregorianCalendar.MONTH) + 1;
+		//sjekker om datoen satt er neste ï¿½r, ut ifra at dagsspennet kun kan vï¿½re 180 dager
 		year = c.getWeekYear() + (actualMonth > month? 1: 
-			(actualMonth == month && c.get(c.DAY_OF_MONTH) > day ? 1: 0));
+			(actualMonth == month && c.get(GregorianCalendar.DAY_OF_MONTH) > day ? 1: 0));
 	}
 	
 	//Lager en kopi av dateinputten
@@ -50,13 +50,13 @@ public class Date {
 //		return d1 > d2 ? d1 : d2;
 	}
 	
-	//returnerer dato på formatet dd-mm-åååå
+	//returnerer dato pï¿½ formatet dd-mm-ï¿½ï¿½ï¿½ï¿½
 	public String toString(){
 		return lengthOfDate(day) + "-" + lengthOfDate(month) + "-" + year;
 	}
 	
-	//om en måned eller dag er mindre enn 10 så legger den på en null
-	//For å få formatet dd-mm-åååå
+	//om en mï¿½ned eller dag er mindre enn 10 sï¿½ legger den pï¿½ en null
+	//For ï¿½ fï¿½ formatet dd-mm-ï¿½ï¿½ï¿½ï¿½
 	private String lengthOfDate(int number){
 		return number < 10 ? "0" + number : "" + number;
 	}
