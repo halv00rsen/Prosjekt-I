@@ -161,6 +161,8 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 			Database.toDatabase(cabinChosen);
 			JOptionPane.showMessageDialog(null, "Din reservasjon til " + cabins.getSelectedItem() + " den " + date[0] + "." + date[1] + " i " + 
 											date[2] + " dag(er), ble godkjent og lagret.");
+			setCabinInformation();
+			updateField(date[0], date[1], date[2]);
 		}else{
 			JOptionPane.showMessageDialog(null, "Din reservasjon ble ikke godkjent.");
 		}
