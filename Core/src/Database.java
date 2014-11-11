@@ -310,16 +310,16 @@ public class Database {
 	 * @param id Bruker-ID
 	 * @return Et Bruker-objekt
 	 */
-	public static Bruker getBruker(String id) {
+	public static Bruker getBruker(String person) {
 		try {
-			String bruker_query = "SELECT person, password_hash, is_admin "
+			String bruker_query = "SELECT password_hash, is_admin "
 							 	+ "FROM bruker "
-							 	+ "WHERE id = '" + id +"'";
+							 	+ "WHERE person = '" + person +"'";
 			ResultSet bruker_res = makeQuery(bruker_query);
 			if (bruker_res.next()) {
 				String passwordHash = bruker_res.getString("password_hash");
 				boolean isAdmin = bruker_res.getBoolean("is_admin");
-				return new Bruker(id, passwordHash, isAdmin);
+				return new Bruker(person, passwordHash, isAdmin);
 			} else {
 				return null;
 			}
