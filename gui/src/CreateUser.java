@@ -75,12 +75,27 @@ public class CreateUser extends JPanel{
 	 * @return boolean 
 	 */
 	private boolean validEmail(){
-//		String email = username.getText().toLowerCase().trim();
+		String email = username.getText().toLowerCase().trim();
 //		if (email.indexOf("@") == -1 || email.indexOf(".") == -1){
 //			JOptionPane.showMessageDialog(null, "Feil format på email");
 //			return false;
 //		}
-//		check database for email
+		if (Database.getBruker(email) != null){
+			JOptionPane.showMessageDialog(null, "Brukernavnet er allerede tatt");
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean validAdminCode(){
+		char[] code = adminCode.getPassword();
+		String hardCode = "1234";
+		if (code.length != hardCode.length())
+			return false;
+		for (int a = 0; a < code.length; a++){
+			if (code[a] != hardCode.charAt(a))
+				return false;
+		}
 		return true;
 	}
 	
@@ -101,7 +116,6 @@ public class CreateUser extends JPanel{
 				return false;
 			}
 		}
-//		check valid username in database
 		return true;
 	}
 	
@@ -111,8 +125,8 @@ public class CreateUser extends JPanel{
 			pass += c;
 		}
 		String username = this.username.getText().trim().toLowerCase();
-		System.out.println(username + "  " + this.username.getText() + "  "  + this.username.getText().trim());
-		Database.addBruker(username, pass, false);
+		Database.addBruker(username, pass, adminCheckBox.isSelected());
+		JOptionPane.showMessageDialog(null, "Du har nå opprettet en bruker!");
 	}
 	
 	/**
@@ -122,6 +136,7 @@ public class CreateUser extends JPanel{
 		username.setText("");
 		password.setText("");
 		checkPassword.setText("");
+		adminCode.setText("");
 	}
 	
 	private class AdminListener implements ActionListener{
@@ -156,6 +171,10 @@ public class CreateUser extends JPanel{
 			if (arg0.getSource() == ok){
 				if (!validPassword() || !validEmail())
 					return;
+				if (adminCheckBox.isSelected() && !validAdminCode()){
+					JOptionPane.showMessageDialog(null, "Adminpassordet er feil");
+					return;
+				}
 				createUserInDatabase();
 				resetFields();
 			}else{
