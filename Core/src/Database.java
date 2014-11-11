@@ -254,17 +254,16 @@ public class Database {
 				spesialiteter = koie_res.getString("spesialiteter");
 			}
 	
-			String item_query = "SELECT id, item, status "
-							  + "FROM item "
+			String item_query = "SELECT item, status "
+							  + "FROM inventory "
 							  + "WHERE koie_id =" + String.valueOf(koie_id);
 			ResultSet item_res = makeQuery(item_query);
 			Inventory inventory = new Inventory();
 			while (item_res.next()) {
-				int itemId = item_res.getInt("id");
 				String itemName = item_res.getString("name");
 				String itemStatusString = item_res.getString("status");
 				Item.Status itemStatus = Item.getItemStatus(itemStatusString);
-				Item item = new Item(itemId, itemName, itemStatus);
+				Item item = new Item(itemName, itemStatus);
 				inventory.addItem(item);
 			}
 			
