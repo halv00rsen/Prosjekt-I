@@ -260,7 +260,7 @@ public class Database {
 			ResultSet item_res = makeQuery(item_query);
 			Inventory inventory = new Inventory();
 			while (item_res.next()) {
-				String itemName = item_res.getString("name");
+				String itemName = item_res.getString("item");
 				String itemStatusString = item_res.getString("status");
 				Item.Status itemStatus = Item.getItemStatus(itemStatusString);
 				Item item = new Item(itemName, itemStatus);
