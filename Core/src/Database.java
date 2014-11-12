@@ -329,10 +329,11 @@ public class Database {
 			ResultSet item_res = makeQuery(item_query);
 			Inventory inventory = koie.getInventory();
 			while (item_res.next()) {
+				int itemId = item_res.getInt("ID");
 				String itemName = item_res.getString("item");
 				String itemStatusString = item_res.getString("status");
 				Item.Status itemStatus = Item.getItemStatus(itemStatusString);
-				Item item = new Item(itemName, itemStatus);
+				Item item = new Item(itemId, itemName, itemStatus);
 				inventory.addItem(item);
 			}
 
