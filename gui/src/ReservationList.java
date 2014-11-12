@@ -27,6 +27,7 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 	private final List<ReservationRow> reservations;
 	private final GridBagConstraints futureC, hasVisitedC;
 	private final JPanel futureReservations, hasVisitedReservations;
+	private ReservationsListListener listener;
 	
 	public ReservationList(){
 //		this.setLayout(new GridLayout(2, 1));
@@ -52,6 +53,10 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 		hasVisitedC.gridx = 0;
 		add(pane1);
 		add(pane2);
+	}
+	
+	public void setListener(ReservationsListListener listener){
+		this.listener = listener;
 	}
 	
 	private void getReservations(){
@@ -95,8 +100,13 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 		username = "admin";
 		
 	}
+	
+	private void callListener(String name, Date from, Date to){
+		
+	}
 
 	public void removeReservation(ReservationRow reservation) {
+		
 		reservations.remove(reservation);
 		futureReservations.remove(reservation);
 		hasVisitedReservations.remove(reservation);
