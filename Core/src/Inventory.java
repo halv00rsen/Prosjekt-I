@@ -115,7 +115,7 @@ public class Inventory {
 
 	/**
 	 * Returnerer et Item-objekt med den gitte ID-en
-	 * @param id
+	 * @param id Unik Item-ID
 	 * @return Item-objekt
 	 */
 	public Item getItemById(int id) {
