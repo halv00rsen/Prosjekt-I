@@ -4,7 +4,7 @@ package src;
 public class Koie {
 	private final int id;
 	private final String name;
-	private final String coordinate;
+	private final String coordinates;
 	private final int year;
 	private final Inventory inventory;
 	private final Calendar cabinRented;
@@ -18,10 +18,17 @@ public class Koie {
 	private String jaktOgFiske;
 	private String spesialiteter;
 
-	public Koie(int id, String name, String coordinate, int year) {
+	/**
+	 * Oppretter et Koie-objekt.
+	 * @param id Unik ID i databasen
+	 * @param name Navn
+	 * @param coordinates Koordinater
+	 * @param year Byggeår
+	 */
+	public Koie(int id, String name, String coordinates, int year) {
 		this.id = id;
 		this.name = name;
-		this.coordinate = coordinate;
+		this.coordinates = coordinates;
 		this.year = year;
 			
 		inventory = new Inventory();
@@ -37,7 +44,7 @@ public class Koie {
 	}
 	
 	public String getCoordinate() {
-		return coordinate;
+		return coordinates;
 	}
 	
 	public int getYear() {
@@ -116,21 +123,21 @@ public class Koie {
 		this.spesialiteter = spesial;
 	}
 
-	/*
 	public String toString() {
 		return name +"\t"+
 				String.valueOf(numBeds) +"\t"+
 				String.valueOf(numBeds) +"\t"+
 				coordinates +"\t"+
-				String.valueOf(year) +"\t"+
+				String.valueOf(year);
+
+				/*
 				terreng +"\t"+
 				String.valueOf(sykkel) +"\t"+
 				String.valueOf(topptur) +"\t"+
 				String.valueOf(jakt) +"\t"+
 				String.valueOf(fiske) +"\t"+
 				spesialiteter;
+				*/
 	}
-	*/
 }
-	
 	
