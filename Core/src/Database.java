@@ -23,8 +23,9 @@ public class Database {
 	private static String initVed = "Core/src/initialiseringAvVedstatus.txt";
 	private static String initBruker = "Core/src/dbinit_bruker.txt";
 
-	// Metode som lager koie tabell og reservasjonstabell i databasen
-	//og fyller koietabellen med data fra initialiseringAvKoier.txt fila
+	/**
+	 *  Metode som initialiserer/resetter databasen med informasjon fra initialiseringsfiler
+	 */
 	public static void initializeDatabase() {
 		try {
 			//sletter alle tidligere tabeller
@@ -35,7 +36,7 @@ public class Database {
 			makeStatement("DROP TABLE reservasjon");
 			makeStatement("DROP TABLE rapport");
 			
-			// Oppretter tabellene koie, bruker, item, vedrapport og reservasjon
+			// Oppretter tabellene koie, bruker, inventory, vedstatus, reservasjon og rapport
 			makeStatement("CREATE TABLE koie"
 						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "name VARCHAR(255) NOT NULL, "
@@ -142,7 +143,10 @@ public class Database {
 		}
 	}
 
-	//metode for ï¿½ oppdatere databasen med info fra koie objektet sendt som argument til metoden
+	/**
+	 * metode for å oppdatere databasen med info fra koie objektet sendt som argument til metoden
+	 * @param koie
+	 */
 	public static void toDatabase(Koie koie) {
 		// legger til vedmengden fra koia til databasen
 		double vedmengde = koie.getVedmengde();		
@@ -177,7 +181,11 @@ public class Database {
 		}
 	}
 
-	// query metode mot databasen, returnerer tilgang til database
+	/**
+	 * query metode mot databasen
+	 * @param query
+	 * @return  returnerer tilgang til database
+	 */
 	private static ResultSet makeQuery(String query) {
 		ResultSet res = null;
 		try {
@@ -191,7 +199,10 @@ public class Database {
 		return res;
 	}
 
-	//metode for ï¿½ utfï¿½re statement mot databasen
+	/**
+	 * Metode for å utføre statements mot databasen
+	 * @param statement
+	 */
 	private static void makeStatement(String statement) {
 		try {
 			Connection conn = getConnection();
@@ -206,7 +217,10 @@ public class Database {
 		}
 	}
 	
-	//metode som ï¿½pner en connection mot databasen
+	/**
+	 * Setter opp connection mot databasen
+	 * @return Connection objekt
+	 */
 	private static Connection getConnection() {
 		try {		
 			Class.forName(driver).newInstance();
@@ -219,7 +233,10 @@ public class Database {
 		}
 	}
 	
-	//metode som returnerer en hasmap med koieID og koieNavn
+	/**
+	 * Hashmap med koie id og koie navn
+	 * @return hashmap key:koie_id, value: koie_navn
+	 */
 	public static HashMap<Integer,String> getIdNameMap() {
 		try {
 			ResultSet res = makeQuery("SELECT id, name FROM koie");
@@ -397,6 +414,11 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * Henter alle reservasjonene en gitt bruker har reservert
+	 * @param person
+	 * @return Liste med UserDatesBooked objekter hvor reservasjonene samnt reservasjons id ligger
+	 */
 	public static ArrayList<UserDatesBooked> getReservasjonBruker(String person) {
 		ArrayList<UserDatesBooked> dates = new ArrayList<UserDatesBooked>();
 		try {
@@ -421,13 +443,24 @@ public class Database {
 		return dates;
 	}
 	
-	//metode for 
+	/**
+	 * Sender rapporten/kommentaren til databasen
+	 * @param koie_id
+	 * @param person
+	 * @param kommentar
+	 * @param resID
+	 */
 	public static void rapporter(int koie_id, String person, String kommentar, int resID) {
 		String statement = "INSERT INTO rapport (koie_id, person, kommentar resID) VALUES ('"
 						 + koie_id +"', '" + person + "', '" + kommentar + "', " + resID + "')";
 		makeStatement(statement);
 	}
 	
+	/**
+	 * Metode for å hente alle rapporter for en gitt koie
+	 * @param koie_id
+	 * @return Liste med en streng på formen "<personen som har rapportert>: <rapporten>" 
+	 */
 	public static ArrayList<String> getRapport(int koie_id) {
 		ArrayList<String> rapport = new ArrayList<String>();
 		try {
@@ -444,10 +477,21 @@ public class Database {
 		return rapport;
 	}
 	
-	//public static 
-	
+	/**
+	 * Sjekker om det er en rapport for gitt reservasjons ID
+	 * @param resID
+	 * @return true hvis rapporten finnes, false ellers
+	 */
+	public static boolean isRapportert(int resID) {
+		try {
+			ResultSet res = makeQuery("SELECT * FROM rapport WHERE resID =" + resID);
+			return res.next();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
-
 
 
 
