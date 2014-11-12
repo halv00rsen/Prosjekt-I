@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class DatabaseTest {
-	/*
+/*
 	@Test
 	public void getKoieShouldReturnKoie() {
 		Koie koie = Database.getKoie(3);
@@ -33,7 +33,8 @@ public class DatabaseTest {
 		Inventory inventory = koie.getInventory();
 		assertTrue(inventory.getAllItems().size() > 0);
 	}
-	*/
+*/
+	/*
 	@Test
 	public void itemShouldBeSetToBroken() {
 		Koie koie = Database.getKoie(4);
@@ -72,11 +73,44 @@ public class DatabaseTest {
 
 		assertEquals(vaffeljernEtter.getStatus(), Item.Status.BROKEN);
 	}
+	*/
+
+	@Test
+	public void itemShouldBeAddedAsLostAndFound() {
+		Koie koie = Database.getKoie(4);
+		assertTrue(koie instanceof Koie);
+
+		Item lue = new Item("Lue", Item.Status.LOST_AND_FOUND);
+
+		Inventory inventory = koie.getInventory();
+		assertTrue(inventory.getAllItems().size() > 0);
+		
+		inventory.addItem(lue);
+	
+		Database.toDatabase(koie);
+		
+		Koie koieEtter = Database.getKoie(4);
+		assertTrue(koieEtter instanceof Koie);
+
+		Inventory invEtter = koieEtter.getInventory();
+		assertTrue(invEtter.getAllItems().size() > 0);
+
+		Item lueEtter = invEtter.getItemById(10);
+
+		for (Item item : inventory.getAllItems()) {
+			if (item.getName().equals("Lue")) {
+				lueEtter = item;
+			}
+		}
+
+		assertEquals(lueEtter.getStatus(), Item.Status.LOST_AND_FOUND);
+	}
+
 /*	
 	@Test
 	public void toDatabaseTest() {
 		Koie koie = new Koie(0, "Testkoia", "Bortenfor dobbeltbladet", 2045);
 		Database.toDatabase(koie);
 	}
-	*/
+*/
 }
