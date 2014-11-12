@@ -53,6 +53,7 @@ public class GUI implements LoginListener{
 		loginPanel.addListener(reservationFrame);
 		loginPanel.addListener(this);
 		reservationFrame.setListener(reservationList);
+		reservationList.setListener(reservationFrame);
 		
 //		frame.pack();
 		frame.setLocationRelativeTo(null);

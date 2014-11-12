@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 
 public class ReservationRow extends JPanel{
 	
-	private final int fromDay, fromMonth, toDay, toMonth;
+	private final Date from, to;
 	private final String name;
 	private boolean isReported;
 	private JButton button, delete;
@@ -27,10 +27,8 @@ public class ReservationRow extends JPanel{
 		this.setBorder(BorderFactory.createEtchedBorder());
 		this.listener = listener;
 		GridBagConstraints c = new GridBagConstraints();
-		this.fromDay = from.day;
-		this.fromMonth = from.month;
-		this.toDay = to.day;
-		this.toMonth = to.month;
+		this.from = from;
+		this.to = to;
 		this.name = name;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -40,9 +38,9 @@ public class ReservationRow extends JPanel{
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 1;
-		add(new JLabel("Fra: " + fromDay + "." + fromMonth), c);
+		add(new JLabel("Fra: " + from.day + "." + from.month), c);
 		c.gridx = 1;
-		add(new JLabel("Til: " + toDay + "." + toMonth + "  "), c);
+		add(new JLabel("Til: " + to.day + "." + to.month + "  "), c);
 		c.gridy = 2;
 		c.gridx = 0;
 		add(new JLabel("Rapportert:"), c);
@@ -93,7 +91,7 @@ public class ReservationRow extends JPanel{
 				return;
 			}
 			if (!isReported){
-				userReport = new UserReport(name, fromDay, fromMonth, toDay, toMonth);
+				userReport = new UserReport(name, from.day, from.month, to.day, to.month);
 				userReport.setListener(this);
 			}
 		}
