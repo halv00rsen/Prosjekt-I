@@ -43,7 +43,7 @@ public class ReservationRow extends JPanel{
 		add(new JLabel("Til: " + to.day + "." + to.month + "  "), c);
 		c.gridy = 2;
 		c.gridx = 0;
-		add(new JLabel("Rapportert:"), c);
+		add(new JLabel("Rapportert: "), c);
 		c.gridy = 2;
 		c.gridx = 1;
 		isReportedString = new JLabel((isReported ? "Ja" : "Nei"));
