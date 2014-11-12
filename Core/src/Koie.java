@@ -80,7 +80,12 @@ public class Koie {
 	}
 		
 	public void setVedmengde(double ved) {
-		this.vedmengde = ved;
+		if (ved > 99){
+			vedmengde = 99;
+		}else if (ved < 0){
+			vedmengde = 0;
+		}else
+			this.vedmengde = ved;
 	}
 
 	public String getTerreng() {
