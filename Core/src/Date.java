@@ -2,12 +2,7 @@ package src;
 
 import java.util.GregorianCalendar;
 
-/** 
- * Holder på en dato
- * <li>{@link day}</li>
- * <li>{@link month}</li>
- * <li>{@link year}</li>
- */
+/** Holder på en dato med dag, måned, år */
 public class Date {
 	public final int day, month, year;
 	
