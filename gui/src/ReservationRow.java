@@ -66,6 +66,18 @@ public class ReservationRow extends JPanel{
 		}
 	}
 	
+	public String getCabinName(){
+		return name;
+	}
+	
+	public Date getFrom(){
+		return from;
+	}
+	
+	public Date getTo(){
+		return to;
+	}
+	
 	private void removeButton(){
 		button.removeAll();
 		this.remove(button);
