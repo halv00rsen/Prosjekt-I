@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -22,6 +21,7 @@ public class Database {
 	private static String initKoie = "Core/src/initialiseringAvKoier.txt";
 	private static String initItem = "Core/src/dbinit_item.txt";
 	//private static String initBruker = "Core/src/dbinit_bruker.txt";
+	private static String initVed = "Core/src/initialiseringAvVedstatus.txt";
 
 	// Metode som lager koie tabell og reservasjonstabell i databasen
 	//og fyller koietabellen med data fra initialiseringAvKoier.txt fila
@@ -35,6 +35,7 @@ public class Database {
 			makeStatement("DROP TABLE inventory");
 			makeStatement("DROP TABLE vedstatus");
 			makeStatement("DROP TABLE reservasjon");
+			makeStatement("DROP TABLE rapport");
 			
 			makeStatement("CREATE TABLE koie"
 						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
@@ -70,17 +71,23 @@ public class Database {
 						+ "toDate VARCHAR(255) NOT NULL, "
 						+ "bruker_id VARCHAR(255) NOT NULL)");
 			
+			makeStatement("CREATE TABLE rapport"
+						+ "(ID int NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "koie_id SMALLINT NOT NULL, "
+						+ "person VARCHAR(255), "
+						+ "rapport VARCHAR(255))");
+			
 			// Fyller inn koie-tabellen fra fil
 			Scanner in = new Scanner(new FileReader(initKoie));
 			in.nextLine(); //hopper over f�rste linje som beskriver data
 			//lager en insert query from hver linje i initialisertinAvKoier.txt
 			while (in.hasNextLine()) {
-				String[] rader = in.nextLine().split("#");	
+				String[] kolonner = in.nextLine().split("#");	
 				String statement = "INSERT INTO koie VALUES (";
-				for (int i=0;i<rader.length-1; i++) {
-					statement += "'"+rader[i]+"', ";
+				for (int i=0;i<kolonner.length-1; i++) {
+					statement += "'"+kolonner[i]+"', ";
 				}
-				statement += "'"+rader[rader.length-1]+"')";
+				statement += "'"+kolonner[kolonner.length-1]+"')";
 				//System.out.println(statement);
 				makeStatement(statement);
 			}
@@ -99,6 +106,17 @@ public class Database {
 				makeStatement(statement);
 			}
 			in.close();
+			
+			
+			//Fyller vedstatus tabellen med data fra fil
+			in = new Scanner(new FileReader(initVed));
+			in.nextLine();
+			while (in.hasNextLine()) {
+				String[] felt = in.nextLine().split(" ");
+				makeStatement("INSERT INTO vedstatus VALUES ('" + felt[0] + "', '" + felt[1] + "')");
+			}
+			in.close();
+			
 /*
 			// Fyller bruker-tabellen med data fra fil
 			in = new Scanner(new FileReader(initBruker));
@@ -130,9 +148,9 @@ public class Database {
 		Calendar calendar = koie.getCalendar();
 		List<BookingDate> datesBooked = calendar.getDatesBooked();
 		
-		// ikke ferdig kode
-		//double vedmengde = koie.getVedmengde();
-		//makeStatement("INSERT INTO koie ")
+		// legger til vedmengden fra koia til databasen
+		double vedmengde = koie.getVedmengde();
+		makeStatement("INSERT INTO vedstatus VALUES ('" + koie.getId() + "', '" + vedmengde + "')");
 		
 		//m� kanskje gj�re et query for � slette allerede reserverte datoer f�rst
 		//har ikke helt tenkt gjennom dette enda... vet ikke hvordan det blir seende ut i databasen.
@@ -400,6 +418,7 @@ public class Database {
 		
 		return dates;
 	}
+	
 	
 }
 
