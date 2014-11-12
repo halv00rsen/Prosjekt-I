@@ -6,12 +6,20 @@ public class Item {
 	private String name;
 	private Status status;
 
-	/**
-	 * IN_ORDER eller BROKEN eller LOST_AND_FOUND 
-	 */
 	public static enum Status {
+		/**
+		 * I orden
+		 */
 		IN_ORDER,
+		
+		/**
+		 * Ødelagt
+		 */
 		BROKEN,
+		
+		/**
+		 * Gjenglemt
+		 */
 		LOST_AND_FOUND;
 	}
 	
@@ -38,7 +46,7 @@ public class Item {
 	 * Oppretter Item-objekt med bare navn.
 	 * <p>
 	 * {@link #id} settes til {@link DEFAULT_ID}, må endres til unik id når den lagres i databasen.
-	 * {@link status} settes til {@link Status.IN_ORDER}.
+	 * {@link status} settes til {@link Status#IN_ORDER}.
 	 * @param name Navn
 	 */
 	public Item(String name) {
