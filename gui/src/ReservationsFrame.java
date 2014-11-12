@@ -95,7 +95,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		setCabinInformation();
 	}
 	
-	public void addListener(ReservationsFrameListener l){
+	public void setListener(ReservationsFrameListener l){
 		listener = l;
 	}
 	
@@ -157,15 +157,21 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		}
 		int[] date = validDates.getReservation();
 		if (isValidReservation(date[0], date[1], date[2])){
-			cabinChosen.getCalendar().reservePeriod(new Date(date[0], date[1]), date[2], username);
+			Date from = new Date(date[0], date[1]);
+			cabinChosen.getCalendar().reservePeriod(from, date[2], username);
 			Database.toDatabase(cabinChosen);
 			JOptionPane.showMessageDialog(null, "Din reservasjon til " + cabins.getSelectedItem() + " den " + date[0] + "." + date[1] + " i " + 
 											date[2] + " dag(er), ble godkjent og lagret.");
 			setCabinInformation();
 			updateField(date[0], date[1], date[2]);
+			callListener(cabinChosen.getName(), from, cabinChosen.getCalendar().getLastDate(from, date[2]));
 		}else{
 			JOptionPane.showMessageDialog(null, "Din reservasjon ble ikke godkjent.");
 		}
+	}
+	
+	private void callListener(String name, Date from, Date to){
+		listener.addReservation(name, from, to);
 	}
 	
 	private class CabinListener implements ActionListener{
