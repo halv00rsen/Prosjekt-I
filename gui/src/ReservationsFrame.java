@@ -107,13 +107,13 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	public void updateField(int day, int month, int numDays){
 		if (cabinChosen == null)
 			return;
-		boolean isValid = cabinChosen.getCalendar().reservationIsOk(new Date(day, month), numDays);
+		boolean isValid = cabinChosen.getCalendar().reservationIsOk(new Date(day, month), numDays, false);
 		isValidDateReservation.setForeground(isValid ? Color.green: Color.red);
 		isValidDateReservation.setText((isValid ? "Ja": "Nei"));
 	}
 	
 	private boolean isValidReservation(int day, int month, int numDays){
-		return cabinChosen.getCalendar().reservationIsOk(new Date(day, month), numDays);
+		return cabinChosen.getCalendar().reservationIsOk(new Date(day, month), numDays, false);
 	}
 	
 	public void userHasLoggedIn(String username){
@@ -163,7 +163,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		int[] date = validDates.getReservation();
 		if (isValidReservation(date[0], date[1], date[2])){
 			Date from = new Date(date[0], date[1]);
-			cabinChosen.getCalendar().reservePeriod(from, date[2], username, -1);
+			cabinChosen.getCalendar().reservePeriod(from, date[2], username, -1, false);
 			Database.toDatabase(cabinChosen);
 			JOptionPane.showMessageDialog(null, "Din reservasjon til " + cabins.getSelectedItem() + " den " + date[0] + "." + date[1] + " i " + 
 											date[2] + " dag(er), ble godkjent og lagret.");
