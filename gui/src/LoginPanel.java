@@ -21,7 +21,7 @@ public class LoginPanel extends JPanel{
 	public static final boolean DEBUG = false;
 	private final AdminLogin loginUser;
 	private final List<LoginListener> listeners;
-	private final JButton logoutButton;
+	private final JButton logoutButton, resetDatabaseButton;
 	private final JCheckBox adminCheckBox;
 	private final JPanel adminBox, panel;
 	private final CreateUser newUser;
@@ -43,6 +43,8 @@ public class LoginPanel extends JPanel{
 		add(panel);
 		newUser = new CreateUser();
 		add(newUser);
+		resetDatabaseButton = new JButton("Tilbakestill database");
+		resetDatabaseButton.addActionListener(new ResetButton());
 	}
 	
 	public void addListener(LoginListener l){
@@ -105,6 +107,10 @@ public class LoginPanel extends JPanel{
 		add(new JLabel("Logget in som admin.  "), c);
 		c.gridx = 1;
 		add(logoutButton,c);
+		c.gridy = 1;
+		c.gridx = 0;
+		c.gridwidth = 2;
+		add(resetDatabaseButton, c);
 		this.repaint();
 	}
 	
@@ -124,6 +130,14 @@ public class LoginPanel extends JPanel{
 			userLoggedOut();
 		}
 		
+	}
+	
+	private class ResetButton implements ActionListener{
+
+		public void actionPerformed(ActionEvent arg0) {
+			Database.initializeDatabase();
+			JOptionPane.showMessageDialog(null, "Databasen er tilbakestilt");
+		}
 	}
 	
 	private class Login implements AdminLoginListener{
