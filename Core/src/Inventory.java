@@ -3,6 +3,7 @@ package src;
 import java.util.List;
 import java.util.ArrayList;
 
+/** Inneholder alt utstyr ({@link Item}-objekter) assosiert med en {@link Koie} */
 public class Inventory {
 	private List<Item> items;
 	
