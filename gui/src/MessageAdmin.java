@@ -21,6 +21,6 @@ public class MessageAdmin extends JPanel{
 	
 //	Denne metoden skal prate med databasen
 	private String getMessagesAdmin(){
-		return "Koie 4 har rapportert om ødelagt bord";
+		return "Koie 4 har rapportert om Ã¸delagt bord";
 	}
 }
