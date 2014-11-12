@@ -33,7 +33,7 @@ public class Inventory {
 
 	/**
 	 * Returnerer alle Item-objekter
-	 * @return Liste med Item-objekter
+	 * @return {@link List<Item>} med {@link Item}-objekter
 	 */
 	public List<Item> getAllItems() {
 		List<Item> allItems = new ArrayList<Item>();
@@ -45,7 +45,7 @@ public class Inventory {
 
 	/**
 	 * Returnerer alle Item-objekter som er i orden
-	 * @return Liste med Item-objekter
+	 * @return {@link List<Item>} med {@link Item}-objekter
 	 */
 	public List<Item> getInOrderItems() {
 		List<Item> inOrderItems = new ArrayList<Item>();
@@ -59,7 +59,7 @@ public class Inventory {
 
 	/**
 	 * Returnerer alle Item-objekter som er ødelagte
-	 * @return Liste med Item-objekter
+	 * @return {@link List<Item>} med {@link Item}-objekter
 	 */
 	public List<Item> getBrokenItems() {
 		List<Item> brokenItems = new ArrayList<Item>();
@@ -73,7 +73,7 @@ public class Inventory {
 
 	/**
 	 * Returnerer alle Item-objekter som er gjenglemte
-	 * @return Liste med Item-objekter
+	 * @return {@link List<Item>} med {@link Item}-objekter
 	 */
 	public List<Item> getLostAndFoundItems() {
 		List<Item> lostAndFoundItems = new ArrayList<Item>();
@@ -87,7 +87,7 @@ public class Inventory {
 
 	/**
 	 * Returnerer alle Item-objekter som er nylig lagt til (dvs. ikke har fått en unik ID i databasen enda).
-	 * @return Liste med Item-objekter
+	 * @return {@link List<Item>} med {@link Item}-objekter
 	 */
 	public List<Item> getNewItems() {
 		List<Item> newItems = new ArrayList<Item>();
@@ -101,7 +101,7 @@ public class Inventory {
 
 	/**
 	 * Returnerer alle Item-objekter som ikke er nylig lagt til (dvs. har en unik ID i databasen).
-	 * @return Liste med Item-objekter
+	 * @return {@link List<Item>} med {@link Item}-objekter
 	 */
 	public List<Item> getOldItems() {
 		List<Item> oldItems = new ArrayList<Item>();

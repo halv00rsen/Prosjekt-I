@@ -7,11 +7,19 @@ public class Item {
 	private Status status;
 
 	/**
-	 * IN_ORDER eller BROKEN eller LOST_AND_FOUND 
+	 * Item-objektets tilstander
+	 * <li> {@link #IN_ORDER} </li>
+	 * <li> {@link #BROKEN} </li>
+	 * <li> {@link #LOST_AND_FOUND} </li>
 	 */
 	public static enum Status {
+		/** I orden */
 		IN_ORDER,
+		
+		/** Ødelagt */
 		BROKEN,
+		
+		/** Gjenglemt */
 		LOST_AND_FOUND;
 	}
 	
@@ -35,10 +43,10 @@ public class Item {
 	}
 
 	/**
-	 * Oppretter Item-objekt med bare navn.
+	 * Oppretter Item-objekt med bare navn. Brukes når admin legger inn nytt utstyr.
 	 * <p>
 	 * {@link #id} settes til {@link DEFAULT_ID}, må endres til unik id når den lagres i databasen.
-	 * {@link status} settes til {@link Status.IN_ORDER}.
+	 * {@link status} settes til {@link Status#IN_ORDER}.
 	 * @param name Navn
 	 */
 	public Item(String name) {
@@ -46,21 +54,21 @@ public class Item {
 	}
 
 	/**
-	 * Oppretter Item-objekt med navn og status. Ment for gjenglemte ting.
+	 * Oppretter Item-objekt med navn og status. Brukes for gjenglemte ting.
 	 * <p>
 	 * {@link #id} settes til {@link #DEFAULT_ID}, må endres til unik id når den lagres i databasen.
 	 * @param name Navn
-	 * @param status Status i enum {@link Item.Status} 
+	 * @param status Status i enum {@link Status} 
 	 */
 	public Item(String name, Status status) {
 		this(DEFAULT_ID, name, status);
 	}
 
 	/**
-	 * Oppretter Item-objekt
+	 * Oppretter Item-objekt. Brukes når data kommer fra databasen.
 	 * @param id Unik id i databasen
 	 * @param name Navn
-	 * @param status Status i enum {@link Item.Status} 
+	 * @param status Status i enum {@link Status} 
 	 */
 	public Item(int id, String name, Status status) {
 		this.id = id;
