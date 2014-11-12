@@ -1,3 +1,2 @@
 bruker_id, passord (må hashes), adminstatus
 admin1, admin1, 1
-
