@@ -1,5 +1,6 @@
 package src;
 
+/** Inneholder unik database-ID, navn og status for en ting som tilhører en {@link Koie} */
 public class Item {
 	public static int DEFAULT_ID = 0;
 	private int id;
