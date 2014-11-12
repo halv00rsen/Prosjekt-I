@@ -34,7 +34,7 @@ public class RemoveReservationsAdmin extends JPanel implements ReservationRowLis
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(new ReservationRow("Kallekula", new Date(13, 11), new Date(18, 11), false, true, this), c);
+		panel.add(new ReservationRow("Kallekula", new Date(13, 11), new Date(18, 11),new Date(1,1), false, true, this), c);
 	}
 
 	public void removeReservation(ReservationRow reservation) {
