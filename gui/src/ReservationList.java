@@ -60,7 +60,7 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 	}
 	
 	private void getReservations(){
-		//Skal bruke databasen for å hente alle reservasjoner til brukeren
+		//Skal bruke databasen for Ã¥ hente alle reservasjoner til brukeren
 //		reservations.add("Koie 1:21.10:29.10:Nei");
 //		reservations.add("Koie 2:10.2:17.2:Ikke relevant");
 		GregorianCalendar calendar = new GregorianCalendar();
