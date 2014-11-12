@@ -144,7 +144,7 @@ public class Database {
 	}
 
 	/**
-	 * metode for å oppdatere databasen med info fra koie objektet sendt som argument til metoden
+	 * metode for ï¿½ oppdatere databasen med info fra koie objektet sendt som argument til metoden
 	 * @param koie
 	 */
 	public static void toDatabase(Koie koie) {
@@ -200,7 +200,7 @@ public class Database {
 	}
 
 	/**
-	 * Metode for å utføre statements mot databasen
+	 * Metode for ï¿½ utfï¿½re statements mot databasen
 	 * @param statement
 	 */
 	private static void makeStatement(String statement) {
@@ -286,19 +286,6 @@ public class Database {
 				jaktOgFiske = koie_res.getString("jaktOgFiske");
 				spesialiteter = koie_res.getString("spesialiteter");
 			}
-	
-			String item_query = "SELECT item, status "
-							  + "FROM inventory "
-							  + "WHERE koie_id =" + String.valueOf(koie_id);
-			ResultSet item_res = makeQuery(item_query);
-			Inventory inventory = new Inventory();
-			while (item_res.next()) {
-				String itemName = item_res.getString("item");
-				String itemStatusString = item_res.getString("status");
-				Item.Status itemStatus = Item.getItemStatus(itemStatusString);
-				Item item = new Item(itemName, itemStatus);
-				inventory.addItem(item);
-			}
 			
 			//vedmengde
 			ResultSet vedmengde_res = makeQuery("SELECT mengde FROM vedstatus");
@@ -335,7 +322,20 @@ public class Database {
 				
 				cabinRented.reservePeriod(from, to, person, resID);
 			}
-			
+
+			String item_query = "SELECT item, status "
+							  + "FROM inventory "
+							  + "WHERE koie_id =" + String.valueOf(koie_id);
+			ResultSet item_res = makeQuery(item_query);
+			Inventory inventory = koie.getInventory();
+			while (item_res.next()) {
+				String itemName = item_res.getString("item");
+				String itemStatusString = item_res.getString("status");
+				Item.Status itemStatus = Item.getItemStatus(itemStatusString);
+				Item item = new Item(itemName, itemStatus);
+				inventory.addItem(item);
+			}
+
 			return koie;
 			
 		} catch (Exception e) {
@@ -457,9 +457,9 @@ public class Database {
 	}
 	
 	/**
-	 * Metode for å hente alle rapporter for en gitt koie
+	 * Metode for ï¿½ hente alle rapporter for en gitt koie
 	 * @param koie_id
-	 * @return Liste med en streng på formen "<personen som har rapportert>: <rapporten>" 
+	 * @return Liste med en streng pï¿½ formen "<personen som har rapportert>: <rapporten>" 
 	 */
 	public static ArrayList<String> getRapport(int koie_id) {
 		ArrayList<String> rapport = new ArrayList<String>();

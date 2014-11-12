@@ -22,7 +22,7 @@ import javax.swing.border.EtchedBorder;
 
 public class ReservationList extends JPanel implements LoginListener, ReservationRowListener, ReservationsFrameListener{
 	
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 	private String username;
 	private final List<ReservationRow> reservations;
 	private final GridBagConstraints futureC, hasVisitedC;
