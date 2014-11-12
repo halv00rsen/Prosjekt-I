@@ -130,7 +130,7 @@ public class Database {
 		makeStatement("UPDATE vedstatus SET mengde = '" + vedmengde +"' WHERE koie_id=" + koie.getId());
 		
 		//sletter alle tidligere reservasjoner
-		makeStatement("DELETE FROM reservasjon WHERE (koie_id =" + koie.getId());
+		makeStatement("DELETE FROM reservasjon WHERE koie_id =" + koie.getId());
 		//oppdaterer datoene koien er reservert for.
 		Calendar calendar = koie.getCalendar();
 		List<BookingDate> datesBooked = calendar.getDatesBooked();
