@@ -112,7 +112,7 @@ public class Calendar {
 	}
 	
 	//returnerer hvilken dato som er x dager foran date
-	public Date getLastDate(Date date, int days){
+	public static Date getLastDate(Date date, int days){
 		if (days > daysInFeature || days < 0)
 			return null;
 		if (days == 0)
