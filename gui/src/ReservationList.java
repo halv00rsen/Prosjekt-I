@@ -68,7 +68,7 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 		List<UserDatesBooked> bookings = Database.getReservasjonBruker(username);
 		HashMap<Integer, String> cabins = Database.getIdNameMap();
 		for (UserDatesBooked b: bookings){
-			ReservationRow row = new ReservationRow(cabins.get(b.cabinId), username, b.from, b.to, today, false, false, this);
+			ReservationRow row = new ReservationRow(cabins.get(b.cabinId), username, b.resID, b.from, b.to, today, Database.isRapportert(b.resID), false, this);
 			reservations.add(row);
 			if (b.from.isBefore(today) || b.from.equals(today)){
 				hasVisitedReservations.add(row, hasVisitedC);
@@ -117,7 +117,7 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 	public void addReservation(String name, Date from, Date to) {
 		GregorianCalendar calendar = new GregorianCalendar();
 		Date today = new Date((DEBUG ? 2 :calendar.get(java.util.Calendar.DATE)), (DEBUG ? 1:(calendar.get(java.util.Calendar.MONTH) + 1)));
-		ReservationRow row = new ReservationRow(name, username, from, to, today, false, false, this);
+		ReservationRow row = new ReservationRow(name, username,-1, from, to, today, false, false, this);
 		reservations.add(row);
 		if (from.isBefore(today) || from.equals(today)){
 			hasVisitedReservations.add(row, hasVisitedC);
