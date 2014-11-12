@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
+/** Håndterer kommunikasjon mellom programmet og MySQL-databasen */
 public class Database {
 	private static String url = "jdbc:mysql://mysql.stud.ntnu.no/";
 	private static String dbName = "alekh_prosjekt1";
@@ -28,7 +29,7 @@ public class Database {
 	 */
 	public static void initializeDatabase() {
 		try {
-			//sletter alle tidligere tabeller
+			// Sletter alle tidligere tabeller
 			makeStatement("DROP TABLE koie");
 			makeStatement("DROP TABLE bruker");
 			makeStatement("DROP TABLE inventory");
@@ -78,10 +79,10 @@ public class Database {
 						+ "person VARCHAR(255), "
 						+ "kommentar VARCHAR(255))");
 			
-			// Fyller inn koie-tabellen fra fil
+			// Fyller koie-tabellen med data fra fil
 			Scanner in = new Scanner(new FileReader(initKoie));
-			in.nextLine(); //hopper over f�rste linje som beskriver data
-			//lager en insert query from hver linje i initialisertinAvKoier.txt
+			in.nextLine(); // Hopper over første linje som beskriver data
+			// Lager en INSERT-statement from hver linje i initialiseringsfila
 			while (in.hasNextLine()) {
 				String[] kolonner = in.nextLine().split("#");	
 				String statement = "INSERT INTO koie VALUES (";
@@ -89,7 +90,6 @@ public class Database {
 					statement += "'"+kolonner[i]+"', ";
 				}
 				statement += "'"+kolonner[kolonner.length-1]+"')";
-				//System.out.println(statement);
 				makeStatement(statement);
 			}
 			in.close();
@@ -109,8 +109,7 @@ public class Database {
 			}
 			in.close();
 			
-			
-			//Fyller vedstatus tabellen med data fra fil
+			//Fyller vedstatus-tabellen med data fra fil
 			in = new Scanner(new FileReader(initVed));
 			in.nextLine();
 			while (in.hasNextLine()) {
@@ -134,7 +133,6 @@ public class Database {
 				makeStatement(statement);
 			}
 			in.close();
-			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -144,17 +142,18 @@ public class Database {
 	}
 
 	/**
-	 * metode for � oppdatere databasen med info fra koie objektet sendt som argument til metoden
-	 * @param koie
+	 * Oppdaterer databasen med info fra et Koie-objekt
+	 * @param koie Et Koie-objekt
 	 */
 	public static void toDatabase(Koie koie) {
-		// legger til vedmengden fra koia til databasen
+		// Legger til vedmengden fra koia til databasen
 		double vedmengde = koie.getVedmengde();		
 		makeStatement("UPDATE vedstatus SET mengde = '" + vedmengde +"' WHERE koie_id=" + koie.getId());
 		
-		//sletter alle tidligere reservasjoner
+		// Sletter alle tidligere reservasjoner
 		makeStatement("DELETE FROM reservasjon WHERE koie_id =" + koie.getId());
-		//oppdaterer datoene koien er reservert for.
+
+		// Oppdaterer reservasjoner
 		Calendar calendar = koie.getCalendar();
 		List<BookingDate> datesBooked = calendar.getDatesBooked();
 		for (BookingDate date : datesBooked) {
@@ -167,7 +166,7 @@ public class Database {
 			makeStatement(statement);
 		}
 		
-		//Inventory
+		// Oppdaterer inventory
 		Inventory inventory = koie.getInventory();
 		List<Item> newItems = inventory.getNewItems();
 		List<Item> oldItems = inventory.getOldItems();
@@ -182,9 +181,9 @@ public class Database {
 	}
 
 	/**
-	 * query metode mot databasen
-	 * @param query
-	 * @return  returnerer tilgang til database
+	 * Gjør en spørring mot databasen
+	 * @param query En query-streng
+	 * @return Et resultat-sett
 	 */
 	private static ResultSet makeQuery(String query) {
 		ResultSet res = null;
@@ -192,7 +191,7 @@ public class Database {
 			Connection conn = getConnection();
 			Statement st = conn.createStatement();
 			res = st.executeQuery(query);
-			//conn.close(); m� kommenteres ut for at getIdNameMap skal fungere...
+			//conn.close(); // Må kommenteres ut for at getIdNameMap skal fungere...
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -200,8 +199,8 @@ public class Database {
 	}
 
 	/**
-	 * Metode for � utf�re statements mot databasen
-	 * @param statement
+	 * Utfører statements mot databasen
+	 * @param statement Statement som skal utføres
 	 */
 	private static void makeStatement(String statement) {
 		try {
@@ -209,7 +208,7 @@ public class Database {
 			Statement st = conn.createStatement();
 			int res = st.executeUpdate(statement);
 			if (res == 1) {
-				System.out.println("statement utf�rt");
+				System.out.println("Statement utført.");
 			}
 			conn.close();
 		} catch (Exception e) {
@@ -218,8 +217,8 @@ public class Database {
 	}
 	
 	/**
-	 * Setter opp connection mot databasen
-	 * @return Connection objekt
+	 * Returnerer en kobling til databasen
+	 * @return Et Connection-objekt
 	 */
 	private static Connection getConnection() {
 		try {		
@@ -234,7 +233,7 @@ public class Database {
 	}
 	
 	/**
-	 * Hashmap med koie id og koie navn
+	 * Returnerer en HashMap med ID og navn til en koie
 	 * @return hashmap key:koie_id, value: koie_navn
 	 */
 	public static HashMap<Integer,String> getIdNameMap() {
@@ -252,7 +251,7 @@ public class Database {
 	}
 	
 	/**
-	 * Returnerer et Koie-objekt fra databasen med en Koie-id.
+	 * Returnerer et Koie-objekt fra databasen med en Koie-ID.
 	 * @param koie_id Koias unike ID i databasen
 	 * @return Et Koie-objekt
 	 */
@@ -373,7 +372,7 @@ public class Database {
 	 * Legger en ny bruker til databasen
 	 * @param id Bruker-ID
 	 * @param password Passord som blir hashet 
-	 * @param isAdmin
+	 * @param isAdmin Om brukeren skal være admninistrator eller ikke
 	 */
 	public static void addBruker(String id, String password, boolean isAdmin) {
 		try {
@@ -414,8 +413,8 @@ public class Database {
 	}
 	
 	/**
-	 * Henter alle reservasjonene en gitt bruker har reservert
-	 * @param person
+	 * Returnerer alle reservasjonene til en bruker
+	 * @param person Bruker-ID-en
 	 * @return Liste med UserDatesBooked objekter hvor reservasjonene samnt reservasjons id ligger
 	 */
 	public static ArrayList<UserDatesBooked> getReservasjonBruker(String person) {
@@ -444,10 +443,10 @@ public class Database {
 	
 	/**
 	 * Sender rapporten/kommentaren til databasen
-	 * @param koie_id
-	 * @param person
-	 * @param kommentar
-	 * @param resID
+	 * @param koie_id Unik koie-ID
+	 * @param person Unik bruker-ID
+	 * @param kommentar Kommentar til rapporten
+	 * @param resID Reservasjons-ID
 	 */
 	public static void rapporter(int koie_id, String person, String kommentar, int resID) {
 		String statement = "INSERT INTO rapport (koie_id, person, kommentar, resID) VALUES ('"
@@ -456,9 +455,9 @@ public class Database {
 	}
 	
 	/**
-	 * Metode for � hente alle rapporter for en gitt koie
-	 * @param koie_id
-	 * @return Liste med en streng p� formen "<personen som har rapportert>: <rapporten>" 
+	 * Returnerer alle rapportene til en koie
+	 * @param koie_id Unik koie-ID
+	 * @return Liste med en streng på formen "<personen som har rapportert>: <rapporten>" 
 	 */
 	public static ArrayList<String> getRapport(int koie_id) {
 		ArrayList<String> rapport = new ArrayList<String>();
@@ -477,8 +476,8 @@ public class Database {
 	}
 	
 	/**
-	 * Sjekker om det er en rapport for gitt reservasjons ID
-	 * @param resID
+	 * Sjekker om det finnes en rapport med en gitt reservasjons-ID
+	 * @param resID Reservasjons-ID
 	 * @return true hvis rapporten finnes, false ellers
 	 */
 	public static boolean isRapportert(int resID) {
@@ -492,8 +491,8 @@ public class Database {
 	}
 	
 	/**
-	 * Henter vedstatus for alle koiene
-	 * @return returnener hashmap med key: koie_id, value: vedmengde
+	 * Returnerer en HashMap med vedstatus for alle koiene
+	 * @return HashMap med key: koie_id, value: vedmengde
 	 */
 	public static HashMap<Integer, Double> getVedstatusForAlleKoier() {
 		HashMap<Integer, Double> vedstatus = new HashMap<Integer, Double>();
@@ -508,19 +507,3 @@ public class Database {
 		return vedstatus;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
