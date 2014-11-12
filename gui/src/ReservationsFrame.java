@@ -214,5 +214,6 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		Koie koie = Database.getKoie(id);
 		koie.getCalendar().removeReservation(from, to);
 		Database.toDatabase(koie);
+		setCabinInformation();
 	}
 }
