@@ -20,15 +20,12 @@ public class Database {
 	
 	private static String initKoie = "Core/src/initialiseringAvKoier.txt";
 	private static String initItem = "Core/src/dbinit_item.txt";
-	//private static String initBruker = "Core/src/dbinit_bruker.txt";
 	private static String initVed = "Core/src/initialiseringAvVedstatus.txt";
 
 	// Metode som lager koie tabell og reservasjonstabell i databasen
 	//og fyller koietabellen med data fra initialiseringAvKoier.txt fila
 	public static void initializeDatabase() {
 		try {
-			// Oppretter tabellene koie, bruker, item, vedrapport og reservasjon
-			
 			//sletter alle tidligere tabeller
 			makeStatement("DROP TABLE koie");
 			makeStatement("DROP TABLE bruker");
@@ -37,6 +34,7 @@ public class Database {
 			makeStatement("DROP TABLE reservasjon");
 			makeStatement("DROP TABLE rapport");
 			
+			// Oppretter tabellene koie, bruker, item, vedrapport og reservasjon
 			makeStatement("CREATE TABLE koie"
 						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "name VARCHAR(255) NOT NULL, "
@@ -117,23 +115,7 @@ public class Database {
 			}
 			in.close();
 			
-/*
-			// Fyller bruker-tabellen med data fra fil
-			in = new Scanner(new FileReader(initBruker));
-			in.nextLine();
-			while (in.hasNextLine()) {
-				String[] fields = in.nextLine().split(", ");	
-				String person = fields[0];
-				String password = fields[1];
-				String isAdmin = fields[2];
 
-				String statement = "INSERT INTO bruker (person, password_hash, is_admin) "
-								 + "VALUES("+person+", "+Bruker.hashPassword(password)+", "+isAdmin+");";
-
-				makeStatement(statement);
-			}
-			in.close();
-*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -143,18 +125,13 @@ public class Database {
 
 	//metode for � oppdatere databasen med info fra koie objektet sendt som argument til metoden
 	public static void toDatabase(Koie koie) {
-		
-		//oppdaterer datoene koien er reservert for.
-		Calendar calendar = koie.getCalendar();
-		List<BookingDate> datesBooked = calendar.getDatesBooked();
-		
 		// legger til vedmengden fra koia til databasen
 		double vedmengde = koie.getVedmengde();		
 		makeStatement("UPDATE vedstatus SET mengde = '" + vedmengde +"' WHERE koie_id=" + koie.getId());
 		
-		//m� kanskje gj�re et query for � slette allerede reserverte datoer f�rst
-		//har ikke helt tenkt gjennom dette enda... vet ikke hvordan det blir seende ut i databasen.
-		
+		//oppdaterer datoene koien er reservert for.
+		Calendar calendar = koie.getCalendar();
+		List<BookingDate> datesBooked = calendar.getDatesBooked();
 		for (BookingDate date : datesBooked) {
 			String bookedFrom = "" + date.dateFrom.year + "-" + date.dateFrom.month + "-" + date.dateFrom.day; 
 			String bookedTo = "" + date.dateTo.year + "-" + date.dateTo.month + "-" + date.dateTo.day;
@@ -165,6 +142,7 @@ public class Database {
 			makeStatement(statement);
 		}
 		
+		//Inventory
 		Inventory inventory = koie.getInventory();
 		List<Item> newItems = inventory.getNewItems();
 		List<Item> oldItems = inventory.getOldItems();
@@ -178,6 +156,7 @@ public class Database {
 		}
 	}
 
+	// query metode mot databasen, returnerer tilgang til database
 	private static ResultSet makeQuery(String query) {
 		ResultSet res = null;
 		try {
@@ -219,6 +198,7 @@ public class Database {
 		}
 	}
 	
+	//metode som returnerer en hasmap med koieID og koieNavn
 	public static HashMap<Integer,String> getIdNameMap() {
 		try {
 			ResultSet res = makeQuery("SELECT id, name FROM koie");
