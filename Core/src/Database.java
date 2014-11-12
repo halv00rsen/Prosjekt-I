@@ -55,7 +55,8 @@ public class Database {
 						+ "is_admin BOOL NOT NULL)");
 
 			makeStatement("CREATE TABLE inventory"
-						+ "(item VARCHAR(255) NOT NULL, "
+						+ "(ID SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "item VARCHAR(255) NOT NULL, "
 						+ "status VARCHAR(255) NOT NULL, "
 						+ "koie_id SMALLINT NOT NULL)");
 			
@@ -418,11 +419,30 @@ public class Database {
 		return dates;
 	}
 	
-//	public static void rapporter(int koie_id, String person, String kommentar) {
-//		String statement = "INSERT INTO rapport (koie_id, person, kommentar) VALUES"
-//						 + ""
-//	}
-//	
+	public static void rapporter(int koie_id, String person, String kommentar) {
+		String statement = "INSERT INTO rapport (koie_id, person, kommentar) VALUES ('"
+						 + koie_id +"', '" + person + "', '" + kommentar + "')";
+		makeStatement(statement);
+	}
+	
+	public static ArrayList<String> getRapport(int koie_id) {
+		ArrayList<String> rapport = new ArrayList<String>();
+		try {
+			String query = "SELECT kommentar, person FROM rapport WHERE koie_id =" + koie_id;
+			ResultSet res = makeQuery(query);
+			while (res.next()) {
+				String kommentar = res.getString("person") + ": ";
+				kommentar += res.getString("kommentar");
+				rapport.add(kommentar);
+			}
+				
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rapport;
+	}
+	
 }
 
 
