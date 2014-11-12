@@ -21,7 +21,7 @@ public class ReservationRow extends JPanel{
 	private final ReservationRowListener listener;
 	private JLabel isReportedString;
 	
-	public ReservationRow(String name, Date from, Date to, Date today, boolean isReported, boolean isAdmin,
+	public ReservationRow(String name, String username, Date from, Date to, Date today, boolean isReported, boolean isAdmin,
 			ReservationRowListener listener){
 		setLayout(new GridBagLayout());
 		this.setBorder(BorderFactory.createEtchedBorder());
@@ -43,11 +43,15 @@ public class ReservationRow extends JPanel{
 		add(new JLabel("Til: " + to.day + "." + to.month + "  "), c);
 		c.gridy = 2;
 		c.gridx = 0;
-		add(new JLabel("Rapportert: "), c);
-		c.gridy = 2;
-		c.gridx = 1;
-		isReportedString = new JLabel((isReported ? "Ja" : "Nei"));
-		add(isReportedString, c);
+		if (!isAdmin){
+			add(new JLabel("Rapportert: "), c);
+			c.gridy = 2;
+			c.gridx = 1;
+			isReportedString = new JLabel((isReported ? "Ja" : "Nei"));
+			add(isReportedString, c);
+		}else{
+			add(new JLabel("Bruker: " + username), c);
+		}
 		c.gridy = 1;
 		c.gridx = 3;
 		ButtonListener l = new ButtonListener();
