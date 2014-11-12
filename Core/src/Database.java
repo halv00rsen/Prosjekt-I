@@ -451,7 +451,7 @@ public class Database {
 	 * @param resID
 	 */
 	public static void rapporter(int koie_id, String person, String kommentar, int resID) {
-		String statement = "INSERT INTO rapport (koie_id, person, kommentar resID) VALUES ('"
+		String statement = "INSERT INTO rapport (koie_id, person, kommentar, resID) VALUES ('"
 						 + koie_id +"', '" + person + "', '" + kommentar + "', '" + resID + "')";
 		makeStatement(statement);
 	}
