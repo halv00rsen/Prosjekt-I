@@ -391,7 +391,7 @@ public class Database {
 	 */
 	public static void addItem(Item item, int koie_id) {
 		try {
-			String statement = "INSERT INTO item (item, status, koie_id) "
+			String statement = "INSERT INTO inventory (item, status, koie_id) "
 							 + "VALUES('"+item.getName()+"', '"+item.getStatus()+"', '"+koie_id+"')";
 			makeStatement(statement);
 		} catch (Exception e) {
