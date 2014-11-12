@@ -492,7 +492,18 @@ public class Database {
 		}
 	}
 	
-	
+	public static HashMap<Integer, Double> getVedstatusForAlleKoier() {
+		HashMap<Integer, Double> vedstatus = new HashMap<Integer, Double>();
+		try {
+			ResultSet res = makeQuery("SELECT koie_id, mengde FROM vedstatus");
+			while (res.next()) {
+				vedstatus.put(res.getInt("koie_id"), res.getDouble("mengde"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vedstatus;
+	}
 }
 
 
