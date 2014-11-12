@@ -22,7 +22,7 @@ public class Bruker {
 	
 	/**
 	 * Hasher et passord
-	 * @param passord En passord-streng
+	 * @param password En passord-streng
 	 * @return En MD5-hash av passordet
 	 */
 	public static String hashPassword(String password) {
