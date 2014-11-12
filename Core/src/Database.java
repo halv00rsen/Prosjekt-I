@@ -72,7 +72,7 @@ public class Database {
 						+ "bruker_id VARCHAR(255) NOT NULL)");
 			
 			makeStatement("CREATE TABLE rapport"
-						+ "(ID int NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "(resID int NOT NULL PRIMARY KEY, "
 						+ "koie_id SMALLINT NOT NULL, "
 						+ "person VARCHAR(255), "
 						+ "kommentar VARCHAR(255))");
@@ -399,7 +399,7 @@ public class Database {
 	public static ArrayList<UserDatesBooked> getReservasjonBruker(String person) {
 		ArrayList<UserDatesBooked> dates = new ArrayList<UserDatesBooked>();
 		try {
-			String query = "SELECT koie_id, fromDate, toDate FROM reservasjon WHERE bruker_id =" + "'"+person+"'";
+			String query = "SELECT koie_id, fromDate, toDate, resID FROM reservasjon WHERE bruker_id =" + "'"+person+"'";
 			ResultSet res = makeQuery(query);
 			while (res.next()) {
 				String fromDate = res.getString("fromDate");
@@ -409,8 +409,9 @@ public class Database {
 				Date from = new Date(Integer.valueOf(fromParts[2]), Integer.valueOf(fromParts[1]));
 				Date to = new Date(Integer.valueOf(toParts[2]), Integer.valueOf(toParts[1]));
 				int koie_id = res.getInt("koie_id");
+				int resID = res.getInt("resID");
 				
-				dates.add(new UserDatesBooked(koie_id, from, to));
+				dates.add(new UserDatesBooked(koie_id, from, to, resID));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -419,7 +420,8 @@ public class Database {
 		return dates;
 	}
 	
-	public static void rapporter(int koie_id, String person, String kommentar) {
+	//metode for 
+	public static void rapporter(int koie_id, String person, String kommentar ) {
 		String statement = "INSERT INTO rapport (koie_id, person, kommentar) VALUES ('"
 						 + koie_id +"', '" + person + "', '" + kommentar + "')";
 		makeStatement(statement);
@@ -440,6 +442,8 @@ public class Database {
 		}
 		return rapport;
 	}
+	
+	//public static 
 	
 }
 
