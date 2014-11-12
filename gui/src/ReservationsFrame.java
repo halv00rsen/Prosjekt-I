@@ -163,13 +163,31 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		int[] date = validDates.getReservation();
 		if (isValidReservation(date[0], date[1], date[2])){
 			Date from = new Date(date[0], date[1]);
+			Date to = Calendar.getLastDate(from, date[2]);
 			cabinChosen.getCalendar().reservePeriod(from, date[2], username, -1, false);
 			Database.toDatabase(cabinChosen);
 			JOptionPane.showMessageDialog(null, "Din reservasjon til " + cabins.getSelectedItem() + " den " + date[0] + "." + date[1] + " i " + 
 											date[2] + " dag(er), ble godkjent og lagret.");
 			setCabinInformation();
 			updateField(date[0], date[1], date[2]);
-			callListener(cabinChosen.getName(), from, cabinChosen.getCalendar().getLastDate(from, date[2]));
+			List<UserDatesBooked> bookings = Database.getReservasjonBruker(username);
+			int resId = -1;
+			for (UserDatesBooked booked: bookings){
+				if (booked.from.equals(from) && booked.to.equals(to)){
+					resId = booked.resID;
+					break;
+				}
+			}
+			if (resId == -1){
+				System.out.println("Feil med resId i reservationsFrame");
+			}
+			for (BookingDate dates: cabinChosen.getCalendar().getDatesBooked()){
+				if (dates.equals(from, to)){
+					dates.setID(resId);
+					break;
+				}
+			}
+			callListener(cabinChosen.getName(), from, to);
 		}else{
 			JOptionPane.showMessageDialog(null, "Din reservasjon ble ikke godkjent.");
 		}
