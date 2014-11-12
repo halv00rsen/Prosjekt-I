@@ -400,7 +400,7 @@ public class Database {
 	public static ArrayList<UserDatesBooked> getReservasjonBruker(String person) {
 		ArrayList<UserDatesBooked> dates = new ArrayList<UserDatesBooked>();
 		try {
-			String query = "SELECT koie_id, fromDate, toDate, resID FROM reservasjon WHERE bruker_id =" + "'"+person+"'";
+			String query = "SELECT koie_id, fromDate, toDate, ID FROM reservasjon WHERE bruker_id =" + "'"+person+"'";
 			ResultSet res = makeQuery(query);
 			while (res.next()) {
 				String fromDate = res.getString("fromDate");
@@ -410,9 +410,9 @@ public class Database {
 				Date from = new Date(Integer.valueOf(fromParts[2]), Integer.valueOf(fromParts[1]));
 				Date to = new Date(Integer.valueOf(toParts[2]), Integer.valueOf(toParts[1]));
 				int koie_id = res.getInt("koie_id");
-				int resID = res.getInt("resID");
+				int ID = res.getInt("ID");
 				
-				dates.add(new UserDatesBooked(koie_id, from, to, resID));
+				dates.add(new UserDatesBooked(koie_id, from, to, ID));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
