@@ -3,6 +3,7 @@ package src;
 import java.security.MessageDigest;
 import java.math.BigInteger;
 
+/** Inneholder informasjon knyttet til en bruker i systemet */
 public class Bruker {
 	private final String id;
 	private String passwordHash;
