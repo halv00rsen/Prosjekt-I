@@ -22,7 +22,7 @@ public class Bruker {
 	
 	/**
 	 * Hasher et passord
-	 * @param passord
+	 * @param passord En passord-streng
 	 * @return En MD5-hash av passordet
 	 */
 	public static String hashPassword(String password) {
@@ -41,7 +41,7 @@ public class Bruker {
 	
 	/**
 	 * Sjekker om et passord er riktig for denne brukeren
-	 * @param password
+	 * @param password En passord-streng
 	 * @return true eller false
 	 */
 	public boolean isPasswordCorrect(String password) {
@@ -59,7 +59,7 @@ public class Bruker {
 	
 	/**
 	 * Hasher et passord og lagrer hashen i databasen
-	 * @param password
+	 * @param password En passord-streng
 	 */
 	public void setPassword(String password) {
 		this.passwordHash = hashPassword(password);
