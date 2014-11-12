@@ -452,7 +452,7 @@ public class Database {
 	 */
 	public static void rapporter(int koie_id, String person, String kommentar, int resID) {
 		String statement = "INSERT INTO rapport (koie_id, person, kommentar resID) VALUES ('"
-						 + koie_id +"', '" + person + "', '" + kommentar + "', " + resID + "')";
+						 + koie_id +"', '" + person + "', '" + kommentar + "', '" + resID + "')";
 		makeStatement(statement);
 	}
 	
@@ -492,6 +492,10 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * Henter vedstatus for alle koiene
+	 * @return returnener hashmap med key: koie_id, value: vedmengde
+	 */
 	public static HashMap<Integer, Double> getVedstatusForAlleKoier() {
 		HashMap<Integer, Double> vedstatus = new HashMap<Integer, Double>();
 		try {
