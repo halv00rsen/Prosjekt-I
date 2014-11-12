@@ -435,8 +435,6 @@ public class Database {
 				kommentar += res.getString("kommentar");
 				rapport.add(kommentar);
 			}
-				
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
