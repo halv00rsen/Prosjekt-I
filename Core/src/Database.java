@@ -36,7 +36,7 @@ public class Database {
 			makeStatement("DROP TABLE reservasjon");
 			makeStatement("DROP TABLE rapport");
 			
-			// Oppretter tabellene koie, bruker, item, vedrapport og reservasjon
+			// Oppretter tabellene koie, bruker, inventory, vedstatus, reservasjon og rapport
 			makeStatement("CREATE TABLE koie"
 						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "name VARCHAR(255) NOT NULL, "
