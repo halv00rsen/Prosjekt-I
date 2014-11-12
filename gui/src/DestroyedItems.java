@@ -26,7 +26,7 @@ import javax.swing.ListModel;
 public class DestroyedItems extends JPanel{
 	
 	private static final String addButtonString = "Legg til >>", removeButtonString = "<< Fjern", 
-			inventoryString = "Utstyr", brokenInventoryString = "Ødelagt utstyr";
+			inventoryString = "Utstyr", brokenInventoryString = "ï¿½delagt utstyr";
 
 	  private static final Insets EMPTY_INSETS = new Insets(0, 0, 0, 0);
 	  private JList<String> inventory, brokenInventory;
@@ -34,7 +34,7 @@ public class DestroyedItems extends JPanel{
 	  private SortedListModel inventoryListModel, brokenInventoryListModel;
 
 	  /**
-	   * Oppretter ødelagt utstyr-panelet i rapporten.
+	   * Oppretter Ã¸delagt utstyr-panelet i rapporten.
 	   */
 	  public DestroyedItems() {
 		  setBorder(BorderFactory.createEtchedBorder());
@@ -62,7 +62,7 @@ public class DestroyedItems extends JPanel{
 	  }
 	  
 	  /**
-	   * @return items en liste med alt ødelagt utstyr på koia
+	   * @return items en liste med alt Ã¸delagt utstyr pÃ¥ koia
 	   */
 	  public List<String> getDestroyedElements(){
 		  List<String> items = new ArrayList<String> ();
@@ -92,7 +92,7 @@ public class DestroyedItems extends JPanel{
 	  
 	  /**
 	   * 
-	   * @param inventory legges til i ødelagt utstyr lista
+	   * @param inventory legges til i Ã¸delagt utstyr lista
 	   */
 	  private void addBrokenInventory(List<String> inventory){
 		  for (String i : inventory)
@@ -110,7 +110,7 @@ public class DestroyedItems extends JPanel{
 	  }
 
 	  /**
-	   * Sletter alle elementer som er valgt i den ødelagte utstyrslista
+	   * Sletter alle elementer som er valgt i den Ã¸delagte utstyrslista
 	   */
 	  private void clearBrokenInventorySelected() {
 		  List<String> seleceted = brokenInventory.getSelectedValuesList();
@@ -121,7 +121,7 @@ public class DestroyedItems extends JPanel{
 
 	  /**
 	   * 
-	   * En listener som lytter til legg-til-knappen, og flytter utstyr til ødelagt utstyr
+	   * En listener som lytter til legg-til-knappen, og flytter utstyr til Ã¸delagt utstyr
 	   */
 	  private class AddListener implements ActionListener {
 	    public void actionPerformed(ActionEvent e) {
@@ -133,7 +133,7 @@ public class DestroyedItems extends JPanel{
 
 	  /**
 	   * 
-	   * En lytter som lytter til fjernknappen, flytter fra ødelagt til ikke-ødelagt lista
+	   * En lytter som lytter til fjernknappen, flytter fra Ã¸delagt til ikke-Ã¸delagt lista
 	   */
 	  private class RemoveListener implements ActionListener {
 	    public void actionPerformed(ActionEvent e) {
@@ -146,7 +146,7 @@ public class DestroyedItems extends JPanel{
 
 	/**
 	 * 
-	 * Klassen håndterer elementene i listene
+	 * Klassen hÃ¥ndterer elementene i listene
 	 */
 	class SortedListModel extends AbstractListModel {
 
