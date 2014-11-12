@@ -14,7 +14,7 @@ public class ChooseCabin {
 	
 	/**
 	 * Oppretter ChooseCabin
-	 * Objektet henter navnet på alle koiene i databasen og lagrer disse i en JComboBox
+	 * Objektet henter navnet pÃ¥ alle koiene i databasen og lagrer disse i en JComboBox
 	 */
 	public ChooseCabin(){
 		cabins = new JComboBox<String>();
@@ -25,7 +25,7 @@ public class ChooseCabin {
 	
 	/**
 	 * 
-	 * @return cabins for at andre skal få legge til komboboksen til sitt panel
+	 * @return cabins for at andre skal fÃ¥ legge til komboboksen til sitt panel
 	 */
 	public JComboBox<String> getComboBox(){
 		return cabins;
