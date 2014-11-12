@@ -323,7 +323,7 @@ public class Database {
 				cabinRented.reservePeriod(from, to, person, resID);
 			}
 
-			String item_query = "SELECT item, status "
+			String item_query = "SELECT id, item, status "
 							  + "FROM inventory "
 							  + "WHERE koie_id =" + String.valueOf(koie_id);
 			ResultSet item_res = makeQuery(item_query);
