@@ -73,7 +73,7 @@ public class Database {
 						+ "(ID int NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "koie_id SMALLINT NOT NULL, "
 						+ "person VARCHAR(255), "
-						+ "rapport VARCHAR(255))");
+						+ "kommentar VARCHAR(255))");
 			
 			// Fyller inn koie-tabellen fra fil
 			Scanner in = new Scanner(new FileReader(initKoie));
@@ -280,6 +280,9 @@ public class Database {
 			koie.setSpesialiteter(spesialiteter);
 			koie.setVedmengde(mengde);
 			
+			
+			//sletter alle tidligere reservasjoner
+			makeStatement("DELETE FROM reservasjon WHERE koie_id =" + koie.getId());
 			//fyller koieobjektet med reservasjonene:
 			ResultSet reservasjoner = makeQuery("SELECT bruker_id, fromDate, toDate "
 									+ "FROM reservasjon WHERE koie_id =" + koie_id);
@@ -399,7 +402,11 @@ public class Database {
 		return dates;
 	}
 	
-	
+//	public static void rapporter(int koie_id, String person, String kommentar) {
+//		String statement = "INSERT INTO rapport (koie_id, person, kommentar) VALUES"
+//						 + ""
+//	}
+//	
 }
 
 
