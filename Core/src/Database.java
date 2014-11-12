@@ -61,7 +61,7 @@ public class Database {
 						+ "koie_id SMALLINT NOT NULL)");
 			
 			makeStatement("CREATE TABLE vedstatus"
-						+ "(koie_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "(koie_id INT NOT NULL PRIMARY KEY, "
 						+ "mengde DOUBLE NOT NULL)");
 			
 			makeStatement("CREATE TABLE reservasjon"
@@ -150,8 +150,11 @@ public class Database {
 		
 		// legger til vedmengden fra koia til databasen
 		double vedmengde = koie.getVedmengde();
-		makeStatement("INSERT INTO vedstatus VALUES ('" + koie.getId() + "', '" + vedmengde + "')"
-				+ " ON DUPLICATE KEY UPDATE");
+		//makeStatement("INSERT INTO vedstatus VALUES ('" + koie.getId() + "', '" + vedmengde + "')"
+		//		+ " ON DUPLICATE KEY UPDATE");
+		
+		makeStatement("INSERT INTO vedstatus (mengde) VALUES ('" + vedmengde + "') WHERE koie_id = '"
+				+ koie.getId() + "'");
 		
 		//m� kanskje gj�re et query for � slette allerede reserverte datoer f�rst
 		//har ikke helt tenkt gjennom dette enda... vet ikke hvordan det blir seende ut i databasen.
