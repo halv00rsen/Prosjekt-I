@@ -101,7 +101,8 @@ public class Database {
 				String koieId = fields[0];
 				String itemNavn = fields[1];
 
-				String statement = "INSERT INTO inventory VALUES ('"+itemNavn+"', 'IN_ORDER', '"+koieId+"')";
+				String statement = "INSERT INTO inventory (item, status, koie_id) " 
+								 + "VALUES ('"+itemNavn+"', 'IN_ORDER', '"+koieId+"')";
 
 				makeStatement(statement);
 			}
@@ -421,9 +422,9 @@ public class Database {
 	}
 	
 	//metode for 
-	public static void rapporter(int koie_id, String person, String kommentar ) {
-		String statement = "INSERT INTO rapport (koie_id, person, kommentar) VALUES ('"
-						 + koie_id +"', '" + person + "', '" + kommentar + "')";
+	public static void rapporter(int koie_id, String person, String kommentar, int resID) {
+		String statement = "INSERT INTO rapport (koie_id, person, kommentar resID) VALUES ('"
+						 + koie_id +"', '" + person + "', '" + kommentar + "', " + resID + "')";
 		makeStatement(statement);
 	}
 	
