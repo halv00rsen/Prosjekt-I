@@ -33,6 +33,20 @@ public class Inventory {
 	}
 
 	/**
+	 * Returnerer et Item-objekt med den gitte ID-en
+	 * @param id Unik Item-ID
+	 * @return Item-objekt
+	 */
+	public Item getItemById(int id) {
+		for (Item item : items) {
+			if (item.getId() == id) {
+				return item;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Returnerer alle Item-objekter
 	 * @return {@link List<Item>} med {@link Item}-objekter
 	 */
@@ -112,19 +126,5 @@ public class Inventory {
 			}
 		}
 		return oldItems;
-	}
-
-	/**
-	 * Returnerer et Item-objekt med den gitte ID-en
-	 * @param id Unik Item-ID
-	 * @return Item-objekt
-	 */
-	public Item getItemById(int id) {
-		for (Item item : items) {
-			if (item.getId() == id) {
-				return item;
-			}
-		}
-		return null;
 	}
 }
