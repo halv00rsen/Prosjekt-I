@@ -17,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class ReservationsFrame extends JPanel implements LoginListener, ValidDatesListener, ReservationsListListener{
@@ -91,7 +92,10 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		cabinInformation.setBorder(BorderFactory.createEtchedBorder());
 		cabinInformation.setLineWrap(true);
 		cabinInformation.setWrapStyleWord(true);
-		add(cabinInformation);
+		JScrollPane pane = new JScrollPane(cabinInformation);
+		pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		add(pane);
 		cabinChosen = Database.getKoie(1);
 		setCabinInformation();
 	}
