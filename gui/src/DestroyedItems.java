@@ -177,18 +177,6 @@ public class DestroyedItems extends JPanel{
 			  fireContentsChanged(this, 0, getSize());
 		  }
 	
-		  public boolean contains(Item element) {
-			  return model.contains(element);
-		  }
-	
-		  public Item firstElement() {
-			  return model.first();
-		  }
-	
-		  public Item lastElement() {
-			  return model.last();
-		  }
-	
 		  public boolean removeElement(Item element) {
 			  boolean removed = model.remove(element);
 			  if (removed) {
