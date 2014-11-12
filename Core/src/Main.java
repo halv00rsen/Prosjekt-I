@@ -6,7 +6,7 @@ public class Main {
 	//private textGUI textGui;
 	
 	private void init(){
-		Database.initializeDatabase();
+		//Database.initializeDatabase();
 
 		//textGui = new textGUI();
 		//textGui.Alternativer("bruker");
@@ -16,6 +16,12 @@ public class Main {
 		//test av hashmap
 		HashMap<Integer, String> idNameMap = Database.getIdNameMap();
 		System.out.println(idNameMap.get(18));
+		
+		Koie koie3 = Database.getKoie(3);
+		Inventory inv = koie3.getInventory();
+		inv.addItem(new Item("ostehøvel"));
+		inv.addItem(new Item("gaffel"));
+		Database.toDatabase(koie3);
 	}
 	
 	public static void main(String[] args){
