@@ -87,7 +87,7 @@ public class GUI implements LoginListener{
 		tabbedPane.addTab("Vedstatus", null, woodStatus, null);
 		messageAdmin = new MessageAdmin();
 		tabbedPane.addTab("Meldinger", null, messageAdmin, null);
-		removeReservations = new RemoveReservationsAdmin();
+		removeReservations = new RemoveReservationsAdmin(reservationFrame);
 		tabbedPane.addTab("Fjern reservasjoner", null, removeReservations, null);
 	}
 
