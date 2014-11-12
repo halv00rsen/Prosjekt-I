@@ -16,9 +16,9 @@ public class Item {
 	}
 	
 	/**
-	 * Returnerer en Item.Status basert på en streng
-	 * @param statusString Tekststreng
-	 * @return returnStatus Status i enum {@link Item.Status} 
+	 * Gjør om en streng til en tilsvarende {@link Status}
+	 * @param statusString Status som streng
+	 * @return returnStatus Status i enum {@link Status} 
 	 */
 	public static Item.Status getItemStatus(String statusString) {
 		Item.Status returnStatus;

@@ -65,7 +65,7 @@ public class ValidDates {
 		listeners.remove(l);
 	}
 	
-	public int[] getReservation(){//returns [dag, måned, antall dager]
+	public int[] getReservation(){//returns [dag, mÃ¥ned, antall dager]
 		int[] res = new int[3];
 		res[0] = (int) date.getSelectedItem();
 		res[1] = ((Months) month.getSelectedItem()).getValue();
