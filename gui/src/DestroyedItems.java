@@ -52,7 +52,7 @@ public class DestroyedItems extends JPanel{
 		  addButton.addActionListener(new AddListener());
 		  removeButton = new JButton("<< Fjern");
 		  c.gridy = 1;
-		  panel.add(new JLabel(""), c);
+		  panel.add(new JLabel(" "), c);
 		  c.gridy = 2;
 		  panel.add(removeButton, c);
 		  removeButton.addActionListener(new RemoveListener());
