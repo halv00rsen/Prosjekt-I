@@ -2,9 +2,14 @@ package src;
 
 import java.util.GregorianCalendar;
 
-/** Holder på en dato bestående av dag, måned, år */
+/** 
+ * Holder på en dato
+ * <li>{@link day}</li>
+ * <li>{@link month}</li>
+ * <li>{@link year}</li>
+ */
 public class Date {
-	public final int month, day, year;
+	public final int day, month, year;
 	
 	/**
 	 * Oppretter et Date-objekt
@@ -35,38 +40,57 @@ public class Date {
 		year = date.year;
 	}
 	
-	// Sjekker om en dato er lik denne
+	/**
+	 * Sjekker om en dato er lik denne
+	 * @param date Dato-objekt
+	 * @return Boolean
+	 */
 	public boolean equals(Date date){
 		if (date == null)
 			return false;
 		return date.month == this.month && date.day == this.day;
 	}
 	
-	// Sjekker om en dato er etter denne
+	/**
+	 * Sjekker om en dato er etter denne
+	 * @param date Dato-objekt
+	 * @return Boolean
+	 */
 	public boolean isAfter(Date date){
-		return equals(date) ? false: Calendar.getNumOfDaysBetween(date, this) < Calendar.daysInFeature;
+		return equals(date) ? false : Calendar.getNumOfDaysBetween(date, this) < Calendar.daysInFeature;
 	}
-	
-	// Sjekker om en dato er etter denne
+		
+	/**
+	 * Sjekker om en dato er før denne
+	 * @param date Dato-objekt
+	 * @return Boolean
+	 */
 	public boolean isBefore(Date date){
-		return equals(date) ? false: Calendar.getNumOfDaysBetween(this, date) < Calendar.daysInFeature;
+		return equals(date) ? false : Calendar.getNumOfDaysBetween(this, date) < Calendar.daysInFeature;
 	}
 	
-	// Returnerer antall dager mellom dette objektet og en annen dato
+	/**
+	 * Returnerer antall dager mellom denne datoen og en annen
+	 * @param date Dato-objekt
+	 * @return Antall dager mellom denne datoen og en annen
+	 */
 	public int getDaysBetween(Date date){
 		return Calendar.getNumOfDaysBetween(this, date);
-//		int d1 = Calendar.getNumOfDaysBetween(this, date);
-//		int d2 = Calendar.getNumOfDaysBetween(date, this);
-//		return d1 > d2 ? d1 : d2;
 	}
 	
-	// Returnerer dato på formatet dd-mm-åååå
+	/**
+	 * Returnerer string med dato på formatet dd-mm-åååå
+	 * @return String med dato på formatet dd-mm-åååå
+	 */
 	public String toString(){
 		return lengthOfDate(day) + "-" + lengthOfDate(month) + "-" + year;
 	}
 	
-	//om en m�ned eller dag er mindre enn 10 s� legger den p� en null
-	//For � f� formatet dd-mm-����
+	/**
+	 * Zero-padder et tall hvis det har bare ett siffer, for å få formatet dd-mm-åååå
+	 * @param number Dag eller måned
+	 * @return En string med lengde 2
+	 */
 	private String lengthOfDate(int number){
 		return number < 10 ? "0" + number : "" + number;
 	}
