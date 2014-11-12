@@ -49,6 +49,8 @@ public class RemoveReservationsAdmin extends JPanel implements ReservationRowLis
 			panel.add(new ReservationRow(cabin.getName(),booking.person, booking.getID(), booking.dateFrom, booking.dateTo, cabin.getCalendar().getTodaysDate(), true, true, this), c);
 			c.gridy++;
 		}
+		panel.revalidate();
+		panel.repaint();
 	}
 
 	public void removeReservation(ReservationRow reservation) {
