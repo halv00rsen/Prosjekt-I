@@ -33,6 +33,7 @@ public class DatabaseTest {
 		Inventory inventory = koie.getInventory();
 		assertTrue(inventory.getAllItems().size() > 0);
 	}
+	*/
 	@Test
 	public void itemShouldBeSetToBroken() {
 		Koie koie = Database.getKoie(4);
@@ -40,8 +41,14 @@ public class DatabaseTest {
 
 		Inventory inventory = koie.getInventory();
 		assertTrue(inventory.getAllItems().size() > 0);
-
+		
 		Item vaffeljern = inventory.getItemById(10);
+		for (Item item : inventory.getAllItems()) {
+			if (item.getName().equals("Vaffeljern")) {
+				vaffeljern = item;
+			}
+		}
+
 		assertEquals(vaffeljern.getStatus(), Item.Status.IN_ORDER);
 
 		vaffeljern.setStatus(Item.Status.BROKEN);
@@ -56,13 +63,20 @@ public class DatabaseTest {
 		assertTrue(invEtter.getAllItems().size() > 0);
 
 		Item vaffeljernEtter = invEtter.getItemById(10);
+
+		for (Item item : inventory.getAllItems()) {
+			if (item.getName().equals("Vaffeljern")) {
+				vaffeljernEtter = item;
+			}
+		}
+
 		assertEquals(vaffeljernEtter.getStatus(), Item.Status.BROKEN);
 	}
-	*/
-	
+/*	
 	@Test
 	public void toDatabaseTest() {
 		Koie koie = new Koie(0, "Testkoia", "Bortenfor dobbeltbladet", 2045);
 		Database.toDatabase(koie);
 	}
+	*/
 }
