@@ -46,7 +46,7 @@ public class RemoveReservationsAdmin extends JPanel implements ReservationRowLis
 		c.gridx = 0;
 		c.gridy = 0;
 		for (BookingDate booking: cabin.getCalendar().getDatesBooked()){
-			panel.add(new ReservationRow(cabin.getName(),booking.person, booking.dateFrom, booking.dateTo, cabin.getCalendar().getTodaysDate(), true, true, this), c);
+			panel.add(new ReservationRow(cabin.getName(),booking.person, booking.getID(), booking.dateFrom, booking.dateTo, cabin.getCalendar().getTodaysDate(), true, true, this), c);
 			c.gridy++;
 		}
 	}

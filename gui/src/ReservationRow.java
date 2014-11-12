@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,13 +16,14 @@ import javax.swing.JPanel;
 public class ReservationRow extends JPanel{
 	
 	private final Date from, to;
-	private final String name;
+	private final String name, username;
 	private boolean isReported;
 	private JButton button, delete;
 	private final ReservationRowListener listener;
 	private JLabel isReportedString;
+	private final int resId;
 	
-	public ReservationRow(String name, String username, Date from, Date to, Date today, boolean isReported, boolean isAdmin,
+	public ReservationRow(String name, String username, int resId, Date from, Date to, Date today, boolean isReported, boolean isAdmin,
 			ReservationRowListener listener){
 		setLayout(new GridBagLayout());
 		this.setBorder(BorderFactory.createEtchedBorder());
@@ -30,6 +32,8 @@ public class ReservationRow extends JPanel{
 		this.from = from;
 		this.to = to;
 		this.name = name;
+		this.username = username;
+		this.resId = resId;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -116,7 +120,15 @@ public class ReservationRow extends JPanel{
 			removeButton();
 			isReported = true;
 			isReportedString.setText("Ja");
-//			Send til databasen
+			Map<Integer, String> cabins = Database.getIdNameMap();
+			int koieId = -1;
+			for (Integer id: cabins.keySet()){
+				if (cabins.get(id).equals(name)){
+					koieId = id;
+					break;
+				}
+			}
+			Database.rapporter(koieId, username, comment, resId);
 		}
 
 		public void cancelPressed() {
