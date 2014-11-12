@@ -21,6 +21,7 @@ public class Database {
 	private static String initKoie = "Core/src/initialiseringAvKoier.txt";
 	private static String initItem = "Core/src/dbinit_item.txt";
 	private static String initVed = "Core/src/initialiseringAvVedstatus.txt";
+	private static String initBruker = "Core/src/dbinit_bruker.txt";
 
 	// Metode som lager koie tabell og reservasjonstabell i databasen
 	//og fyller koietabellen med data fra initialiseringAvKoier.txt fila
@@ -112,6 +113,22 @@ public class Database {
 			while (in.hasNextLine()) {
 				String[] felt = in.nextLine().split(" ");
 				makeStatement("INSERT INTO vedstatus VALUES ('" + felt[0] + "', '" + felt[1] + "')");
+			}
+			in.close();
+			
+			// Fyller bruker-tabellen med data fra fil
+			in = new Scanner(new FileReader(initBruker));
+			in.nextLine();
+			while (in.hasNextLine()) {
+				String[] fields = in.nextLine().split(", ");	
+				String person = fields[0];
+				String password = fields[1];
+				String isAdmin = fields[2];
+
+				String statement = "INSERT INTO bruker (person, password_hash, is_admin) "
+								 + "VALUES('"+person+"', '"+Bruker.hashPassword(password)+"', '"+isAdmin+"');";
+ 
+				makeStatement(statement);
 			}
 			in.close();
 			
