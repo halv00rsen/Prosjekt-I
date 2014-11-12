@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -18,7 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-public class ReservationsFrame extends JPanel implements LoginListener, ValidDatesListener{
+public class ReservationsFrame extends JPanel implements LoginListener, ValidDatesListener, ReservationsListListener{
 	
 	private ValidDates validDates;
 	private JButton reserveButton;
@@ -194,5 +195,20 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 
 	public void adminHasLoggedIn() {
 		adminLogin = true;
+	}
+
+	public void removeReservation(Date from, Date to, String idName) {
+		HashMap<Integer, String> cabins = Database.getIdNameMap();
+		int id = -1;
+		for (Integer ids: cabins.keySet()){
+			if (cabins.get(ids).equals(idName)){
+				id = ids;
+				break;
+			}
+		}if (id == -1)
+			return;
+		Koie koie = Database.getKoie(id);
+		koie.getCalendar().removeReservation(from, to);
+		Database.toDatabase(koie);
 	}
 }
