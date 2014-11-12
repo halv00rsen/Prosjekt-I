@@ -320,7 +320,7 @@ public class Database {
 				Date from = new Date(Integer.valueOf(fromParts[2]), Integer.valueOf(fromParts[1]));
 				Date to = new Date(Integer.valueOf(toParts[2]), Integer.valueOf(toParts[1]));
 				
-				cabinRented.reservePeriod(from, to, person, resID);
+				cabinRented.reservePeriod(from, to, person, resID, true);
 			}
 
 			String item_query = "SELECT id, item, status "

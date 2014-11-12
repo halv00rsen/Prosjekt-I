@@ -55,13 +55,13 @@ public class Calendar {
 	}
 	
 	//sjekker om denne reservasjonen kan reserveres, s� ikke overbooking skjer
-	public boolean reservationIsOk(Date dateFrom, int days){
-		return reservationIsOk(dateFrom, getLastDate(dateFrom, days), days);
+	public boolean reservationIsOk(Date dateFrom, int days, boolean isFromDatabase){
+		return reservationIsOk(dateFrom, getLastDate(dateFrom, days), days, isFromDatabase);
 		
 	}
 	
-	private boolean reservationIsOk(Date dateFrom, Date dateTo, int numOfDays){
-		if (numOfDays > daysInFeature || numOfDays < 0 || dateFrom == null || dateTo == null)
+	private boolean reservationIsOk(Date dateFrom, Date dateTo, int numOfDays, boolean isFromDatabase){
+		if ((numOfDays > daysInFeature || numOfDays < 0 || dateFrom == null || dateTo == null) && !isFromDatabase)
 			return false;
 		for (BookingDate booking : datesBooked){
 			if (booking.datesCollideWithBooking(dateFrom, dateTo))
@@ -76,13 +76,13 @@ public class Calendar {
 		return numOfDays + daysFromToNow <= daysInFeature;
 	}
 	
-	private boolean reservationIsOk(Date dateFrom, Date dateTo){
-		return reservationIsOk(dateFrom, dateTo, dateFrom.getDaysBetween(dateTo));
+	private boolean reservationIsOk(Date dateFrom, Date dateTo, boolean isFromDatabase){
+		return reservationIsOk(dateFrom, dateTo, dateFrom.getDaysBetween(dateTo), isFromDatabase);
 	}
 	
 	//reserverer en gitt periode
-	public void reservePeriod(Date date, int days, String person, int resID){
-		reservePeriod(date, getLastDate(date, days), person, resID);
+	public void reservePeriod(Date date, int days, String person, int resID, boolean isFromDatabase){
+		reservePeriod(date, getLastDate(date, days), person, resID, isFromDatabase);
 	}
 	
 	//returnerer en kopi av datoer som er booket
@@ -91,10 +91,16 @@ public class Calendar {
 	}
 	
 	//reserverer ei koie
-	public void reservePeriod(Date dateFrom, Date dateTo, String person, int resID){
-		if (!reservationIsOk(dateFrom, dateTo))
+	public void reservePeriod(Date dateFrom, Date dateTo, String person, int resID, boolean isFromDatabase){
+		if (!reservationIsOk(dateFrom, dateTo, isFromDatabase))
 			return;
-		BookingDate booking = new BookingDate(dateFrom, dateTo, person);
+		BookingDate booking = null;
+		try{
+			booking = new BookingDate(dateFrom, dateTo, person);
+		}catch (IllegalArgumentException e){
+			System.out.println("Din reservasjon er for gammel.");
+			return;
+		}
 		booking.setID(resID);
 		for (int a = 0; a < datesBooked.size(); a++){
 			if (!booking.isAfter(datesBooked.get(a))){
