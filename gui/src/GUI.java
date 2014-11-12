@@ -52,6 +52,7 @@ public class GUI implements LoginListener{
 		tabbedPane.addTab("Reserver Koie", null, reservationFrame, null);
 		loginPanel.addListener(reservationFrame);
 		loginPanel.addListener(this);
+		reservationFrame.setListener(reservationList);
 		
 //		frame.pack();
 		frame.setLocationRelativeTo(null);
