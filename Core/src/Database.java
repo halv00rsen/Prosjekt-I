@@ -319,12 +319,12 @@ public class Database {
 			koie.setVedmengde(mengde);
 			
 			//fyller koieobjektet med reservasjonene:
-			ResultSet reservasjoner = makeQuery("SELECT bruker_id, fromDate, toDate "
+			ResultSet reservasjoner = makeQuery("SELECT ID, bruker_id, fromDate, toDate "
 									+ "FROM reservasjon WHERE koie_id =" + koie_id);
 			Calendar cabinRented = koie.getCalendar();
 			while (reservasjoner.next()) {
 				String person = reservasjoner.getString("bruker_id");
-				
+				int resID = reservasjoner.getInt("ID");
 				String fromDate = reservasjoner.getString("fromDate");
 				String toDate = reservasjoner.getString("toDate");			
 				String[] fromParts = fromDate.split("-");
@@ -333,7 +333,7 @@ public class Database {
 				Date from = new Date(Integer.valueOf(fromParts[2]), Integer.valueOf(fromParts[1]));
 				Date to = new Date(Integer.valueOf(toParts[2]), Integer.valueOf(toParts[1]));
 				
-				cabinRented.reservePeriod(from, to, person);
+				cabinRented.reservePeriod(from, to, person, resID);
 			}
 			
 			return koie;
@@ -491,6 +491,8 @@ public class Database {
 			return false;
 		}
 	}
+	
+	
 }
 
 
