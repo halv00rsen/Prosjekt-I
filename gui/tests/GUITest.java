@@ -10,7 +10,7 @@ public class GUITest implements AdminLoginListener{
 	
 	/**
 	 * 
-	 * @param args 
+	 * @param args Standard args
 	 */
 	public static void main(String[] args){
 		GUITest test = new GUITest();
