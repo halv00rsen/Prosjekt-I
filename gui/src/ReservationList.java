@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,8 +20,9 @@ import javax.swing.JTextArea;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
-public class ReservationList extends JPanel implements LoginListener, ReservationRowListener{
+public class ReservationList extends JPanel implements LoginListener, ReservationRowListener, ReservationsFrameListener{
 	
+	public static final boolean DEBUG = false;
 	private String username;
 	private final List<ReservationRow> reservations;
 	private final GridBagConstraints futureC, hasVisitedC;
@@ -44,6 +46,10 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 		pane2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		futureC = new GridBagConstraints();
 		hasVisitedC = new GridBagConstraints();
+		futureC.gridx = 0;
+		futureC.gridy = 0;
+		hasVisitedC.gridy = 0;
+		hasVisitedC.gridx = 0;
 		add(pane1);
 		add(pane2);
 	}
@@ -52,14 +58,21 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 		//Skal bruke databasen for å hente alle reservasjoner til brukeren
 //		reservations.add("Koie 1:21.10:29.10:Nei");
 //		reservations.add("Koie 2:10.2:17.2:Ikke relevant");
+		GregorianCalendar calendar = new GregorianCalendar();
+		Date today = new Date((DEBUG ? 2 :calendar.get(java.util.Calendar.DATE)), (DEBUG ? 1:(calendar.get(java.util.Calendar.MONTH) + 1)));
 		List<UserDatesBooked> bookings = Database.getReservasjonBruker(username);
 		HashMap<Integer, String> cabins = Database.getIdNameMap();
 		for (UserDatesBooked b: bookings){
-			reservations.add(new ReservationRow(cabins.get(b.cabinId), b.from, b.to, false, false, this));
-		}
-		for (ReservationRow r : reservations){
-			futureReservations.add(r, futureC);
-			futureC.gridy++;
+			ReservationRow row = new ReservationRow(cabins.get(b.cabinId), b.from, b.to, today, false, false, this);
+			reservations.add(row);
+			if (b.from.isBefore(today) || b.from.equals(today)){
+				hasVisitedReservations.add(row, hasVisitedC);
+				hasVisitedC.gridy++;
+			}
+			else{
+				futureReservations.add(row, futureC);
+				futureC.gridy++;
+			}
 		}
 	}
 
@@ -70,6 +83,7 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 
 	public void userHasLoggedOut() {
 //		c.gridy = 1;
+		username = null;
 		futureReservations.removeAll();
 		hasVisitedReservations.removeAll();
 		reservations.clear();
@@ -78,6 +92,7 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 	@Override
 	public void adminHasLoggedIn() {
 		// TODO Auto-generated method stub
+		username = "admin";
 		
 	}
 
@@ -85,5 +100,20 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 		reservations.remove(reservation);
 		futureReservations.remove(reservation);
 		hasVisitedReservations.remove(reservation);
+	}
+
+	public void addReservation(String name, Date from, Date to) {
+		GregorianCalendar calendar = new GregorianCalendar();
+		Date today = new Date((DEBUG ? 2 :calendar.get(java.util.Calendar.DATE)), (DEBUG ? 1:(calendar.get(java.util.Calendar.MONTH) + 1)));
+		ReservationRow row = new ReservationRow(name, from, to, today, false, false, this);
+		reservations.add(row);
+		if (from.isBefore(today) || from.equals(today)){
+			hasVisitedReservations.add(row, hasVisitedC);
+			hasVisitedC.gridy++;
+		}
+		else{
+			futureReservations.add(row, futureC);
+			futureC.gridy++;
+		}
 	}
 }
