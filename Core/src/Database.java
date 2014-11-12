@@ -150,7 +150,8 @@ public class Database {
 		
 		// legger til vedmengden fra koia til databasen
 		double vedmengde = koie.getVedmengde();
-		makeStatement("INSERT INTO vedstatus VALUES ('" + koie.getId() + "', '" + vedmengde + "')");
+		makeStatement("INSERT INTO vedstatus VALUES ('" + koie.getId() + "', '" + vedmengde + "')"
+				+ " ON DUPLICATE KEY UPDATE");
 		
 		//m� kanskje gj�re et query for � slette allerede reserverte datoer f�rst
 		//har ikke helt tenkt gjennom dette enda... vet ikke hvordan det blir seende ut i databasen.
