@@ -6,20 +6,20 @@ public class Item {
 	private String name;
 	private Status status;
 
+	/**
+	 * Item-objektets tilstander
+	 * <li> {@link #IN_ORDER} </li>
+	 * <li> {@link #BROKEN} </li>
+	 * <li> {@link #LOST_AND_FOUND} </li>
+	 */
 	public static enum Status {
-		/**
-		 * I orden
-		 */
+		/** I orden */
 		IN_ORDER,
 		
-		/**
-		 * Ødelagt
-		 */
+		/** Ødelagt */
 		BROKEN,
 		
-		/**
-		 * Gjenglemt
-		 */
+		/** Gjenglemt */
 		LOST_AND_FOUND;
 	}
 	
@@ -58,7 +58,7 @@ public class Item {
 	 * <p>
 	 * {@link #id} settes til {@link #DEFAULT_ID}, må endres til unik id når den lagres i databasen.
 	 * @param name Navn
-	 * @param status Status i enum {@link Item.Status} 
+	 * @param status Status i enum {@link Status} 
 	 */
 	public Item(String name, Status status) {
 		this(DEFAULT_ID, name, status);
@@ -68,7 +68,7 @@ public class Item {
 	 * Oppretter Item-objekt. Brukes når data kommer fra databasen.
 	 * @param id Unik id i databasen
 	 * @param name Navn
-	 * @param status Status i enum {@link Item.Status} 
+	 * @param status Status i enum {@link Status} 
 	 */
 	public Item(int id, String name, Status status) {
 		this.id = id;
