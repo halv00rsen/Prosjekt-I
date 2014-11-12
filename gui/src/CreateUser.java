@@ -71,13 +71,13 @@ public class CreateUser extends JPanel{
 	}
 
 	/**
-	 * Sjekker om emailen er en valid emailadresse og om den finnes fra før i databasen
+	 * Sjekker om emailen er en valid emailadresse og om den finnes fra fÃ¸r i databasen
 	 * @return boolean 
 	 */
 	private boolean validEmail(){
 		String email = username.getText().toLowerCase().trim();
 //		if (email.indexOf("@") == -1 || email.indexOf(".") == -1){
-//			JOptionPane.showMessageDialog(null, "Feil format på email");
+//			JOptionPane.showMessageDialog(null, "Feil format pï¿½ email");
 //			return false;
 //		}
 		if (Database.getBruker(email) != null){
@@ -100,7 +100,7 @@ public class CreateUser extends JPanel{
 	}
 	
 	/**
-	 * Sjekker om passordene stemmer overens og om det er lang nok lengde på dem
+	 * Sjekker om passordene stemmer overens og om det er lang nok lengde pÃ¥ dem
 	 * @return boolean
 	 */
 	private boolean validPassword(){
@@ -126,11 +126,11 @@ public class CreateUser extends JPanel{
 		}
 		String username = this.username.getText().trim().toLowerCase();
 		Database.addBruker(username, pass, adminCheckBox.isSelected());
-		JOptionPane.showMessageDialog(null, "Du har nå opprettet en bruker!");
+		JOptionPane.showMessageDialog(null, "Du har nÃ¥ opprettet en bruker!");
 	}
 	
 	/**
-	 * Fjerner all tekst i alle inputfelt på siden
+	 * Fjerner all tekst i alle inputfelt pÃ¥ siden
 	 */
 	public void resetFields(){
 		username.setText("");
