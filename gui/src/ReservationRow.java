@@ -82,7 +82,7 @@ public class ReservationRow extends JPanel{
 		
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == delete){
-				int deleteReservation = JOptionPane.showOptionDialog(null, "Er du sikker på at du vil slette din reservasjon?", "Slett reservasjon", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[] {"Ja", "Nei"}, "Ja");
+				int deleteReservation = JOptionPane.showOptionDialog(null, "Er du sikker pÃ¥ at du vil slette din reservasjon?", "Slett reservasjon", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[] {"Ja", "Nei"}, "Ja");
 				if (deleteReservation == 0){
 					removeThis();
 				}
