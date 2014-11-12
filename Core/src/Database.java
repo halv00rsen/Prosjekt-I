@@ -405,7 +405,7 @@ public class Database {
 	 */
 	public static void updateItem(Item item) {
 		try {
-			String statement = "INSERT INTO item (id, status) "
+			String statement = "INSERT INTO inventory (id, status) "
 							 + "VALUES('"+item.getId()+"', '"+item.getStatus()+"') "
 							 + "ON DUPLICATE KEY UPDATE";
 			makeStatement(statement);
