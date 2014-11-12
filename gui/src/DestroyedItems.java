@@ -2,6 +2,7 @@ package src;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,10 +26,6 @@ import javax.swing.ListModel;
 
 public class DestroyedItems extends JPanel{
 	
-	private static final String addButtonString = "Legg til >>", removeButtonString = "<< Fjern", 
-			inventoryString = "Utstyr", brokenInventoryString = "�delagt utstyr";
-
-	  private static final Insets EMPTY_INSETS = new Insets(0, 0, 0, 0);
 	  private JList<Item> inventory, brokenInventory;
 	  private JButton addButton, removeButton;
 	  private SortedListModel inventoryListModel, brokenInventoryListModel;
@@ -38,27 +35,33 @@ public class DestroyedItems extends JPanel{
 	   */
 	  public DestroyedItems() {
 		  setBorder(BorderFactory.createEtchedBorder());
-		  setLayout(new GridBagLayout());
+		  setLayout(new GridLayout(1,3));
 		  inventoryListModel = new SortedListModel();
 		  inventory = new JList<Item>(inventoryListModel);
-		  add(new JLabel(inventoryString), new GridBagConstraints(0, 0, 1, 1, 0, 0,
-		      GridBagConstraints.CENTER, GridBagConstraints.NONE, EMPTY_INSETS, 0, 0));
-		  add(new JScrollPane(inventory), new GridBagConstraints(0, 1, 1, 5, .5,
-		      1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, EMPTY_INSETS, 0, 0));
-		  addButton = new JButton(addButtonString);
-		  add(addButton, new GridBagConstraints(1, 2, 1, 2, 0, .25,
-		      GridBagConstraints.CENTER, GridBagConstraints.NONE, EMPTY_INSETS, 0, 0));
+		  JScrollPane pane1 = new JScrollPane(inventory);
+		  pane1.setBorder(BorderFactory.createTitledBorder("Utstyr"));
+		  add(pane1);
+		  JPanel panel = new JPanel();
+		  GridBagConstraints c = new GridBagConstraints();
+		  panel.setLayout(new GridBagLayout());
+		  c.gridx = 0;
+		  c.gridy = 0;
+		  c.fill = GridBagConstraints.HORIZONTAL;
+		  addButton = new JButton("Legg til >>");
+		  panel.add(addButton, c);
 		  addButton.addActionListener(new AddListener());
-		  removeButton = new JButton(removeButtonString);
-		  add(removeButton, new GridBagConstraints(1, 4, 1, 2, 0, .25,
-		      GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 5, 0, 5), 0, 0));
+		  removeButton = new JButton("<< Fjern");
+		  c.gridy = 1;
+		  panel.add(new JLabel(""), c);
+		  c.gridy = 2;
+		  panel.add(removeButton, c);
 		  removeButton.addActionListener(new RemoveListener());
+		  add(panel);
 		  brokenInventoryListModel = new SortedListModel();
 		  brokenInventory = new JList<Item>(brokenInventoryListModel);
-		  add(new JLabel(brokenInventoryString), new GridBagConstraints(2, 0, 1, 1, 0, 0,
-		      GridBagConstraints.CENTER, GridBagConstraints.NONE, EMPTY_INSETS, 0, 0));
-		  add(new JScrollPane(brokenInventory), new GridBagConstraints(2, 1, 1, 5, .5,
-		      1.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH, EMPTY_INSETS, 0, 0));
+		  JScrollPane pane2 = new JScrollPane(brokenInventory);
+		  pane2.setBorder(BorderFactory.createTitledBorder("�delagt utstyr"));
+		  add(pane2);
 	  }
 	  
 	  /**
@@ -124,11 +127,11 @@ public class DestroyedItems extends JPanel{
 	   * En listener som lytter til legg-til-knappen, og flytter utstyr til ødelagt utstyr
 	   */
 	  private class AddListener implements ActionListener {
-	    public void actionPerformed(ActionEvent e) {
-	    	List<Item> selected = inventory.getSelectedValuesList();
-	    	addBrokenInventory(selected);
-	    	clearInventorySelected();
-	    }
+		  public void actionPerformed(ActionEvent e) {
+			  List<Item> selected = inventory.getSelectedValuesList();
+			  addBrokenInventory(selected);
+			  clearInventorySelected();
+		  }
 	  }
 
 	  /**
@@ -136,72 +139,62 @@ public class DestroyedItems extends JPanel{
 	   * En lytter som lytter til fjernknappen, flytter fra ødelagt til ikke-ødelagt lista
 	   */
 	  private class RemoveListener implements ActionListener {
-	    public void actionPerformed(ActionEvent e) {
-	    	List<Item> selected = brokenInventory.getSelectedValuesList();
-	    	addInventory(selected);
-	    	clearBrokenInventorySelected();
-	    }
+		  public void actionPerformed(ActionEvent e){
+			  List<Item> selected = brokenInventory.getSelectedValuesList();
+			  addInventory(selected);
+			  clearBrokenInventorySelected();
+		  }
 	  }
-	}
 
 	/**
 	 * 
 	 * Klassen håndterer elementene i listene
 	 */
-	class SortedListModel extends AbstractListModel {
-
-	  private SortedSet model;
-
-	  public SortedListModel() {
-	    model = new TreeSet();
-	  }
-
-	  public int getSize() {
-	    return model.size();
-	  }
-
-	  public Object getElementAt(int index) {
-	    return model.toArray()[index];
-	  }
-
-	  public void add(Object element) {
-	    if (model.add(element)) {
-	      fireContentsChanged(this, 0, getSize());
-	    }
-	  }
-
-	  public void addAll(Object elements[]) {
-	    Collection c = Arrays.asList(elements);
-	    model.addAll(c);
-	    fireContentsChanged(this, 0, getSize());
-	  }
-
-	  public void clear() {
-	    model.clear();
-	    fireContentsChanged(this, 0, getSize());
-	  }
-
-	  public boolean contains(Object element) {
-	    return model.contains(element);
-	  }
-
-	  public Object firstElement() {
-	    return model.first();
-	  }
-
-	  public Iterator<String> iterator() {
-	    return model.iterator();
-	  }
-
-	  public Object lastElement() {
-	    return model.last();
-	  }
-
-	  public boolean removeElement(Object element) {
-	    boolean removed = model.remove(element);
-	    if (removed) {
-	      fireContentsChanged(this, 0, getSize());
-	    }
-	    return removed;
-	  }
+	private class SortedListModel extends AbstractListModel<Item> {
+	
+		  private SortedSet<Item> model;
+	
+		  public SortedListModel() {
+			  model = new TreeSet<Item>();
+		  }
+	
+		  public int getSize() {
+			  return model.size();
+		  }
+	
+		  public Item getElementAt(int index) {
+			  return (Item) model.toArray()[index];
+		  }
+	
+		  public void add(Item element) {
+			  if (model.add(element)) {
+				  fireContentsChanged(this, 0, getSize());
+			  }
+		  }
+	
+		  public void clear() {
+			  model.clear();
+			  fireContentsChanged(this, 0, getSize());
+		  }
+	
+		  public boolean contains(Item element) {
+			  return model.contains(element);
+		  }
+	
+		  public Item firstElement() {
+			  return model.first();
+		  }
+	
+		  public Item lastElement() {
+			  return model.last();
+		  }
+	
+		  public boolean removeElement(Item element) {
+			  boolean removed = model.remove(element);
+			  if (removed) {
+				  fireContentsChanged(this, 0, getSize());
+			  }
+			  return removed;
+		  }
+	}
 }
