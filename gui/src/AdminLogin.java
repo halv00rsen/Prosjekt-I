@@ -67,7 +67,7 @@ public class AdminLogin extends JPanel{
 	private class ButtonListener implements ActionListener{
 
 		/**
-		 * @param e en av knappene har blitt trykket på
+		 * @param e en av knappene har blitt trykket pÃ¥
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (listener == null)

@@ -65,7 +65,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		c.gridy = 2;
 		panel.add(month, c);
 		c.gridx = 0;
-		panel.add(new JLabel("Måned:"), c);
+		panel.add(new JLabel("MÃ¥ned:"), c);
 		c.gridy = 3;
 		panel.add(new JLabel("Antall dager:"), c);
 		c.gridx = 3;
@@ -135,7 +135,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		info += "\nTopptur: " + cabinChosen.getTopptur();
 		info += "\nJakt og fiske: " + cabinChosen.getJaktOgFiske();
 		info += "\nSpesialiteter: " + cabinChosen.getSpesialiteter();
-		info += "\n\nKoia er reservert på følgende dager:";
+		info += "\n\nKoia er reservert pÃ¥ fÃ¥lgende dager:";
 		if (cabinChosen.getCalendar().getDatesBooked().size() == 0){
 			info += "\nIngen reservasjoner for denne koia.";
 		}else
@@ -152,7 +152,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		}
 		if (!isLoggedIn){
 			JOptionPane.showMessageDialog(null, "Du er ikke logged inn, og kan dermed ikke reservere ei koie."
-					+ "\nGå til innloggingsfanen for å logge inn.");
+					+ "\nGÃ¥ til innloggingsfanen for Ã¥ logge inn.");
 			return;
 		}
 		int[] date = validDates.getReservation();
