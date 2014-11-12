@@ -1,7 +1,7 @@
 package src;
 
 /** Inneholder unik database-ID, navn og status for en ting som tilhører en {@link Koie} */
-public class Item {
+public class Item implements Comparable<Item>{
 	public static int DEFAULT_ID = 0;
 	private int id;
 	private String name;
@@ -99,5 +99,16 @@ public class Item {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+	
+	public String toString(){
+		return name;
+	}
+
+	public int compareTo(Item item) {
+		if (item.name.equals(name)){
+			return 0;
+		}
+		return 1;
 	}
 }

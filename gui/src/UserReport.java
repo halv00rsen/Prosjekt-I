@@ -16,6 +16,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
@@ -35,17 +36,18 @@ public class UserReport {
 	private DestroyedItems destroyedItems;
 	private final String cabin;
 	private JComboBox<Integer> numWood;
+	private final int cabinId;
 	
 	private UserReportListener listener;
 	
-	public UserReport(String cabin, int dayFrom, int monthFrom, int dayTo, int monthTo){
+	public UserReport(String cabin, int dayFrom, int monthFrom, int dayTo, int monthTo, int cabinId){
 		frame = new JFrame("Rapport");
 		frame.setSize(400, 400);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		buttonListener = new ButtonListener();
 		this.cabin = cabin;
-		
+		this.cabinId = cabinId;
 		JPanel cancelOkButtons = new JPanel();
 		frame.getContentPane().add(cancelOkButtons, BorderLayout.SOUTH);
 		cancelOkButtons.setLayout(new GridLayout(1, 0, 0, 0));
@@ -73,7 +75,7 @@ public class UserReport {
 		c.gridy = 1;
 		panel_1.add(new JLabel("Leid fra " + dayFrom + "." + monthFrom + " til " + dayTo + ". " + monthTo));
 		c.gridy = 2;
-		panel_1.add(new JLabel("Antall vedsekker: "), c);
+		panel_1.add(new JLabel("Brukte vedsekker: "), c);
 		c.gridx = 1;
 		numWood = new JComboBox<Integer>();
 		for (int a = 0; a < 10; a++){
@@ -96,6 +98,7 @@ public class UserReport {
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		panel.add(scrollPane);
 		tabbedPane.addTab("Annen Info", null, panel, null);
+		updateEquipmentInCabin();
 		frame.setLocation(GUI.getXPosition(), GUI.getYPosition());
 		frame.setVisible(true);
 	}
@@ -105,10 +108,8 @@ public class UserReport {
 	}
 	
 	private void updateEquipmentInCabin(){
-		if (cabin.equals("Koie 1")){
-			String[] a = new String[] {"Gitar", "Stol", "Bord"};
-			destroyedItems.setInventory(a);
-		}
+		List<Item> items = Database.getKoie(cabinId).getInventory().getAllItems();
+		destroyedItems.setInventory(items);
 	}
 	
 	private class ButtonListener implements ActionListener{

@@ -29,7 +29,7 @@ public class DestroyedItems extends JPanel{
 			inventoryString = "Utstyr", brokenInventoryString = "�delagt utstyr";
 
 	  private static final Insets EMPTY_INSETS = new Insets(0, 0, 0, 0);
-	  private JList<String> inventory, brokenInventory;
+	  private JList<Item> inventory, brokenInventory;
 	  private JButton addButton, removeButton;
 	  private SortedListModel inventoryListModel, brokenInventoryListModel;
 
@@ -40,7 +40,7 @@ public class DestroyedItems extends JPanel{
 		  setBorder(BorderFactory.createEtchedBorder());
 		  setLayout(new GridBagLayout());
 		  inventoryListModel = new SortedListModel();
-		  inventory = new JList<String>(inventoryListModel);
+		  inventory = new JList<Item>(inventoryListModel);
 		  add(new JLabel(inventoryString), new GridBagConstraints(0, 0, 1, 1, 0, 0,
 		      GridBagConstraints.CENTER, GridBagConstraints.NONE, EMPTY_INSETS, 0, 0));
 		  add(new JScrollPane(inventory), new GridBagConstraints(0, 1, 1, 5, .5,
@@ -54,7 +54,7 @@ public class DestroyedItems extends JPanel{
 		      GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 5, 0, 5), 0, 0));
 		  removeButton.addActionListener(new RemoveListener());
 		  brokenInventoryListModel = new SortedListModel();
-		  brokenInventory = new JList<String>(brokenInventoryListModel);
+		  brokenInventory = new JList<Item>(brokenInventoryListModel);
 		  add(new JLabel(brokenInventoryString), new GridBagConstraints(2, 0, 1, 1, 0, 0,
 		      GridBagConstraints.CENTER, GridBagConstraints.NONE, EMPTY_INSETS, 0, 0));
 		  add(new JScrollPane(brokenInventory), new GridBagConstraints(2, 1, 1, 5, .5,
@@ -64,10 +64,10 @@ public class DestroyedItems extends JPanel{
 	  /**
 	   * @return items en liste med alt ødelagt utstyr på koia
 	   */
-	  public List<String> getDestroyedElements(){
-		  List<String> items = new ArrayList<String> ();
+	  public List<Item> getDestroyedElements(){
+		  List<Item> items = new ArrayList<Item> ();
 		  for (int a = 0; a < brokenInventoryListModel.getSize(); a++)
-			  items.add((String) brokenInventoryListModel.getElementAt(a));
+			  items.add((Item) brokenInventoryListModel.getElementAt(a));
 		  return items;
 	  }
 	  
@@ -75,18 +75,18 @@ public class DestroyedItems extends JPanel{
 	   * Sletter alt utstyr som ligger i lista
 	   * @param inventory en liste med alt utstyr i koia
 	   */
-	  public void setInventory(String[] inventory){
+	  public void setInventory(List<Item> inventory){
 		  inventoryListModel.clear();
 		  brokenInventoryListModel.clear();
-		  for (String i : inventory)
+		  for (Item i : inventory)
 			  inventoryListModel.add(i);
 	  }
 	  /**
 	   * 
 	   * @param inventory legges til lista til utstyr
 	   */
-	  private void addInventory(List<String> inventory){
-		  for (String i : inventory)
+	  private void addInventory(List<Item> inventory){
+		  for (Item i : inventory)
 			  inventoryListModel.add(i);
 	  }
 	  
@@ -94,8 +94,8 @@ public class DestroyedItems extends JPanel{
 	   * 
 	   * @param inventory legges til i ødelagt utstyr lista
 	   */
-	  private void addBrokenInventory(List<String> inventory){
-		  for (String i : inventory)
+	  private void addBrokenInventory(List<Item> inventory){
+		  for (Item i : inventory)
 			  brokenInventoryListModel.add(i);
 	  }
 	  
@@ -103,8 +103,8 @@ public class DestroyedItems extends JPanel{
 	   * sletter alle elementer som er valgt i utstyrlista
 	   */
 	  private void clearInventorySelected() {
-	    List<String> selected = inventory.getSelectedValuesList();
-	    for (String value : selected)
+	    List<Item> selected = inventory.getSelectedValuesList();
+	    for (Item value : selected)
 	    	inventoryListModel.removeElement(value);
 	    inventory.getSelectionModel().clearSelection();
 	  }
@@ -113,8 +113,8 @@ public class DestroyedItems extends JPanel{
 	   * Sletter alle elementer som er valgt i den ødelagte utstyrslista
 	   */
 	  private void clearBrokenInventorySelected() {
-		  List<String> seleceted = brokenInventory.getSelectedValuesList();
-		  for (String value : seleceted)
+		  List<Item> seleceted = brokenInventory.getSelectedValuesList();
+		  for (Item value : seleceted)
 			  brokenInventoryListModel.removeElement(value);
 		  brokenInventory.getSelectionModel().clearSelection();
 	  }
@@ -125,7 +125,7 @@ public class DestroyedItems extends JPanel{
 	   */
 	  private class AddListener implements ActionListener {
 	    public void actionPerformed(ActionEvent e) {
-	    	List<String> selected = inventory.getSelectedValuesList();
+	    	List<Item> selected = inventory.getSelectedValuesList();
 	    	addBrokenInventory(selected);
 	    	clearInventorySelected();
 	    }
@@ -137,7 +137,7 @@ public class DestroyedItems extends JPanel{
 	   */
 	  private class RemoveListener implements ActionListener {
 	    public void actionPerformed(ActionEvent e) {
-	    	List<String> selected = brokenInventory.getSelectedValuesList();
+	    	List<Item> selected = brokenInventory.getSelectedValuesList();
 	    	addInventory(selected);
 	    	clearBrokenInventorySelected();
 	    }

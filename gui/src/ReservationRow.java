@@ -111,12 +111,22 @@ public class ReservationRow extends JPanel{
 				return;
 			}
 			if (!isReported){
-				userReport = new UserReport(name, from.day, from.month, to.day, to.month);
+				Map<Integer, String> cabins = Database.getIdNameMap();
+				int cabinId = -1;
+				for (Integer i: cabins.keySet()){
+					if (cabins.get(i).equals(name)){
+						cabinId = i;
+						break;
+					}
+				}
+				if (cabinId == -1)
+					return;
+				userReport = new UserReport(name, from.day, from.month, to.day, to.month, cabinId);
 				userReport.setListener(this);
 			}
 		}
 
-		public void okPressed(String comment, List<String> brokenInventory) {
+		public void okPressed(String comment, List<Item> brokenInventory) {
 			removeButton();
 			isReported = true;
 			isReportedString.setText("Ja");
