@@ -110,6 +110,8 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 		reservations.remove(reservation);
 		futureReservations.remove(reservation);
 		hasVisitedReservations.remove(reservation);
+		revalidate();
+		repaint();
 	}
 
 	public void addReservation(String name, Date from, Date to) {
