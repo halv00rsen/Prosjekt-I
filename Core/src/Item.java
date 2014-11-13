@@ -9,9 +9,8 @@ public class Item implements Comparable<Item>{
 
 	/**
 	 * Item-objektets tilstander
-	 * <li> {@link #IN_ORDER} </li>
-	 * <li> {@link #BROKEN} </li>
-	 * <li> {@link #LOST_AND_FOUND} </li>
+	 * <p>
+	 * {@link #IN_ORDER} eller {@link #BROKEN} eller {@link #LOST_AND_FOUND}
 	 */
 	public static enum Status {
 		/** I orden */
@@ -77,34 +76,64 @@ public class Item implements Comparable<Item>{
 		this.status = status;
 	}
 	
+	/**
+	 * Returnerer Item-objektets ID
+	 * @return Item-objektets ID
+	 */
 	public int getId() {
 		return id;
 	}
 	
+	/**
+	 * Setter Item-objektets ID
+	 * @param id Item-objektets ID
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * Returnerer Item-objektets navn
+	 * @return Item-objektets navn
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Setter Item-objektets navn
+	 * @param name Item-objektets navn
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Returnerer Item-objektets status
+	 * @return Item-objektets status i enum {@link Status}
+	 */
 	public Status getStatus() {
 		return status;
 	}
 
+	/**
+	 * Setter Item-objektets status
+	 * @param status Item-objektets status i enum {@link Status}
+	 */
 	public void setStatus(Status status) {
 		this.status = status;
 	}
 	
+	/**
+	 * Returnerer Item-objektets navn
+	 */
 	public String toString(){
 		return name;
 	}
 
+	/**
+	 * Sammenligner navnene til to Item-objekter
+	 */
 	public int compareTo(Item item) {
 		if (item.name.equals(name)){
 			return 0;
