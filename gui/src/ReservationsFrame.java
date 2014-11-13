@@ -187,14 +187,14 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 					break;
 				}
 			}
-			callListener(cabinChosen.getName(), from, to);
+			callListener(cabinChosen.getName(), from, to, resId);
 		}else{
 			JOptionPane.showMessageDialog(null, "Din reservasjon ble ikke godkjent.");
 		}
 	}
 	
-	private void callListener(String name, Date from, Date to){
-		listener.addReservation(name, from, to);
+	private void callListener(String name, Date from, Date to, int resId){
+		listener.addReservation(name, from, to, resId);
 	}
 	
 	private class CabinListener implements ActionListener{
