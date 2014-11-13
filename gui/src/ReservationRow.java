@@ -76,6 +76,10 @@ public class ReservationRow extends JPanel{
 		}
 	}
 	
+	public int getResId(){
+		return resId;
+	}
+	
 	public String getCabinName(){
 		return name;
 	}

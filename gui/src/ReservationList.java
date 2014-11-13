@@ -101,12 +101,12 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 		
 	}
 	
-	private void callListener(String name, Date from, Date to){
-		listener.removeReservation(from, to, name);
+	private void callListener(int resId){
+		listener.removeReservation(resId);
 	}
 
 	public void removeReservation(ReservationRow reservation) {
-		callListener(reservation.getCabinName(), reservation.getFrom(), reservation.getTo());
+		callListener(reservation.getResId());
 		reservations.remove(reservation);
 		futureReservations.remove(reservation);
 		hasVisitedReservations.remove(reservation);

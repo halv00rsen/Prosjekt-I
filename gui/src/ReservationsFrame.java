@@ -219,19 +219,20 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		adminLogin = true;
 	}
 
-	public void removeReservation(Date from, Date to, String idName) {
-		HashMap<Integer, String> cabins = Database.getIdNameMap();
-		int id = -1;
-		for (Integer ids: cabins.keySet()){
-			if (cabins.get(ids).equals(idName)){
-				id = ids;
-				break;
-			}
-		}if (id == -1)
-			return;
-		Koie koie = Database.getKoie(id);
-		koie.getCalendar().removeReservation(from, to);
-		Database.toDatabase(koie);
-		setCabinInformation();
+	public void removeReservation(int resId) {
+		Database.slettReservasjon(resId);
+//		HashMap<Integer, String> cabins = Database.getIdNameMap();
+//		int id = -1;
+//		for (Integer ids: cabins.keySet()){
+//			if (cabins.get(ids).equals(idName)){
+//				id = ids;
+//				break;
+//			}
+//		}if (id == -1)
+//			return;
+//		Koie koie = Database.getKoie(id);
+//		koie.getCalendar().removeReservation(from, to);
+//		Database.toDatabase(koie);
+//		setCabinInformation();
 	}
 }

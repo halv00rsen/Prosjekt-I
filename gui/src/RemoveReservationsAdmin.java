@@ -55,7 +55,7 @@ public class RemoveReservationsAdmin extends JPanel implements ReservationRowLis
 
 	public void removeReservation(ReservationRow reservation) {
 		panel.remove(reservation);
-		deleteListener.removeReservation(reservation.getFrom(), reservation.getTo(), reservation.getCabinName());
+		deleteListener.removeReservation(reservation.getResId());
 		panel.revalidate();
 		panel.repaint();
 	}
