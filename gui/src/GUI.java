@@ -32,6 +32,7 @@ public class GUI implements LoginListener{
 	private MessageAdmin messageAdmin;
 	private RemoveReservationsAdmin removeReservations;
 	private AddItemAdmin addItemAdmin;
+	private MailToUserAdmin mailToUser;
 	
 	public GUI(){
 		frame = new JFrame("NTNUI-Koiene");
@@ -79,6 +80,8 @@ public class GUI implements LoginListener{
 		removeReservations = null;
 		tabbedPane.remove(addItemAdmin);
 		addItemAdmin = null;
+		tabbedPane.remove(mailToUser);
+		mailToUser = null;
 	}
 
 	public void adminHasLoggedIn() {
@@ -86,12 +89,14 @@ public class GUI implements LoginListener{
 		frame.setTitle("NTNUI-Koiene (admin)");
 		itemStatus = new ItemStatus();
 		tabbedPane.addTab("Utstyrstatus", null, itemStatus, null);
-		woodStatus = new WoodStatus();
-		tabbedPane.addTab("Vedstatus", null, woodStatus, null);
 		addItemAdmin = new AddItemAdmin();
 		tabbedPane.addTab("Legg til utstyr", null, addItemAdmin, null);
+		woodStatus = new WoodStatus();
+		tabbedPane.addTab("Vedstatus", null, woodStatus, null);
 		removeReservations = new RemoveReservationsAdmin(reservationFrame);
 		tabbedPane.addTab("Fjern reservasjoner", null, removeReservations, null);
+		mailToUser = new MailToUserAdmin();
+		tabbedPane.addTab("Mail til bruker", null, mailToUser, null);
 	}
 
 	public static int getXPosition() {
