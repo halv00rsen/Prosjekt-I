@@ -60,7 +60,7 @@ public class DestroyedItems extends JPanel{
 		  brokenInventoryListModel = new SortedListModel();
 		  brokenInventory = new JList<Item>(brokenInventoryListModel);
 		  JScrollPane pane2 = new JScrollPane(brokenInventory);
-		  pane2.setBorder(BorderFactory.createTitledBorder("Ødelagt utstyr"));
+		  pane2.setBorder(BorderFactory.createTitledBorder("Ã˜delagt utstyr"));
 		  add(pane2);
 	  }
 	  
