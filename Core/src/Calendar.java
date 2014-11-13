@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+/** Holder på reservasjonene til en koie */
 public class Calendar {
-	
 	public final static int daysInFeature = 180;
 	private final List<BookingDate> datesBooked;
-	private Date todaysDate, maxDate;//dato per dags dato
+	private Date todaysDate, maxDate; // Dato per dags dato
 	
+	/**
+	 * Oppretter et tomt Calendar-objekt
+	 */
 	public Calendar(){
 		datesBooked = new ArrayList<BookingDate>();
 		java.util.Calendar c = new GregorianCalendar();
@@ -18,33 +21,80 @@ public class Calendar {
 		maxDate = getLastDate(todaysDate, daysInFeature);
 	}
 	
+	/**
+	 * Returnerer nåværende dato
+	 * @return Date-objekt med nåværende dato
+	 */
 	public Date getTodaysDate(){
 		return todaysDate;
 	}
 	
+	/**
+	 * Returnerer den siste datoen det kan reserveres på
+	 * @return Date-objekt med siste dato
+	 */
 	public Date getMaxDate(){
 		return maxDate;
 	}
+			
+	/**
+	 * Sjekker om denne reservasjonen kan reserveres, så ikke overbooking skjer
+	 * @param dateFrom
+	 * @param days
+	 * @param isFromDatabase
+	 * @return
+	 */
+	public boolean reservationIsOk(Date dateFrom, int days, boolean isFromDatabase){
+		return reservationIsOk(dateFrom, getLastDate(dateFrom, days), days, isFromDatabase);
+		
+	}
 	
-	//sjekker om reservasjonen eksisterer og fjerner den
-	public void removeReservation(Date dateFrom, Date dateTo){
-		BookingDate removeBooking = null;
+	/**
+	 * Sjekker om reservasjonen er gyldig og ikke kolliderer med andre reservasjoner
+	 * @param dateFrom Start-dato
+	 * @param dateTo Slutt-dato
+	 * @param isFromDatabase Om reservasjon ble hentet fra databasen
+	 * @return Om reservasjonen er gyldig
+	 */
+	private boolean reservationIsOk(Date dateFrom, Date dateTo, boolean isFromDatabase){
+		return reservationIsOk(dateFrom, dateTo, dateFrom.getDaysBetween(dateTo), isFromDatabase);
+	}
+	
+	/**
+	 * Sjekker om reservasjonen er gyldig og ikke kolliderer med andre reservasjoner
+	 * @param dateFrom Start-dato
+	 * @param dateTo Slutt-dato
+	 * @param numOfDays Varighet
+	 * @param isFromDatabase Om reservasjon ble hentet fra databasen
+	 * @return Om reservasjonen er gyldig
+	 */
+	private boolean reservationIsOk(Date dateFrom, Date dateTo, int numOfDays, boolean isFromDatabase) {
+		if ((numOfDays > daysInFeature || numOfDays < 0 || dateFrom == null || dateTo == null) && !isFromDatabase) {
+			return false;
+		}
+
 		for (BookingDate booking : datesBooked){
-			if (booking.equals(dateFrom, dateTo)){
-				removeBooking = booking;
-				break;
+			if (booking.datesCollideWithBooking(dateFrom, dateTo)) {
+				return false;
 			}
 		}
-		if (removeBooking != null){
-			datesBooked.remove(removeBooking);
+
+		if (!todaysDate.isBefore(dateFrom)) {
+			return dateFrom.isAfter(todaysDate);
+		} else if (todaysDate.equals(dateFrom)) {
+			return true;
 		}
+
+		int daysFromToNow = todaysDate.getDaysBetween(dateFrom);
+		return numOfDays + daysFromToNow <= daysInFeature;
 	}
 	
-	public void removeReservation(Date dateFrom, int days){
-		removeReservation(dateFrom, getLastDate(dateFrom, days));
-	}
-	
-	//sjekker om en reservasjon finnes
+	/**
+	 * Returnerer om en reservasjon finnes
+	 * @param dateFrom Start-dato
+	 * @param days Varighet
+	 * @return True hvis reservasjonene finnes, false ellers
+	 */
 	public boolean reservationExcists(Date dateFrom, int days){
 		Date dateTo = getLastDate(dateFrom, days);
 		for (BookingDate booking : datesBooked){
@@ -53,44 +103,15 @@ public class Calendar {
 		}
 		return false;
 	}
-	
-	//sjekker om denne reservasjonen kan reserveres, s� ikke overbooking skjer
-	public boolean reservationIsOk(Date dateFrom, int days, boolean isFromDatabase){
-		return reservationIsOk(dateFrom, getLastDate(dateFrom, days), days, isFromDatabase);
-		
-	}
-	
-	private boolean reservationIsOk(Date dateFrom, Date dateTo, int numOfDays, boolean isFromDatabase){
-		if ((numOfDays > daysInFeature || numOfDays < 0 || dateFrom == null || dateTo == null) && !isFromDatabase)
-			return false;
-		for (BookingDate booking : datesBooked){
-			if (booking.datesCollideWithBooking(dateFrom, dateTo))
-				return false;
-		}
-		if (!todaysDate.isBefore(dateFrom)){
-			return dateFrom.isAfter(todaysDate);
-		}
-		else if (todaysDate.equals(dateFrom))
-			return true;
-		int daysFromToNow = todaysDate.getDaysBetween(dateFrom);
-		return numOfDays + daysFromToNow <= daysInFeature;
-	}
-	
-	private boolean reservationIsOk(Date dateFrom, Date dateTo, boolean isFromDatabase){
-		return reservationIsOk(dateFrom, dateTo, dateFrom.getDaysBetween(dateTo), isFromDatabase);
-	}
-	
-	//reserverer en gitt periode
-	public void reservePeriod(Date date, int days, String person, int resID, boolean isFromDatabase){
-		reservePeriod(date, getLastDate(date, days), person, resID, isFromDatabase);
-	}
-	
-	//returnerer en kopi av datoer som er booket
-	public List<BookingDate> getDatesBooked(){
-		return new ArrayList<BookingDate>(datesBooked);
-	}
-	
-	//reserverer ei koie
+
+	/**
+	 * Reserverer en koie for en gitt periode
+	 * @param dateFrom Start-dato
+	 * @param dateTo Slutt-dato
+	 * @param person Hvilken bruker som reserverer
+	 * @param resID Reservasjons-ID
+	 * @param isFromDatabase Om reservasjonen er hente fra databasen
+	 */
 	public void reservePeriod(Date dateFrom, Date dateTo, String person, int resID, boolean isFromDatabase){
 		if (!reservationIsOk(dateFrom, dateTo, isFromDatabase))
 			return;
@@ -111,7 +132,59 @@ public class Calendar {
 		datesBooked.add(booking);
 	}
 	
-	//returnerer hvilken dato som er x dager foran date
+	/**
+	 * Reserverer en koie for en gitt periode
+	 * @param date Start-dato
+	 * @param days Varighet
+	 * @param person Hvilken bruker som reserverer
+	 * @param resID Reservasjons-ID
+	 * @param isFromDatabase Om reservasjonen ble hentet fra databasen
+	 */
+	public void reservePeriod(Date date, int days, String person, int resID, boolean isFromDatabase){
+		reservePeriod(date, getLastDate(date, days), person, resID, isFromDatabase);
+	}
+
+	/**
+	 * Fjerner en reservasjon hvis den eksisterer
+	 * @param dateFrom Start-dato
+	 * @param dateTo Slutt-dato
+	 */
+	public void removeReservation(Date dateFrom, Date dateTo){
+		BookingDate removeBooking = null;
+		for (BookingDate booking : datesBooked){
+			if (booking.equals(dateFrom, dateTo)){
+				removeBooking = booking;
+				break;
+			}
+		}
+		if (removeBooking != null){
+			datesBooked.remove(removeBooking);
+		}
+	}
+	
+	/**
+	 * Fjerner en reservasjon hvis den eksisterer
+	 * @param dateFrom Start-dato
+	 * @param days Varighet
+	 */
+	public void removeReservation(Date dateFrom, int days){
+		removeReservation(dateFrom, getLastDate(dateFrom, days));
+	}
+	
+	/**
+	 * Returnerer en kopi av datoer som er booket
+	 * @return Datoer som er booket
+	 */
+	public List<BookingDate> getDatesBooked(){
+		return new ArrayList<BookingDate>(datesBooked);
+	}
+	
+	/**
+	 * Returnerer hvilken dato som er et gitt antall dager foran en dato
+	 * @param date Dato
+	 * @param days Antall dager
+	 * @return Dato som er et gitt antall dager foran en dato
+	 */
 	public static Date getLastDate(Date date, int days){
 		if (days > daysInFeature || days < 0)
 			return null;
@@ -129,24 +202,34 @@ public class Calendar {
 		return new Date(day, month);
 	}
 	
-	//returnerer antall dager i denne aktuelle m�neden
-	public static int getDayOfMonth(int month){
-		if (month == 2){
+	/**
+	 * Returnerer hvor mange dager det er i en gitt måned
+	 * @param month Måneden
+	 * @return Hvor mange dager det er i måneden
+	 */
+	public static int getDayOfMonth(int month) {
+		if (month == 2) {
 			java.util.Calendar c = new GregorianCalendar();
-			if (c.getWeekYear() % 4 == 0)//skudd�r
+			if (c.getWeekYear() % 4 == 0) { // Skuddår
 				return 29;
+			}
 			return 28;
-		}else if ((month < 8 && month % 2 == 1) || (month > 7 && month % 2 == 0)){
-			return 31;//sjekker alle m�neder med 31 dager
-		}
-		else if ((month < 8 && month % 2 == 0) || (month > 7 && month % 2 == 1)){
-			return 30;//sjekker ralle m�neder med 30 dager
-		}else
+		} else if ((month < 8 && month % 2 == 1) || (month > 7 && month % 2 == 0)) {
+			return 31; // Sjekker alle måneder med 31 dager
+		} else if ((month < 8 && month % 2 == 0) || (month > 7 && month % 2 == 1)) {
+			return 30; // Sjekker alle måneder med 30 dager
+		} else {
 			return -1;
+		}
 	}
 	
-	//sjekker antall dager mellom dateFrom og dateTo
-	//er statisk, brukes av andre klasser, bla BookingDate
+	/**
+	 * Returnerer antall dager mellom to datoer
+	 * @param dateFrom Start-dato
+	 * @param dateTo Slutt-dato
+	 * @return Antall dager mellom datoene
+	 */
+	// Er statisk, brukes av andre klasser, bl.a. BookingDate
 	public static int getNumOfDaysBetween(Date dateFrom, Date dateTo){
 		int monthDifference = (dateTo.month - dateFrom.month) % 12;
 		if (monthDifference < 0 || (dateTo.day < dateFrom.day && monthDifference == 0))
@@ -171,8 +254,13 @@ public class Calendar {
 		}
 	}
 	
-	//sjekker om en dato er p� riktig format, day og month er ikke 0-indeksert
-	//er statisk, kan brukes av andre klasser, bla. Date 
+	/**
+	 * Sjekker om en dato er gyldig
+	 * @param day Dag (ikke 0̈́-indeksert)
+	 * @param month Måned (ikke 0-indeksert)
+	 * @return Om dag og måned er en gyldig kombinasjon
+	 */
+	// Er statisk, kan brukes av andre klasser, bl.a. Date 
 	public static boolean validDate(int day, int month){
 		int daysInMonth = getDayOfMonth(month);
 		if (day < 1 || daysInMonth == -1 || day > daysInMonth || month > 12)

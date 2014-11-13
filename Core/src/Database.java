@@ -152,6 +152,7 @@ public class Database {
 		
 		// Sletter alle tidligere reservasjoner
 		makeStatement("DELETE FROM reservasjon WHERE koie_id =" + koie.getId());
+		
 
 		// Oppdaterer reservasjoner
 		Calendar calendar = koie.getCalendar();
