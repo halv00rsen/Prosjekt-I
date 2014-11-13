@@ -431,6 +431,19 @@ public class Database {
 	}
 	
 	/**
+	 * Fjernet et Item fra databasen
+	 * @param item Et Item-objekt som skal fjernes
+	 */
+	public static void removeItem(Item item) {
+		try {
+			String statement = "DELETE FROM inventory WHERE ID = "+item.getId();
+			makeStatement(statement);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Returnerer alle reservasjonene til en bruker
 	 * @param person Bruker-ID-en
 	 * @return Liste med UserDatesBooked objekter hvor reservasjonene samnt reservasjons id ligger
