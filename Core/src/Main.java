@@ -19,7 +19,7 @@ public class Main {
 		
 		Koie koie3 = Database.getKoie(3);
 		Inventory inv = koie3.getInventory();
-		inv.addItem(new Item("ostehøvel"));
+		inv.addItem(new Item("ostehÃ¸vel"));
 		inv.addItem(new Item("gaffel"));
 		Database.toDatabase(koie3);
 	}
