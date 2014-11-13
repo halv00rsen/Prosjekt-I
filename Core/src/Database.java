@@ -73,11 +73,19 @@ public class Database {
 						+ "toDate VARCHAR(255) NOT NULL, "
 						+ "bruker_id VARCHAR(255) NOT NULL)");
 			
-			makeStatement("CREATE TABLE rapport"
-						+ "(resID int NOT NULL PRIMARY KEY, "
+//			makeStatement("CREATE TABLE rapport"
+//						+ "(resID int NOT NULL PRIMARY KEY, "
+//						+ "koie_id SMALLINT NOT NULL, "
+//						+ "person VARCHAR(255), "
+//						+ "kommentar VARCHAR(255))");
+			makeStatement("CREATE TABLE rapport" 
+						+ "(id SMALLINT NOT NULL AUTO_INCREMENT, "
+						+ "resID int NOT NULL, " 
 						+ "koie_id SMALLINT NOT NULL, "
 						+ "person VARCHAR(255), "
-						+ "kommentar VARCHAR(255))");
+						+ "kommentar VARCHAR(255), "
+						+ "PRIMARY KEY(id), "
+						+ "FOREGIN KEY(resID) REFERENCES reservasjon(ID))");
 			
 			// Fyller koie-tabellen med data fra fil
 			Scanner in = new Scanner(new FileReader(initKoie));
