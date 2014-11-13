@@ -6,7 +6,7 @@ public class BookingDate {
 	public final int numberOfDays;
 	public final String person;
 	private int resID;
-	public final boolean isFromDatabase;
+	public boolean isFromDatabase;
 	
 	/**
 	 * Oppretter et BookingDate-objekt
@@ -33,6 +33,10 @@ public class BookingDate {
 	 */
 	public int getID(){
 		return resID;
+	}
+	
+	public void setIsFromDatabase(boolean isFrom){
+		isFromDatabase = isFrom;
 	}
 
 	/**
@@ -101,6 +105,6 @@ public class BookingDate {
 	 * Returnerer informasjonen i objektet som en streng
 	 */
 	public String toString(){
-		return "[Fra: " + dateFrom + ", Til: " + dateTo + ", Antall dager: " + numberOfDays + "]";
+		return "[Fra: " + dateFrom + ", Til: " + dateTo + ", Antall dager: " + numberOfDays + ", isFromdatabase: " + isFromDatabase + "]";
 	}
 }
