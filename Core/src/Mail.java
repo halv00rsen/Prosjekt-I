@@ -7,23 +7,18 @@ import javax.activation.*;
 
 public class Mail {
 	
-	public static void main(String[] args) {
-		//Mail mail = new Mail();
-		Mail.sendMail("alekh@stud.ntnu.no", "test", "heisann");
-	}
+//	public static void main(String[] args) {
+//		Mail.sendMail("alekh@stud.ntnu.no", "test", "heisann");
+//	}
 	
-	public static void sendMail(String emailBruker, String subjectline, String messageText) {
+	public static void sendMail(String to, String subjectline, String messageText) {
 		
 		String from = "it1901gruppe10@gmail.com";
 		String pass = "prosjekt1"; 
 		
-		String to = emailBruker;
-		
-		String host = "smtp.gmail.com";
-		String port = "587";
 		Properties properties = System.getProperties();
-		properties.setProperty("mail.smtp.host", host);
-		properties.setProperty("mail.smtp.port", port);
+		properties.setProperty("mail.smtp.host", "smtp.gmail.com");
+		properties.setProperty("mail.smtp.port", "587");
 		properties.setProperty("mail.smtp.password", pass);
 		properties.setProperty("mail.smtp.user", from);
 		properties.setProperty("mail.smtp.auth", "true");
