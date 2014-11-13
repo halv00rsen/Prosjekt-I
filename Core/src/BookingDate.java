@@ -13,7 +13,8 @@ public class BookingDate {
 	 * @param dateFrom Start-dato
 	 * @param dateTo Slutt-dato
 	 * @param person Bruker som reserverer
-	 * @throws IllegalArgumentException
+	 * @param isFromDatabase Om reservasjonen er hentet fra databasen
+	 * @throws IllegalArgumentException Exception hvis argumentene er feil
 	 */
 	public BookingDate(Date dateFrom, Date dateTo, String person, boolean isFromDatabase) throws IllegalArgumentException{
 		this.dateFrom = dateFrom;
