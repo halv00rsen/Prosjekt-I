@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import src.Item.Status;
+
 public class ReservationRow extends JPanel{
 	
 	private final Date from, to;
@@ -126,7 +128,7 @@ public class ReservationRow extends JPanel{
 			}
 		}
 
-		public void okPressed(String comment, List<Item> brokenInventory) {
+		public void okPressed(String comment, List<Item> brokenInventory, int woodUsed, List<Item> lostItems) {
 			removeButton();
 			isReported = true;
 			isReportedString.setText("Ja");
@@ -138,6 +140,17 @@ public class ReservationRow extends JPanel{
 					break;
 				}
 			}
+			Koie cabin = Database.getKoie(koieId);
+			for (Item item : brokenInventory){
+				item.setStatus(Status.BROKEN);
+				Database.updateItem(item);
+			}
+			for (Item item : lostItems){
+				Database.addItem(item, koieId);
+			}
+			double woodLeft = cabin.getVedmengde() - woodUsed;
+			cabin.setVedmengde(woodLeft);
+			Database.toDatabase(cabin);
 			Database.rapporter(koieId, username, comment, resId);
 		}
 
