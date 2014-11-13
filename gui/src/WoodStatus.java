@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -30,11 +31,13 @@ public class WoodStatus extends JPanel{
 	private final JButton addButton;
 	private Koie cabinInUse;
 	public static final int minSacks = 5;
+	private final Map<Integer, Double> woodStatus;
+	private final Map<Integer, String> cabinNames;
 	
 	public WoodStatus(){
-		setLayout(new GridLayout(1,2));
+		setLayout(new GridBagLayout());
 		updateWood = new JPanel();
-		woodInformation = new JTextArea();
+		woodInformation = new JTextArea(20, 20);
 		woodInformation.setEditable(false);
 		woodInformation.setLineWrap(true);
 		woodInformation.setWrapStyleWord(true);
@@ -65,29 +68,40 @@ public class WoodStatus extends JPanel{
 		c.gridx = 1;
 		updateWood.add(addButton, c);
 		cabins.addActionListener(new UpdateListener());
-		Map<Integer, String> cabinsId = Database.getIdNameMap();
-		String cabinSacks = "";
+		cabinNames = Database.getIdNameMap();
 		Map<Integer, Double> woodAmount = Database.getVedstatusForAlleKoier();
-		for (Integer cabinId : cabinsId.keySet()){
-			cabinSacks += cabinsId.get(cabinId) + ": " + woodAmount.get(cabinId) + " vedsekker.";
-			if (woodAmount.get(cabinId) <= minSacks){
-				cabinSacks += " Trenger snart pÃ¥fyll.";
-			}
-			cabinSacks += "\n";
+		woodStatus = new HashMap<Integer, Double>();
+		for (Integer cabinId : cabinNames.keySet()){
+			woodStatus.put(cabinId, woodAmount.get(cabinId));
 		}
 		cabinInUse = Database.getKoie(cabins.getSelectedItem());
-		woodInformation.setText(cabinSacks);
-		add(updateWood);
-		add(pane);
+		setWoodInfo();
+		c.gridx = 0;
+		c.gridy = 0;
+		add(updateWood, c);
+		c.gridx = 1;
+//		c.gridheight = 5;
+//		c.gridwidth = 5;
+		add(pane, c);
+	}
+	
+	private void setWoodInfo(){
+		String info = "";
+		for (Integer id : woodStatus.keySet()){
+			info += cabinNames.get(id) + ": " + woodStatus.get(id) + " vedsekker." + (woodStatus.get(id) < 5? "Trenger påfyll": "") + "\n";
+		}
+		woodInformation.setText(info);
 	}
 	
 	private class ButtonListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent arg0) {
 			String woods = numWood.getText();
-			String numbs = "0123456789";
-			if (woods.length() == 0)
+			String numbs = "0123456789-";
+			if (woods.length() == 0){
+				JOptionPane.showMessageDialog(null, "Feil vedinput.");
 				return;
+			}
 			for (int a = 0; a < woods.length(); a++){
 				if (numbs.indexOf(woods.charAt(a)) == -1){
 					JOptionPane.showMessageDialog(null, woods + " er ikke et valid tall.");
@@ -103,6 +117,8 @@ public class WoodStatus extends JPanel{
 			Database.toDatabase(cabinInUse);
 			JOptionPane.showMessageDialog(null, cabinInUse.getName() + " fikk lagt til " + numSacks + " sekker.");
 			numWood.setText("");
+			woodStatus.put(cabinInUse.getId(), cabinInUse.getVedmengde());
+			setWoodInfo();
 		}
 	}
 	

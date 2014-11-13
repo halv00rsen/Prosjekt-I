@@ -26,7 +26,7 @@ public class LostItems extends JPanel{
 	private final JList<Item> lostItemsList;
 	
 	public LostItems(){
-		setLayout(new GridLayout(2,1));
+		setLayout(new GridLayout(1,2));
 		lostItemField = new JTextField(10);
 		addButton = new JButton("Legg til");
 		removeButton = new JButton("Fjern");
@@ -42,17 +42,14 @@ public class LostItems extends JPanel{
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
-		c.gridwidth = 2;
 		panel.add(new JLabel("Skriv inn glemt utstyr: "), c);
-		c.gridwidth = 1;
 		c.gridy = 1;
 		panel.add(lostItemField, c);
-		c.gridx = 1;
+		c.gridy = 2;
 		panel.add(addButton, c);
-		c.gridx = 1;
-		c.gridy = 0;
+		c.gridy = 3;
 		panel.add(new JLabel("  "), c);
-		c.gridx = 2;
+		c.gridy = 4;
 		panel.add(removeButton, c);
 		add(panel);
 		add(pane);
