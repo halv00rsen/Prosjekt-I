@@ -192,7 +192,7 @@ public class Database {
 	
 	/**
 	 * Sletter en reservasjon med gitt ID
-	 * @param resID
+	 * @param resID Reservasjons-ID
 	 */
 	public static void slettReservasjon(int resID) {
 		makeStatement("DELETE FROM reservasjon WHERE ID =" + resID);
@@ -364,7 +364,7 @@ public class Database {
 		
 	/**
 	 * Henter et Bruker-objekt fra databasen
-	 * @param id Bruker-ID
+	 * @param person Bruker-ID
 	 * @return Et Bruker-objekt
 	 */
 	public static Bruker getBruker(String person) {
@@ -431,6 +431,19 @@ public class Database {
 	}
 	
 	/**
+	 * Fjernet et Item fra databasen
+	 * @param item Et Item-objekt som skal fjernes
+	 */
+	public static void removeItem(Item item) {
+		try {
+			String statement = "DELETE FROM inventory WHERE ID = "+item.getId();
+			makeStatement(statement);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Returnerer alle reservasjonene til en bruker
 	 * @param person Bruker-ID-en
 	 * @return Liste med UserDatesBooked objekter hvor reservasjonene samnt reservasjons id ligger
@@ -475,7 +488,7 @@ public class Database {
 	/**
 	 * Returnerer alle rapportene til en koie
 	 * @param koie_id Unik koie-ID
-	 * @return Liste med en streng på formen "<personen som har rapportert>: <rapporten>" 
+	 * @return Liste med en streng på formen "personen-som-har-rapportert: rapporten" 
 	 */
 	public static ArrayList<String> getRapport(int koie_id) {
 		ArrayList<String> rapport = new ArrayList<String>();
