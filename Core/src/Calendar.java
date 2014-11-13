@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-/** Holder på reservasjonene til en koie */
+/** Holder på reservasjonene til en {@link Koie} */
 public class Calendar {
 	public final static int daysInFeature = 180;
 	private final List<BookingDate> datesBooked;
