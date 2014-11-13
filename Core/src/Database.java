@@ -166,13 +166,14 @@ public class Database {
 		Calendar calendar = koie.getCalendar();
 		List<BookingDate> datesBooked = calendar.getDatesBooked();
 		for (BookingDate date : datesBooked) {
+			if (date.isFromDatabase)
+				continue;
 			String bookedFrom = "" + date.dateFrom.year + "-" + date.dateFrom.month + "-" + date.dateFrom.day; 
 			String bookedTo = "" + date.dateTo.year + "-" + date.dateTo.month + "-" + date.dateTo.day;
 			
 			String statement = "INSERT INTO reservasjon (koie_id, fromDate, toDate, bruker_id) "
 							 + "VALUES ('"+ koie.getId() + "','" + bookedFrom + "','" + bookedTo + "','" + date.person +"')";
-			if (!date.isFromDatabase)
-				makeStatement(statement);
+			makeStatement(statement);
 		}
 		
 		// Oppdaterer inventory
