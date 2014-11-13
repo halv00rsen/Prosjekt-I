@@ -73,19 +73,20 @@ public class Database {
 						+ "toDate VARCHAR(255) NOT NULL, "
 						+ "bruker_id VARCHAR(255) NOT NULL)");
 			
-//			makeStatement("CREATE TABLE rapport"
-//						+ "(resID int NOT NULL PRIMARY KEY, "
-//						+ "koie_id SMALLINT NOT NULL, "
-//						+ "person VARCHAR(255), "
-//						+ "kommentar VARCHAR(255))");
-			makeStatement("CREATE TABLE rapport" 
-						+ "(id SMALLINT NOT NULL AUTO_INCREMENT, "
-						+ "resID int NOT NULL, " 
+			makeStatement("CREATE TABLE rapport"
+						+ "(resID int NOT NULL PRIMARY KEY, "
 						+ "koie_id SMALLINT NOT NULL, "
 						+ "person VARCHAR(255), "
-						+ "kommentar VARCHAR(255), "
-						+ "PRIMARY KEY(id), "
-						+ "FOREGIN KEY(resID) REFERENCES reservasjon(ID))");
+						+ "kommentar VARCHAR(255))");
+			
+//			makeStatement("CREATE TABLE rapport" 
+//						+ "(id SMALLINT NOT NULL AUTO_INCREMENT, "
+//						+ "resID int NOT NULL, " 
+//						+ "koie_id SMALLINT NOT NULL, "
+//						+ "person VARCHAR(255), "
+//						+ "kommentar VARCHAR(255), "
+//						+ "PRIMARY KEY(id), "
+//						+ "FOREGIN KEY(resID) REFERENCES reservasjon(ID))");
 			
 			// Fyller koie-tabellen med data fra fil
 			Scanner in = new Scanner(new FileReader(initKoie));
@@ -159,9 +160,8 @@ public class Database {
 		makeStatement("UPDATE vedstatus SET mengde = '" + vedmengde +"' WHERE koie_id=" + koie.getId());
 		
 		// Sletter alle tidligere reservasjoner
-		makeStatement("DELETE FROM reservasjon WHERE koie_id =" + koie.getId());
+		//makeStatement("DELETE FROM reservasjon WHERE koie_id =" + koie.getId());
 		
-
 		// Oppdaterer reservasjoner
 		Calendar calendar = koie.getCalendar();
 		List<BookingDate> datesBooked = calendar.getDatesBooked();
@@ -187,6 +187,14 @@ public class Database {
 		for (Item item : oldItems) {
 			updateItem(item);
 		}
+	}
+	
+	/**
+	 * Sletter en reservasjon med gitt ID
+	 * @param resID
+	 */
+	public static void slettReservasjon(int resID) {
+		makeStatement("DELETE FROM reservasjon WHERE ID =" + resID);
 	}
 
 	/**
