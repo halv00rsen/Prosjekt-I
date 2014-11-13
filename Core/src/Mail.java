@@ -7,9 +7,13 @@ import javax.activation.*;
 
 /** Inneholder metoder for å sende epost til brukere om at nytt utstyr må fraktes til en koie */
 public class Mail {
-//	public static void main(String[] args) {
-//		Mail.sendMail("alekh@stud.ntnu.no", "test", "heisann");
-//	}
+	public static void main(String[] args) {
+		//Mail.sendMail("it1901gruppe10@gmail.com", "test", "heisann");
+		Mail.getMail();
+	}
+	
+	final static String mail = "it1901gruppe10@gmail.com";
+	final static String pass = "prosjekt1"; 
 	
 	/**
 	 * Sender en epost
@@ -18,14 +22,11 @@ public class Mail {
 	 * @param messageText Melding
 	 */
 	public static void sendMail(String to, String subjectline, String messageText) {
-		final String from = "it1901gruppe10@gmail.com";
-		final String pass = "prosjekt1"; 
-		
 		Properties properties = System.getProperties();
 		properties.setProperty("mail.smtp.host", "smtp.gmail.com");
 		properties.setProperty("mail.smtp.port", "587");
 		properties.setProperty("mail.smtp.password", pass);
-		properties.setProperty("mail.smtp.user", from);
+		properties.setProperty("mail.smtp.user", mail);
 		properties.setProperty("mail.smtp.auth", "true");
 		properties.setProperty("mail.smtp.starttls.enable", "true");
 		
@@ -33,13 +34,13 @@ public class Mail {
 		Session session = Session.getDefaultInstance(properties,
 				new Authenticator() {
 			    	protected PasswordAuthentication  getPasswordAuthentication() {
-			        return new PasswordAuthentication(from, pass);
+			        return new PasswordAuthentication(mail, pass);
 			    	}
 		});
 		
 		try{
 	         MimeMessage message = new MimeMessage(session);
-	         message.setFrom(new InternetAddress(from));
+	         message.setFrom(new InternetAddress(mail));
 	         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
 	         // Set Subject: header field
@@ -55,4 +56,33 @@ public class Mail {
 	         mex.printStackTrace();
 	    }
 	}
+	
+	/**
+	 * Metode som leser siste mail fra "it1901gruppe10@gmail.com"
+	 * @return string med innhold fra mail
+	 */
+	public static String getMail() {
+		Properties properties = new Properties();
+		properties.setProperty("mail.store.protocol", "imaps");
+		try {
+			Session session = Session.getInstance(properties, null);
+			Store store = session.getStore();
+			store.connect("imap.gmail.com", mail, pass);
+			Folder inbox = store.getFolder("reservasjon");
+			
+			inbox.open(Folder.READ_ONLY);
+			Message msg = inbox.getMessage(inbox.getMessageCount());
+			
+			String content = (String) msg.getContent();
+			return content;
+            
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+	}
 }
+
