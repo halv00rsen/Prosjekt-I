@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class ReservationsFrame extends JPanel implements LoginListener, ValidDatesListener, ReservationsListListener{
+public class ReservationsFrame extends JPanel implements LoginListener, ValidDatesListener, ReservationsListListener, ChangeTabListener{
 	
 	private ValidDates validDates;
 	private JButton reserveButton;
@@ -96,8 +96,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		add(pane);
-		cabinChosen = Database.getKoie(1);
-		setCabinInformation();
+		
 	}
 	
 	public void setListener(ReservationsFrameListener l){
@@ -238,5 +237,10 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 //		koie.getCalendar().removeReservation(from, to);
 //		Database.toDatabase(koie);
 //		setCabinInformation();
+	}
+
+	public void initPanel() {
+		cabinChosen = Database.getKoie(cabins.getSelectedItem());
+		setCabinInformation();
 	}
 }

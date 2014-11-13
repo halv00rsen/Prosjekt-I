@@ -6,7 +6,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-public class MessageAdmin extends JPanel{
+public class MessageAdmin extends JPanel implements ChangeTabListener{
 
 	private final JTextArea messageArea;
 	
@@ -23,4 +23,10 @@ public class MessageAdmin extends JPanel{
 	private String getMessagesAdmin(){
 		return "Koie 4 har rapportert om ødelagt bord";
 	}
+
+@Override
+public void initPanel() {
+	// TODO Auto-generated method stub
+	
+}
 }

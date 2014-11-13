@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JComboBox;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class GUI implements LoginListener{
 
@@ -56,6 +58,11 @@ public class GUI implements LoginListener{
 		loginPanel.addListener(this);
 		reservationFrame.setListener(reservationList);
 		reservationList.setListener(reservationFrame);
+		tabbedPane.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e){
+				((ChangeTabListener) tabbedPane.getSelectedComponent()).initPanel();
+			}
+		});
 		
 //		frame.pack();
 		frame.setLocationRelativeTo(null);

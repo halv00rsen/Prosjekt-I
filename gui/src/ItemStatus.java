@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class ItemStatus extends JPanel{
+public class ItemStatus extends JPanel implements ChangeTabListener{
 
 	private final ChooseCabin cabins;
 	private final JTextArea inOrder, broken, lostAndFound;
@@ -69,5 +69,11 @@ public class ItemStatus extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			setKoieInformation(cabins.getSelectedItem());
 		}
+	}
+
+	@Override
+	public void initPanel() {
+		// TODO Auto-generated method stub
+		
 	}
 }

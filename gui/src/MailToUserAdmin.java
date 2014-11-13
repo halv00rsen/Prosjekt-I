@@ -17,7 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class MailToUserAdmin extends JPanel{
+public class MailToUserAdmin extends JPanel implements ChangeTabListener{
 
 	private final JComboBox<Bruker> users;
 	private final JTextArea emailInfo;
@@ -85,5 +85,11 @@ public class MailToUserAdmin extends JPanel{
 			//send mail til mailklassen
 			resetFields();
 		}
+	}
+
+	@Override
+	public void initPanel() {
+		// TODO Auto-generated method stub
+		
 	}
 }

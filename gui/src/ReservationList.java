@@ -20,7 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
-public class ReservationList extends JPanel implements LoginListener, ReservationRowListener, ReservationsFrameListener{
+public class ReservationList extends JPanel implements LoginListener, ReservationRowListener, ReservationsFrameListener, ChangeTabListener{
 	
 	public static final boolean DEBUG = true;
 	private String username;
@@ -30,6 +30,7 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 	private ReservationsListListener listener;
 	
 	public ReservationList(){
+		username = null;
 //		this.setLayout(new GridLayout(2, 1));
 		setLayout(new GridLayout(1,2));
 		reservations = new ArrayList<ReservationRow>();
@@ -83,7 +84,6 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 
 	public void userHasLoggedIn(String username) {
 		this.username = username;
-		getReservations();
 	}
 
 	public void userHasLoggedOut() {
@@ -127,5 +127,10 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 			futureReservations.add(row, futureC);
 			futureC.gridy++;
 		}
+	}
+
+	public void initPanel() {
+		if (username != null)
+			getReservations();
 	}
 }

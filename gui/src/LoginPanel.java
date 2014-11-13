@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class LoginPanel extends JPanel{
+public class LoginPanel extends JPanel implements ChangeTabListener{
 	
 	public static final boolean DEBUG = false;
 	private final AdminLogin loginUser;
@@ -159,5 +159,11 @@ public class LoginPanel extends JPanel{
 				loginUser.resetFields();
 			}
 		}
+	}
+
+	@Override
+	public void initPanel() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class RemoveReservationsAdmin extends JPanel implements ReservationRowListener{
+public class RemoveReservationsAdmin extends JPanel implements ReservationRowListener, ChangeTabListener{
 
 	private final JPanel panel;
 	private final ChooseCabin chooseCabin;
@@ -65,5 +65,11 @@ public class RemoveReservationsAdmin extends JPanel implements ReservationRowLis
 		public void actionPerformed(ActionEvent arg0) {
 			getAllReservations();
 		}
+	}
+
+	@Override
+	public void initPanel() {
+		// TODO Auto-generated method stub
+		
 	}
 }

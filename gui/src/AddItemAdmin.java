@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 
 import src.Item.Status;
 
-public class AddItemAdmin extends JPanel{
+public class AddItemAdmin extends JPanel implements ChangeTabListener{
 	
 	private final ChooseCabin cabins;
 	private final JComboBox<Item> allItems;
@@ -150,5 +150,11 @@ public class AddItemAdmin extends JPanel{
 				updateCabin();
 			}
 		}
+	}
+
+	@Override
+	public void initPanel() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -22,7 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class WoodStatus extends JPanel{
+public class WoodStatus extends JPanel implements ChangeTabListener{
 	
 	private final JPanel updateWood;
 	private final JTextArea woodInformation;
@@ -68,14 +68,8 @@ public class WoodStatus extends JPanel{
 		c.gridx = 1;
 		updateWood.add(addButton, c);
 		cabins.addActionListener(new UpdateListener());
-		cabinNames = Database.getIdNameMap();
-		Map<Integer, Double> woodAmount = Database.getVedstatusForAlleKoier();
 		woodStatus = new HashMap<Integer, Double>();
-		for (Integer cabinId : cabinNames.keySet()){
-			woodStatus.put(cabinId, woodAmount.get(cabinId));
-		}
-		cabinInUse = Database.getKoie(cabins.getSelectedItem());
-		setWoodInfo();
+		cabinNames = new HashMap<Integer, String>();
 		c.gridx = 0;
 		c.gridy = 0;
 		add(updateWood, c);
@@ -127,5 +121,17 @@ public class WoodStatus extends JPanel{
 		public void actionPerformed(ActionEvent arg0) {
 			cabinInUse = Database.getKoie(cabins.getSelectedItem());
 		}
+	}
+
+	public void initPanel() {
+		cabinNames.clear();
+		cabinNames.putAll(Database.getIdNameMap());
+		Map<Integer, Double> woodAmount = Database.getVedstatusForAlleKoier();
+		woodStatus.clear();
+		for (Integer cabinId : cabinNames.keySet()){
+			woodStatus.put(cabinId, woodAmount.get(cabinId));
+		}
+		cabinInUse = Database.getKoie(cabins.getSelectedItem());
+		setWoodInfo();
 	}
 }
