@@ -2,18 +2,20 @@ package src;
 
 import java.util.HashMap;
 
+/** Starter og kjører programmet */
 public class Main {
-	//private textGUI textGui;
-	
+	/**
+	 * Initialiserer programmet
+	 */
 	private void init(){
 		//Database.initializeDatabase();
-
-		//textGui = new textGUI();
-		//textGui.Alternativer("bruker");
 	}
 	
+	/**
+	 * Kjører programmet
+	 */
 	private void run(){
-		//test av hashmap
+		// Test av HashMap
 		HashMap<Integer, String> idNameMap = Database.getIdNameMap();
 		System.out.println(idNameMap.get(18));
 		
@@ -24,6 +26,10 @@ public class Main {
 		Database.toDatabase(koie3);
 	}
 	
+	/**
+	 * Starter initialisering og kjøringen av programmet
+	 * @param args Standard args
+	 */
 	public static void main(String[] args){
 		Main program = new Main();
 		program.init();

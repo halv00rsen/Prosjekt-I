@@ -12,8 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class AdminLogin extends JPanel{
-	
+public class AdminLogin extends JPanel {
 	private JTextField userName;
 	private JPasswordField password;
 	private JButton ok, reset;
@@ -23,7 +22,7 @@ public class AdminLogin extends JPanel{
 	 * Oppretter et loginfelt for bruker.
 	 * @param listener En AdminLoginListener som lytter til om noen har logget inn
 	 */
-	public AdminLogin(AdminLoginListener listener){
+	public AdminLogin(AdminLoginListener listener) {
 		setLayout(new GridLayout(3, 2, 0, 0));
 		ButtonListener buttonListener = new ButtonListener();
 		if (listener == null)
@@ -62,19 +61,18 @@ public class AdminLogin extends JPanel{
 	}
 	
 	/**
-	 * Lytter til ok og avbrytknappene
+	 * Lytter til "Ok"- og "Avbryt"-knappene
 	 */
-	private class ButtonListener implements ActionListener{
-
+	private class ButtonListener implements ActionListener {
 		/**
-		 * @param e en av knappene har blitt trykket på
+		 * @param e En av knappene har blitt trykket på
 		 */
 		public void actionPerformed(ActionEvent e) {
 			if (listener == null)
 				return;
-			if (e.getSource() == ok){
+			if (e.getSource() == ok) {
 				listener.login(userName.getText(), password.getPassword());
-			}else if (e.getSource() == reset){
+			}else if (e.getSource() == reset) {
 				userName.setText("");
 				password.setText("");
 			}
@@ -84,7 +82,7 @@ public class AdminLogin extends JPanel{
 	/**
 	 * Lytter til tastaturet, hvis enter, da kan man logge inn
 	 */
-	private class KeyboardListener implements KeyListener{
+	private class KeyboardListener implements KeyListener {
 
 		public void keyPressed(KeyEvent arg0) {
 			
@@ -95,7 +93,7 @@ public class AdminLogin extends JPanel{
 		}
 
 		public void keyTyped(KeyEvent arg0) {
-			if (arg0.getKeyChar() == '\n' && listener != null){
+			if (arg0.getKeyChar() == '\n' && listener != null) {
 				listener.login(userName.getText(), password.getPassword());
 			}
 		}
