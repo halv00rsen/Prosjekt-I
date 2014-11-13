@@ -19,8 +19,10 @@ import java.util.EventListener;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -32,11 +34,12 @@ public class UserReport {
 	private JFrame frame;
 	private JTextArea textArea;
 	private ButtonListener buttonListener;
-	private JButton okButton, cancelButton;
+	private final JButton okButton, cancelButton;
 	private DestroyedItems destroyedItems;
 	private final String cabin;
-	private JComboBox<Integer> numWood;
+	private final JTextField numWood;
 	private final int cabinId;
+	private final LostItems lostItems;
 	
 	private UserReportListener listener;
 	
@@ -77,15 +80,14 @@ public class UserReport {
 		c.gridy = 2;
 		panel_1.add(new JLabel("Brukte vedsekker: "), c);
 		c.gridx = 1;
-		numWood = new JComboBox<Integer>();
-		for (int a = 0; a < 10; a++){
-			numWood.addItem(a);
-		}
+		numWood = new JTextField(4);
 		panel_1.add(numWood, c);
 		
 		destroyedItems = new DestroyedItems();
-		tabbedPane.addTab("Ã˜delagt utsyr", null, destroyedItems, null);
+		tabbedPane.addTab("Ødelagt utsyr", null, destroyedItems, null);
 		
+		lostItems = new LostItems();
+		tabbedPane.addTab("Gjenglemt utstyr", null, lostItems, null);
 		
 		JPanel panel = new JPanel();
 		
@@ -119,7 +121,18 @@ public class UserReport {
 				listener.cancelPressed();
 			}
 			else if (arg0.getSource() == okButton){
-				listener.okPressed(textArea.getText(), destroyedItems.getDestroyedElements());
+				String nums = "0123456789";
+				String text = numWood.getText();
+				for (int a = 0; a < text.length(); a++){
+					if (nums.indexOf(text.charAt(a)) == -1){
+						JOptionPane.showMessageDialog(null, text + " er ikke et gyldig vedtall.");
+						return;
+					}
+				}
+				int number = 0;
+				if (text.length() != 0)
+					number = Integer.parseInt(text);
+				listener.okPressed(textArea.getText(), destroyedItems.getDestroyedElements(), number, lostItems.getLostItems());
 			}
 			frame.removeAll();
 			frame.setVisible(false);

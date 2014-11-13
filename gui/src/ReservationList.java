@@ -114,10 +114,10 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 		repaint();
 	}
 
-	public void addReservation(String name, Date from, Date to) {
+	public void addReservation(String name, Date from, Date to, int resId) {
 		GregorianCalendar calendar = new GregorianCalendar();
 		Date today = new Date((DEBUG ? 2 :calendar.get(java.util.Calendar.DATE)), (DEBUG ? 1:(calendar.get(java.util.Calendar.MONTH) + 1)));
-		ReservationRow row = new ReservationRow(name, username,-1, from, to, today, false, false, this);
+		ReservationRow row = new ReservationRow(name, username,resId, from, to, today, false, false, this);
 		reservations.add(row);
 		if (from.isBefore(today) || from.equals(today)){
 			hasVisitedReservations.add(row, hasVisitedC);
