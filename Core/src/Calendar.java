@@ -21,6 +21,14 @@ public class Calendar {
 		maxDate = getLastDate(todaysDate, daysInFeature);
 	}
 	
+	public BookingDate getReservation(Date from, Date to){
+		for (BookingDate booking: datesBooked){
+			if (booking.equals(from, to))
+				return booking;
+		}
+		return null;
+	}
+	
 	/**
 	 * Returnerer nåværende dato
 	 * @return Date-objekt med nåværende dato
@@ -69,7 +77,7 @@ public class Calendar {
 	 * @return Om reservasjonen er gyldig
 	 */
 	private boolean reservationIsOk(Date dateFrom, Date dateTo, int numOfDays, boolean isFromDatabase) {
-		if ((numOfDays > daysInFeature || numOfDays < 0 || dateFrom == null || dateTo == null) && !isFromDatabase) {
+		if ((numOfDays > daysInFeature || numOfDays < 0 || dateFrom == null || dateTo == null)) {
 			return false;
 		}
 
