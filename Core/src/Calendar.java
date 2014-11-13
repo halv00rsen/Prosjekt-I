@@ -38,11 +38,11 @@ public class Calendar {
 	}
 			
 	/**
-	 * Sjekker om denne reservasjonen kan reserveres, så ikke overbooking skjer
-	 * @param dateFrom
-	 * @param days
-	 * @param isFromDatabase
-	 * @return
+	 * Sjekker om reservasjonen er gyldig og ikke kolliderer med andre reservasjoner
+	 * @param dateFrom Start-dato
+	 * @param days Varighet
+	 * @param isFromDatabase Om reservasjonen er hentet fra databasen
+	 * @return Om reservasjonen er gyldig
 	 */
 	public boolean reservationIsOk(Date dateFrom, int days, boolean isFromDatabase){
 		return reservationIsOk(dateFrom, getLastDate(dateFrom, days), days, isFromDatabase);
