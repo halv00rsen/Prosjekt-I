@@ -172,6 +172,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 			updateField(date[0], date[1], date[2]);
 			List<UserDatesBooked> bookings = Database.getReservasjonBruker(username);
 			int resId = -1;
+			cabinChosen.getCalendar().getReservation(from, to).setIsFromDatabase(true);
 			for (UserDatesBooked booked: bookings){
 				if (booked.from.equals(from) && booked.to.equals(to)){
 					resId = booked.resID;
