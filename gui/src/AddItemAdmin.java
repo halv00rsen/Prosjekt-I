@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -20,9 +21,10 @@ public class AddItemAdmin extends JPanel{
 	private final ChooseCabin cabins;
 	private final JComboBox<Item> allItems;
 	private final JComboBox<Status> statusBox;
-	private final JButton addItem, removeItem;
+	private final JButton addItem, removeItem, saveInfo, resetInfo;
 	private final JTextField itemNameInput;
 	private final JTextArea itemInfo;
+	private Koie cabinInUse;
 	
 	public AddItemAdmin(){
 		cabins = new ChooseCabin();
@@ -30,60 +32,75 @@ public class AddItemAdmin extends JPanel{
 		cabins.addActionListener(listener);
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipadx = 2;
-		c.ipady = 2;
-		c.gridx = 0;
-		c.gridy = 0;
-		add(new JLabel("Koie: "), c);
-		c.gridx = 1;
-		add(cabins.getComboBox(), c);
-		itemNameInput = new JTextField(10);
-		c.gridy = 1;
-		c.gridx = 0;
-		add(new JLabel("Nytt utstyr: "),c);
-		c.gridx = 2;
+		itemNameInput = new JTextField(5);
 		addItem = new JButton("Legg til");
 		addItem.addActionListener(listener);
-		add(addItem, c);
-		c.gridx = 1;
-		add(itemNameInput, c);
 		allItems = new JComboBox<Item>();
-		c.gridy = 3;
-		c.gridx = 1;
-		add(allItems, c);
-		c.gridx = 0;
-		add(new JLabel("Utstyr: "), c);
 		statusBox = new JComboBox<Status>();
 		for (Status status : Status.values())
 			statusBox.addItem(status);
-		c.gridy = 4;
+		removeItem = new JButton("Fjern");
+		removeItem.addActionListener(listener);
+		itemInfo = new JTextArea(2, 17);
+		itemInfo.setEditable(false);
+		itemInfo.setBorder(BorderFactory.createEtchedBorder());
+		allItems.addActionListener(listener);
+		statusBox.addActionListener(listener);
+		updateCabin();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		add(new JLabel("Koie: "), c);
+		c.gridwidth = 3;
+		c.gridx = 1;
+		add(cabins.getComboBox(), c);
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 1;
+		add(new JLabel("Nytt utstyr: "), c);
+		c.gridx = 1;
+		add(itemNameInput, c);
+		c.gridwidth = 2;
+		c.gridx = 2;
+		add(addItem, c);
+		c.gridwidth = 1;
+		c.gridy = 2;
+		c.gridx = 0;
+		add(new JLabel("Utstyr: "), c);
+		c.gridx = 1;
+		add(allItems, c);
+		c.gridx = 2;
+		c.gridheight = 2;
+		c.gridwidth = 2;
+		c.fill = GridBagConstraints.BOTH;
+		add(itemInfo, c);
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridheight = 1;
+		c.gridwidth = 1;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		add(new JLabel("Sett status: "), c);
 		c.gridx = 1;
 		add(statusBox, c);
 		c.gridx = 0;
-		add(new JLabel("Status valgt utstyr: "), c);
-		c.gridy = 5;
-		add(new JLabel("Fjern valgt utstyr: "), c);
+		c.gridy = 4;
+		add(new JLabel("Fjern ting: "), c);
 		c.gridx = 1;
-		removeItem = new JButton("Fjern");
-		removeItem.addActionListener(listener);
 		add(removeItem, c);
-		itemInfo = new JTextArea();
-		itemInfo.setEditable(false);
-		itemInfo.setBorder(BorderFactory.createEtchedBorder());
-		c.fill = GridBagConstraints.RELATIVE;
+		saveInfo = new JButton("Lagre");
+		saveInfo.addActionListener(listener);
 		c.gridx = 2;
-		c.gridy = 2;
-		allItems.addActionListener(listener);
-		statusBox.addActionListener(listener);
-		add(itemInfo, c);
-		updateCabin();
+		add(saveInfo, c);
+		resetInfo = new JButton("Reset");
+		resetInfo.addActionListener(listener);
+		c.gridx = 3;
+		add(resetInfo, c);
 	}
 	
 	private void updateCabin(){
-		Koie cabin = Database.getKoie(cabins.getSelectedItem());
+		cabinInUse = Database.getKoie(cabins.getSelectedItem());
 		allItems.removeAllItems();
-		for (Item item: cabin.getInventory().getAllItems()){
+		for (Item item: cabinInUse.getInventory().getAllItems()){
 			allItems.addItem(item);
 		}
 		updateInformation();
@@ -91,20 +108,43 @@ public class AddItemAdmin extends JPanel{
 	
 	private void updateInformation(){
 		Item item = (Item) allItems.getSelectedItem();
-		itemInfo.setText("Ting: " + item.getName() + "\nStatus: " + item.getStatus());
+		if (item == null)
+			itemInfo.setText("");
+		else{
+			item.setStatus((Status) statusBox.getSelectedItem());
+			itemInfo.setText("Ting: " + item.getName() + "\nStatus: " + item.getStatus());
+		}
+	}
+	
+	private void sendToDatabase(){
+		Database.toDatabase(cabinInUse);
+		JOptionPane.showMessageDialog(this, "Informasjonen ble lagret.");
 	}
 	
 	private class CabinListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == addItem){
-				
+				Item item = new Item(itemNameInput.getText());
+				cabinInUse.getInventory().addItem(item);
+				allItems.addItem(item);
+				itemNameInput.setText("");
+				updateInformation();
 			}
 			else if (arg0.getSource() == removeItem){
-				
+				Item item = (Item) allItems.getSelectedItem();
+				cabinInUse.getInventory().removeItem(item);
+				allItems.removeItem(item);
+				updateInformation();
 			}
 			else if (arg0.getSource() == allItems || arg0.getSource() == statusBox){
+				if (arg0.getSource() == statusBox){
+					((Item) allItems.getSelectedItem()).setStatus((Status) statusBox.getSelectedItem());
+				}
 				updateInformation();
+			}
+			else if (arg0.getSource() == saveInfo){
+				sendToDatabase();
 			}
 			else{
 				updateCabin();
