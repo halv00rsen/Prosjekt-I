@@ -69,7 +69,7 @@ public class WoodStatus extends JPanel{
 		String cabinSacks = "";
 		Map<Integer, Double> woodAmount = Database.getVedstatusForAlleKoier();
 		for (Integer cabinId : cabinsId.keySet()){
-			cabinSacks += cabinsId.get(cabinId) + " har " + woodAmount.get(cabinId) + " vedsekker igjen.";
+			cabinSacks += cabinsId.get(cabinId) + ": " + woodAmount.get(cabinId) + " vedsekker.";
 			if (woodAmount.get(cabinId) <= minSacks){
 				cabinSacks += " Trenger snart påfyll.";
 			}
