@@ -117,7 +117,7 @@ public class Calendar {
 			return;
 		BookingDate booking = null;
 		try{
-			booking = new BookingDate(dateFrom, dateTo, person);
+			booking = new BookingDate(dateFrom, dateTo, person, isFromDatabase);
 		}catch (IllegalArgumentException e){
 			System.out.println("Din reservasjon er for gammel.");
 			return;

@@ -6,6 +6,7 @@ public class BookingDate {
 	public final int numberOfDays;
 	public final String person;
 	private int resID;
+	public final boolean isFromDatabase;
 	
 	/**
 	 * Oppretter et BookingDate-objekt
@@ -14,7 +15,7 @@ public class BookingDate {
 	 * @param person Bruker som reserverer
 	 * @throws IllegalArgumentException
 	 */
-	public BookingDate(Date dateFrom, Date dateTo, String person) throws IllegalArgumentException{
+	public BookingDate(Date dateFrom, Date dateTo, String person, boolean isFromDatabase) throws IllegalArgumentException{
 		this.dateFrom = dateFrom;
 		this.dateTo = dateTo;
 		numberOfDays = Calendar.getNumOfDaysBetween(dateFrom, dateTo);
@@ -22,7 +23,9 @@ public class BookingDate {
 		if (numberOfDays > Calendar.daysInFeature || dateFrom == null || dateTo == null)
 			throw new IllegalArgumentException("not valid dates for the program");
 		resID = -1;
+		this.isFromDatabase = isFromDatabase;
 	}
+	
 		
 	/**
 	 * Returnerer reservasjons-ID-en

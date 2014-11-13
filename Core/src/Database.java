@@ -171,8 +171,8 @@ public class Database {
 			
 			String statement = "INSERT INTO reservasjon (koie_id, fromDate, toDate, bruker_id) "
 							 + "VALUES ('"+ koie.getId() + "','" + bookedFrom + "','" + bookedTo + "','" + date.person +"')";
-			
-			makeStatement(statement);
+			if (!date.isFromDatabase)
+				makeStatement(statement);
 		}
 		
 		// Oppdaterer inventory
