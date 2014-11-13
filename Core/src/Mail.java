@@ -7,10 +7,10 @@ import javax.activation.*;
 
 /** Inneholder metoder for å sende epost til brukere om at nytt utstyr må fraktes til en koie */
 public class Mail {
-	public static void main(String[] args) {
-		//Mail.sendMail("it1901gruppe10@gmail.com", "test", "heisann");
-		Mail.getMail();
-	}
+//	public static void main(String[] args) {
+//		Mail.sendMail("it1901gruppe10@gmail.com", "test", "heisann");
+//		Mail.getMail();
+//	}
 	
 	final static String mail = "it1901gruppe10@gmail.com";
 	final static String pass = "prosjekt1"; 
