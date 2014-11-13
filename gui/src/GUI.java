@@ -31,6 +31,7 @@ public class GUI implements LoginListener{
 	private WoodStatus woodStatus;
 	private MessageAdmin messageAdmin;
 	private RemoveReservationsAdmin removeReservations;
+	private AddItemAdmin addItemAdmin;
 	
 	public GUI(){
 		frame = new JFrame("NTNUI-Koiene");
@@ -76,6 +77,8 @@ public class GUI implements LoginListener{
 		messageAdmin = null;
 		tabbedPane.remove(removeReservations);
 		removeReservations = null;
+		tabbedPane.remove(addItemAdmin);
+		addItemAdmin = null;
 	}
 
 	public void adminHasLoggedIn() {
@@ -85,8 +88,8 @@ public class GUI implements LoginListener{
 		tabbedPane.addTab("Utstyrstatus", null, itemStatus, null);
 		woodStatus = new WoodStatus();
 		tabbedPane.addTab("Vedstatus", null, woodStatus, null);
-		messageAdmin = new MessageAdmin();
-		tabbedPane.addTab("Meldinger", null, messageAdmin, null);
+		addItemAdmin = new AddItemAdmin();
+		tabbedPane.addTab("Legg til utstyr", null, addItemAdmin, null);
 		removeReservations = new RemoveReservationsAdmin(reservationFrame);
 		tabbedPane.addTab("Fjern reservasjoner", null, removeReservations, null);
 	}
