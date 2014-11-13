@@ -50,10 +50,18 @@ public class Bruker {
 		return passwordHash.equals(hash);
 	}
 
+	/**
+	 * Returnerer ID-en til Bruker-objektet
+	 * @return Bruker-objektets unike ID
+	 */
 	public String getId() {
 		return id;
 	}
 
+	/**
+	 * Returnerer passord-hashen til Bruker-objektet
+	 * @return Passord-hash
+	 */
 	public String getPasswordHash() {
 		return passwordHash;
 	}
@@ -66,10 +74,18 @@ public class Bruker {
 		this.passwordHash = hashPassword(password);
 	}
 
+	/**
+	 * Returnerer om brukeren er admin eller ikke
+	 * @return Boolean
+	 */
 	public boolean isAdmin() {
 		return isAdmin;
 	}
 	
+	/**
+	 * Setter om brukeren er admin eller ikke
+	 * @param isAdmin Boolean
+	 */
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
