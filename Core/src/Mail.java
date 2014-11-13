@@ -14,8 +14,8 @@ public class Mail {
 	
 	public static void sendMail(String emailBruker, String subjectline, String messageText) {
 		
-		String from = "it1901gruppe10@gmail.com";
-		String pass = "prosjekt1"; 
+		final String from = "it1901gruppe10@gmail.com";
+		final String pass = "prosjekt1"; 
 		
 		String to = emailBruker;
 		
