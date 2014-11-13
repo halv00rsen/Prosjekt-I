@@ -38,7 +38,6 @@ public class Calendar {
 	}
 			
 	/**
-	 * 
 	 * Sjekker om denne reservasjonen kan reserveres, så ikke overbooking skjer
 	 * @param dateFrom
 	 * @param days
