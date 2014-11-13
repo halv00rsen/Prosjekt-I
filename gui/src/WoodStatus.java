@@ -71,7 +71,7 @@ public class WoodStatus extends JPanel{
 		for (Integer cabinId : cabinsId.keySet()){
 			cabinSacks += cabinsId.get(cabinId) + ": " + woodAmount.get(cabinId) + " vedsekker.";
 			if (woodAmount.get(cabinId) <= minSacks){
-				cabinSacks += " Trenger snart påfyll.";
+				cabinSacks += " Trenger snart pÃ¥fyll.";
 			}
 			cabinSacks += "\n";
 		}

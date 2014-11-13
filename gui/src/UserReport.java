@@ -84,7 +84,7 @@ public class UserReport {
 		panel_1.add(numWood, c);
 		
 		destroyedItems = new DestroyedItems();
-		tabbedPane.addTab("Ødelagt utsyr", null, destroyedItems, null);
+		tabbedPane.addTab("Ã˜delagt utsyr", null, destroyedItems, null);
 		
 		lostItems = new LostItems();
 		tabbedPane.addTab("Gjenglemt utstyr", null, lostItems, null);
