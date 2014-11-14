@@ -64,6 +64,7 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 		//Skal bruke databasen for å hente alle reservasjoner til brukeren
 //		reservations.add("Koie 1:21.10:29.10:Nei");
 //		reservations.add("Koie 2:10.2:17.2:Ikke relevant");
+		deleteReservations();
 		GregorianCalendar calendar = new GregorianCalendar();
 		Date today = new Date((DEBUG ? 2 :calendar.get(java.util.Calendar.DATE)), (DEBUG ? 1:(calendar.get(java.util.Calendar.MONTH) + 1)));
 		List<UserDatesBooked> bookings = Database.getReservasjonBruker(username);
@@ -85,13 +86,17 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 	public void userHasLoggedIn(String username) {
 		this.username = username;
 	}
+	
+	private void deleteReservations(){
+		futureReservations.removeAll();
+		hasVisitedReservations.removeAll();
+		reservations.clear();
+	}
 
 	public void userHasLoggedOut() {
 //		c.gridy = 1;
 		username = null;
-		futureReservations.removeAll();
-		hasVisitedReservations.removeAll();
-		reservations.clear();
+		deleteReservations();
 	}
 
 	@Override
