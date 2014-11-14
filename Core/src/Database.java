@@ -79,14 +79,6 @@ public class Database {
 						+ "person VARCHAR(255), "
 						+ "kommentar VARCHAR(255))");
 			
-//			makeStatement("CREATE TABLE rapport" 
-//						+ "(id SMALLINT NOT NULL AUTO_INCREMENT, "
-//						+ "resID int NOT NULL, " 
-//						+ "koie_id SMALLINT NOT NULL, "
-//						+ "person VARCHAR(255), "
-//						+ "kommentar VARCHAR(255), "
-//						+ "PRIMARY KEY(id), "
-//						+ "FOREGIN KEY(resID) REFERENCES reservasjon(ID))");
 			
 			// Fyller koie-tabellen med data fra fil
 			Scanner in = new Scanner(new FileReader(initKoie));
