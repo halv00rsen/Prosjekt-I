@@ -4,13 +4,14 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JComboBox;
 
 public class ChooseCabin {
 
 	private JComboBox<String> cabins;
-	private HashMap<Integer, String> cabinsIdName;
+	private Map<Integer, String> cabinsIdName;
 	
 	/**
 	 * Oppretter ChooseCabin
@@ -18,7 +19,7 @@ public class ChooseCabin {
 	 */
 	public ChooseCabin(){
 		cabins = new JComboBox<String>();
-		cabinsIdName = Database.getIdNameMap();
+		cabinsIdName = GUI.getIdMap();
 		for (String name : getNameCabins())
 			cabins.addItem(name);
 	}

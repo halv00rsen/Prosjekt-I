@@ -31,7 +31,7 @@ public class ItemStatus extends JPanel implements ChangeTabListener{
 		lostAndFound = createTextArea("Mistet utstyr", panel);
 		add(panel);
 		
-		setKoieInformation(cabins.getSelectedItem());
+//		setKoieInformation(cabins.getSelectedItem());
 		
 	}
 	
@@ -71,9 +71,8 @@ public class ItemStatus extends JPanel implements ChangeTabListener{
 		}
 	}
 
-	@Override
 	public void initPanel() {
-		// TODO Auto-generated method stub
+		setKoieInformation(cabins.getSelectedItem());
 		
 	}
 }

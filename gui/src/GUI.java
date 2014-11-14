@@ -6,7 +6,9 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -21,6 +23,7 @@ public class GUI implements LoginListener{
 
 	public static boolean DEBUG = true;
 	public static int WIDTH = 600, HEIGHT = 500;
+	private static Map<Integer, String> allCabins;
 	
 	private static JFrame frame;
 	
@@ -51,7 +54,7 @@ public class GUI implements LoginListener{
 		tabbedPane.addTab("Reservasjoner", null, reservationList, null);
 		loginPanel.addListener(reservationList);
 		
-		
+		allCabins = Database.getIdNameMap();
 		reservationFrame = new ReservationsFrame();
 		tabbedPane.addTab("Reserver Koie", null, reservationFrame, null);
 		loginPanel.addListener(reservationFrame);
@@ -89,6 +92,12 @@ public class GUI implements LoginListener{
 		addItemAdmin = null;
 		tabbedPane.remove(mailToUser);
 		mailToUser = null;
+	}
+	
+	public static Map<Integer, String> getIdMap(){
+		if (allCabins == null)
+			return null;
+		return new HashMap<Integer, String>(allCabins);
 	}
 
 	public void adminHasLoggedIn() {

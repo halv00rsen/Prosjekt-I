@@ -33,7 +33,6 @@ public class RemoveReservationsAdmin extends JPanel implements ReservationRowLis
 		panel.setBorder(BorderFactory.createTitledBorder("Reservasjoner"));
 		pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		getAllReservations();
 		add(panel2);
 		add(pane);
 		this.deleteListener = deleteListener;
@@ -67,9 +66,7 @@ public class RemoveReservationsAdmin extends JPanel implements ReservationRowLis
 		}
 	}
 
-	@Override
 	public void initPanel() {
-		// TODO Auto-generated method stub
-		
+		getAllReservations();
 	}
 }

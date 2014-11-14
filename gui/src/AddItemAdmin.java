@@ -46,7 +46,6 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 		itemInfo.setBorder(BorderFactory.createEtchedBorder());
 		allItems.addActionListener(listener);
 		statusBox.addActionListener(listener);
-		updateCabin();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -152,9 +151,7 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 		}
 	}
 
-	@Override
 	public void initPanel() {
-		// TODO Auto-generated method stub
-		
+		updateCabin();
 	}
 }
