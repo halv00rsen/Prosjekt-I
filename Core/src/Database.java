@@ -1,10 +1,10 @@
 package src;
 
 import java.io.FileReader;
-import java.util.List;
-import java.util.HashMap;
 import java.util.Scanner;
+import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import java.sql.DriverManager;
 import java.sql.Connection;
