@@ -107,6 +107,7 @@ public class ReservationRow extends JPanel{
 	private class ButtonListener implements ActionListener, UserReportListener{
 		
 		private UserReport userReport;
+		private Koie cabin;
 		
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == delete){
@@ -127,7 +128,8 @@ public class ReservationRow extends JPanel{
 				}
 				if (cabinId == -1)
 					return;
-				userReport = new UserReport(name, from.day, from.month, to.day, to.month, cabinId);
+				cabin = Database.getKoie(cabinId);
+				userReport = new UserReport(from.day, from.month, to.day, to.month, cabin);
 				userReport.setListener(this);
 			}
 		}
@@ -136,30 +138,18 @@ public class ReservationRow extends JPanel{
 			removeButton();
 			isReported = true;
 			isReportedString.setText("Ja");
-			Map<Integer, String> cabins = Database.getIdNameMap();
-			int koieId = -1;
-			for (Integer id: cabins.keySet()){
-				if (cabins.get(id).equals(name)){
-					koieId = id;
-					break;
-				}
-			}
-			Koie cabin = Database.getKoie(koieId);
 			for (Item item : brokenInventory){
 				item.setStatus(Status.BROKEN);
-				Database.updateItem(item);
-			}
-			for (Item item : lostItems){
-				Database.addItem(item, koieId);
 			}
 			double woodLeft = cabin.getVedmengde() - woodUsed;
 			cabin.setVedmengde(woodLeft);
 			Database.toDatabase(cabin);
-			Database.rapporter(koieId, username, comment, resId);
+			Database.rapporter(cabin.getId(), username, comment, resId);
 		}
 
 		public void cancelPressed() {
 			userReport = null;
+			cabin = null;
 		}
 	}
 }
