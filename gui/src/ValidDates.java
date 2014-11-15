@@ -28,7 +28,7 @@ public class ValidDates {
 		this.month = month;
 		this.numDays = numDays;
 		listeners = new ArrayList<ValidDatesListener>();
-		for (int a = 1; a < 11; a++){
+		for (int a = 0; a < 11; a++){
 			numDays.addItem(a);
 		}
 		date.addItem(0);//Must be here, else nullpointerexception
