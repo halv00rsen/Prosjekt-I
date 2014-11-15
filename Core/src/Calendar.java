@@ -15,9 +15,7 @@ public class Calendar {
 	 */
 	public Calendar(){
 		datesBooked = new ArrayList<BookingDate>();
-		java.util.Calendar c = new GregorianCalendar();
-		int monthToDay = c.get(GregorianCalendar.MONTH) + 1;
-		todaysDate = new Date(c.get(GregorianCalendar.DAY_OF_MONTH), monthToDay);
+		todaysDate = getTodaysDate();
 		maxDate = getLastDate(todaysDate, daysInFeature);
 	}
 	
@@ -29,21 +27,26 @@ public class Calendar {
 		return null;
 	}
 	
+	
 	/**
 	 * Returnerer nåværende dato
 	 * @return Date-objekt med nåværende dato
 	 */
-	public Date getTodaysDate(){
-		return todaysDate;
+	public static Date getTodaysDate(){
+		java.util.Calendar c = new GregorianCalendar();
+		int monthToDay = c.get(GregorianCalendar.MONTH) + 1;
+		return new Date(c.get(GregorianCalendar.DAY_OF_MONTH), monthToDay);
 	}
+	
 	
 	/**
 	 * Returnerer den siste datoen det kan reserveres på
 	 * @return Date-objekt med siste dato
 	 */
-	public Date getMaxDate(){
-		return maxDate;
+	public static Date getMaxDate(){
+		return getLastDate(getTodaysDate(), daysInFeature);
 	}
+	
 			
 	/**
 	 * Sjekker om reservasjonen er gyldig og ikke kolliderer med andre reservasjoner
