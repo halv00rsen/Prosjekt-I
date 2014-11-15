@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class ReservationsFrame extends JPanel implements LoginListener, ValidDatesListener, ReservationsListListener, ChangeTabListener{
 	
@@ -35,6 +36,9 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	private ReservationsFrameListener listener;
 	private boolean adminLogin;
 	private Koie cabinChosen;
+	private final JTextField reserveForUser;
+	private final JPanel panel, panel2;
+	private final GridBagConstraints c;
 	
 	/**
 	 * Oppretter et panel der man kan reservere nye koier med dato fra og antall dager reservasjonen skal telle
@@ -43,8 +47,8 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	public ReservationsFrame(){
 		setLayout(new GridLayout(1,2));
 		GridBagLayout layout = new GridBagLayout();
-		GridBagConstraints c = new GridBagConstraints();
-		JPanel panel = new JPanel();
+		c = new GridBagConstraints();
+		panel = new JPanel();
 		panel.setLayout(layout);
 		cabins = new ChooseCabin();
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -82,7 +86,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		panel.add(isValidDateReservation, c);
 		reserveButton = new JButton("Reserver");
 		reserveButton.addActionListener(new ButtonListener());
-		c.gridy = 6;
+		c.gridy = 7;
 		c.gridx = 2;
 		panel.add(reserveButton, c);
 		validDates.addListener(this);
@@ -96,7 +100,14 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		add(pane);
-		
+		reserveForUser = new JTextField(10);
+		c.gridx = 0;
+		c.gridy = 6;
+		c.gridwidth = 3;
+		panel2 = new JPanel();
+		panel2.setLayout(new GridLayout(1,2));
+		panel2.add(new JLabel("Reserver for : "));
+		panel2.add(reserveForUser);
 	}
 	
 	public void setListener(ReservationsFrameListener l){
@@ -124,6 +135,8 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		this.username = null;
 		isLoggedIn = false;
 		adminLogin = false;
+		panel.remove(panel2);
+		reserveForUser.setText("");
 	}
 	
 	private void setCabinInformation(){
@@ -153,11 +166,20 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	}
 	
 	private void buttonPressed(){
+//		if (adminLogin){
+//			JOptionPane.showMessageDialog(null, "Kan ikke reservere koie som admin.");
+//			return;
+//		}
+		String username;
 		if (adminLogin){
-			JOptionPane.showMessageDialog(null, "Kan ikke reservere koie som admin.");
-			return;
-		}
-		if (!isLoggedIn){
+			username = reserveForUser.getText();
+			reserveForUser.setText("");
+			if ("".equals(username)){
+				JOptionPane.showMessageDialog(null, "Ikke et valid brukernavn");
+			}
+		}else
+			username = this.username;
+		if (!isLoggedIn && !adminLogin){
 			JOptionPane.showMessageDialog(null, "Du er ikke logged inn, og kan dermed ikke reservere ei koie."
 					+ "\nGå til innloggingsfanen for å logge inn.");
 			return;
@@ -242,5 +264,8 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	public void initPanel() {
 		cabinChosen = Database.getKoie(cabins.getSelectedItem());
 		setCabinInformation();
+		if (adminLogin){
+			panel.add(panel2, c);
+		}
 	}
 }
