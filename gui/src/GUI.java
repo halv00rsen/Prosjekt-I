@@ -19,6 +19,10 @@ import javax.swing.JComboBox;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * 
+ * Hovedklassen til GUIet. Lager en instans av alt som har med gui, inneholder også selve JFramen.
+ */
 public class GUI implements LoginListener{
 
 	public static boolean DEBUG = true;
@@ -34,13 +38,15 @@ public class GUI implements LoginListener{
 	
 	private ItemStatus itemStatus;
 	private WoodStatus woodStatus;
-	private MessageAdmin messageAdmin;
 	private RemoveReservationsAdmin removeReservations;
 	private AddItemAdmin addItemAdmin;
 	private MailToUserAdmin mailToUser;
 	private CabinMapField mapField;
 //	private AdminReport adminReport;
 	
+	/**
+	 * Oppretter JFrame og legger til alle fanene i programmet
+	 */
 	public GUI(){
 		frame = new JFrame("NTNUI-Koiene");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,18 +81,24 @@ public class GUI implements LoginListener{
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Setter brukernavnet til brukeren i tittelen til programmet.
+	 * @param username - brukernavnet til brukeren som har logget inn
+	 */
 	public void userHasLoggedIn(String username) {
 		frame.setTitle("NTNUI-Koiene (" + username + ")");
 	}
 
+	/**
+	 * Om en bruker/admin logger ut, resetter guiet tittelen og fjerner alle instanser som kun admin
+	 * har tilgang til.
+	 */
 	public void userHasLoggedOut() {
 		frame.setTitle("NTNUI-Koiene");
 		tabbedPane.remove(itemStatus);
 		itemStatus = null;
 		tabbedPane.remove(woodStatus);
 		woodStatus = null;
-		tabbedPane.remove(messageAdmin);
-		messageAdmin = null;
 		tabbedPane.remove(removeReservations);
 		removeReservations = null;
 		tabbedPane.remove(addItemAdmin);
@@ -99,12 +111,19 @@ public class GUI implements LoginListener{
 //		adminReport = null;
 	}
 	
+	/**
+	 * 
+	 * @return HashMap - returnerer id og navn til alle koiene i koienettverket
+	 */
 	public static Map<Integer, String> getIdMap(){
 		if (allCabins == null)
 			return null;
 		return new HashMap<Integer, String>(allCabins);
 	}
 
+	/**
+	 * Oppretter alle instanser admin skal ha tilgang til
+	 */
 	public void adminHasLoggedIn() {
 //		Utstyrstatus, legg inn nytt utstyr, sjekk vedstatus, veddugnad, 
 		frame.setTitle("NTNUI-Koiene (admin)");
@@ -124,12 +143,20 @@ public class GUI implements LoginListener{
 //		tabbedPane.addTab("Rapporter", null, adminReport, null);
 	}
 
+	/**
+	 * 
+	 * @return x - returnerer JFramens x posisjon
+	 */
 	public static int getXPosition() {
 		if (frame == null)
 			return -1;
 		return frame.getX();
 	}
 
+	/**
+	 * 
+	 * @return y - returnerer JFramens y posisjon
+	 */
 	public static int getYPosition() {
 		if (frame == null)
 			return -1;

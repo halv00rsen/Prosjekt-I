@@ -15,6 +15,10 @@ import javax.swing.JPanel;
 
 import src.Item.Status;
 
+/**
+ * 
+ * Hver reservasjon blir gjort om til et JPanel og som lager funksjonalitet til brukeren
+ */
 public class ReservationRow extends JPanel{
 	
 	private final Date from, to;
@@ -25,6 +29,18 @@ public class ReservationRow extends JPanel{
 	private JLabel isReportedString;
 	private final int resId;
 	
+	/**
+	 * Oppretter objektet
+	 * @param name - navnet på koia
+	 * @param username - emailen til brukeren
+	 * @param resId - reservasjonsid i databasen til den aktuelle reservasjon
+	 * @param from - dato fra
+	 * @param to - dato til
+	 * @param today - dagens dato
+	 * @param isReported - om en reservasjon er rapportert
+	 * @param isAdmin - om det er admin som ser feltet
+	 * @param listener - en lytter til reservasjonen
+	 */
 	public ReservationRow(String name, String username, int resId, Date from, Date to, Date today, boolean isReported, boolean isAdmin,
 			ReservationRowListener listener){
 		setLayout(new GridBagLayout());
@@ -75,19 +91,34 @@ public class ReservationRow extends JPanel{
 			}
 		}
 	}
-	
+	/**
+	 * 
+	 * @return resId - returnerer reservasjonsid til en reservasjon
+	 */
 	public int getResId(){
 		return resId;
 	}
 	
+	/**
+	 * 
+	 * @return name - navnet til koia
+	 */
 	public String getCabinName(){
 		return name;
 	}
 	
+	/**
+	 * 
+	 * @return from - dato fra
+	 */
 	public Date getFrom(){
 		return from;
 	}
 	
+	/**
+	 * 
+	 * @return to - dato til
+	 */
 	public Date getTo(){
 		return to;
 	}
@@ -103,7 +134,10 @@ public class ReservationRow extends JPanel{
 	}
 	
 	
-	
+	/**
+	 * 
+	 * En lytter til knappene til reservasjonen
+	 */
 	private class ButtonListener implements ActionListener, UserReportListener{
 		
 		private UserReport userReport;

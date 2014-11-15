@@ -11,6 +11,11 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+/**
+ * 
+ * Et objekt som håndterer riktig format på dato.
+ */
 public class ValidDates {
 
 	private Date today, maxDate;
@@ -19,6 +24,12 @@ public class ValidDates {
 	private final List<ValidDatesListener> listeners;
 	private final MonthChanged listener;
 	
+	/**
+	 * Oppretter objektet
+	 * @param day - en JComboBox som alle dager i en måned skal settes til.
+	 * @param month - en JComboBox som alle lovlige måneder kan reserveres i.
+	 * @param numDays - en JComboBox som viser antall dager man leier for
+	 */
 	public ValidDates(JComboBox<Integer> day, JComboBox<Months> month, JComboBox<Integer> numDays){
 		today = Calendar.getTodaysDate();
 		maxDate = Calendar.getMaxDate();
@@ -44,7 +55,10 @@ public class ValidDates {
 		updateDays();
 	}
 	
-	public void setCabin(int cabinId){
+	/**
+	 * Henter verdiene som er valgt
+	 */
+	public void setCabin(){
 		int[] res = getReservation();
 		callValidDate(res[0], res[1], res[2]);
 	}
@@ -54,14 +68,26 @@ public class ValidDates {
 			l.updateField(day, month, numDays);
 	}
 	
+	/**
+	 * 
+	 * @param l - lytteren blir lagt til
+	 */
 	public void addListener(ValidDatesListener l){
 		listeners.add(l);
 	}
 	
+	/**
+	 * 
+	 * @param l - lytteren blir fjernet
+	 */
 	public void removeListener(ValidDatesListener l){
 		listeners.remove(l);
 	}
 	
+	/**
+	 * 
+	 * @return res - returnerer den valgte dato og antall dager som skal leies
+	 */
 	public int[] getReservation(){//returns [dag, mÃ¥ned, antall dager]
 		int[] res = new int[3];
 		res[0] = (int) date.getSelectedItem();
@@ -94,6 +120,10 @@ public class ValidDates {
 		date.addActionListener(listener);
 	}
 	
+	/**
+	 * 
+	 * Lytter til månedboksen, siden antall dager varierer fra måned til måned
+	 */
 	private class MonthChanged implements ActionListener{
 
 		public void actionPerformed(ActionEvent arg0) {

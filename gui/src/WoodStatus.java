@@ -22,6 +22,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/**
+ * 
+ * Et panel som henter vedstatus til koiene og der man kan forandre vedstatusen
+ */
 public class WoodStatus extends JPanel implements ChangeTabListener{
 	
 	private final JPanel updateWood;
@@ -34,6 +38,9 @@ public class WoodStatus extends JPanel implements ChangeTabListener{
 	private final Map<Integer, Double> woodStatus;
 	private final Map<Integer, String> cabinNames;
 	
+	/**
+	 * Oppretter objektet
+	 */
 	public WoodStatus(){
 		setLayout(new GridBagLayout());
 		updateWood = new JPanel();
@@ -87,6 +94,10 @@ public class WoodStatus extends JPanel implements ChangeTabListener{
 		woodInformation.setText(info);
 	}
 	
+	/**
+	 * 
+	 * En lytter til knappene i panelet som opdaterer databasen og feltene i objektet
+	 */
 	private class ButtonListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent arg0) {
@@ -116,6 +127,10 @@ public class WoodStatus extends JPanel implements ChangeTabListener{
 		}
 	}
 	
+	/**
+	 * 
+	 * En lytter som blir kalt når ei ny koie blir valgt
+	 */
 	private class UpdateListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent arg0) {

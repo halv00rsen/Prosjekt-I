@@ -18,6 +18,10 @@ import javax.swing.JTextField;
 
 import src.Item.Status;
 
+/**
+ * 
+ * Et JPanel der man kan legge til/fjerne utstyr som er gjenglemt i ei koie
+ */
 public class LostItems extends JPanel{
 	
 	private final JButton addButton, removeButton;
@@ -25,6 +29,9 @@ public class LostItems extends JPanel{
 	private final SortedListModel lostItemsModel;
 	private final JList<Item> lostItemsList;
 	
+	/**
+	 * Oppretter objektet
+	 */
 	public LostItems(){
 		setLayout(new GridLayout(1,2));
 		lostItemField = new JTextField(10);
@@ -56,6 +63,10 @@ public class LostItems extends JPanel{
 		
 	}
 	
+	/**
+	 * 
+	 * @return lostItem - returnerer ei liste med alt utstyr som er gjenglemt
+	 */
 	public List<Item> getLostItems(){
 		List<Item> lostItems = new ArrayList<Item>();
 		for (int a = 0; a < lostItemsModel.getSize(); a++){
@@ -64,8 +75,15 @@ public class LostItems extends JPanel{
 		return lostItems;
 	}
 
+	/**
+	 * 
+	 * En lytter som lytter til knappene i objektet
+	 */
 	private class LostItemButtonListener implements ActionListener{
 		
+		/**
+		 * @param arg0 - En ActionEvent som blir kalt når en av knappene blir trykket på
+		 */
 		public void actionPerformed(ActionEvent arg0){
 			if (arg0.getSource() == addButton){
 				String itemName = lostItemField.getText();

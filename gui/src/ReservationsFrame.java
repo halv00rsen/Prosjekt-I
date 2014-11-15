@@ -21,6 +21,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/**
+ * 
+ * Et JPanel der man kan reservere ei ny koie.
+ * Kan også se informasjon.
+ */
 public class ReservationsFrame extends JPanel implements LoginListener, ValidDatesListener, ReservationsListListener, ChangeTabListener{
 	
 	private ValidDates validDates;
@@ -110,6 +115,10 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		panel2.add(reserveForUser);
 	}
 	
+	/**
+	 * 
+	 * @param l - setter en lytter til panelet
+	 */
 	public void setListener(ReservationsFrameListener l){
 		listener = l;
 	}
@@ -222,16 +231,24 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		listener.addReservation(name, from, to, resId);
 	}
 	
+	/**
+	 * 
+	 * En lytter til koieboksen
+	 */
 	private class CabinListener implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e){
 			int cabinId = cabins.getSelectedItem();
 			cabinChosen = Database.getKoie(cabinId);
-			validDates.setCabin(cabinId);
+			validDates.setCabin();
 			setCabinInformation();
 		}
 	}
 	
+	/**
+	 * 
+	 * Lytter til knappene
+	 */
 	private class ButtonListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {

@@ -16,6 +16,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * 
+ * Et JPanel som håndterer om en bruker vil logge inn
+ */
 public class LoginPanel extends JPanel implements ChangeTabListener{
 	
 	public static final boolean DEBUG = false;
@@ -26,6 +30,9 @@ public class LoginPanel extends JPanel implements ChangeTabListener{
 	private final JPanel adminBox, panel;
 	private final CreateUser newUser;
 	
+	/**
+	 * Oppretter objektet
+	 */
 	public LoginPanel(){
 		panel = new JPanel();
 		panel.setBorder(BorderFactory.createTitledBorder("Innlogging"));
@@ -47,10 +54,18 @@ public class LoginPanel extends JPanel implements ChangeTabListener{
 		resetDatabaseButton.addActionListener(new ResetButton());
 	}
 	
+	/**
+	 * 
+	 * @param l - blir lagt til som lytter av LoginPanel
+	 */
 	public void addListener(LoginListener l){
 		listeners.add(l);
 	}
 	
+	/**
+	 * 
+	 * @param l - fjerner lytteren av LoginPanel
+	 */
 	public void removeListener(LoginListener l){
 		listeners.remove(l);
 	}

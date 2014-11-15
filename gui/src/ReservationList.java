@@ -20,6 +20,10 @@ import javax.swing.JTextArea;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+/**
+ * 
+ * Et objekt som håndterer alle reservasjonene til en gitt bruker
+ */
 public class ReservationList extends JPanel implements LoginListener, ReservationRowListener, ReservationsFrameListener, ChangeTabListener{
 	
 	public static final boolean DEBUG = true;
@@ -29,6 +33,9 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 	private final JPanel futureReservations, hasVisitedReservations;
 	private ReservationsListListener listener;
 	
+	/**
+	 * Oppretter objektet
+	 */
 	public ReservationList(){
 		username = null;
 //		this.setLayout(new GridLayout(2, 1));
@@ -56,6 +63,10 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 		add(pane2);
 	}
 	
+	/**
+	 * 
+	 * @param listener - setter lytteren til dette objektet
+	 */
 	public void setListener(ReservationsListListener listener){
 		this.listener = listener;
 	}

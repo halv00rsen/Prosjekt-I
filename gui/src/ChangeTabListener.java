@@ -8,7 +8,7 @@ package src;
  */
 public interface ChangeTabListener {
 	/**
-	 * Henter info som er nødvendig for en aktuell fane.
+	 * Blir kalt når den aktuelle fanen åpnes for å hente relevant data
 	 */
 	public void initPanel();
 }

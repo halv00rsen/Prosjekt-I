@@ -18,6 +18,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/**
+ * 
+ * Et JPanel der admin kan sende en mail til en bruker
+ */
 public class MailToUserAdmin extends JPanel implements ChangeTabListener{
 
 	private final JComboBox<Bruker> users;
@@ -25,6 +29,9 @@ public class MailToUserAdmin extends JPanel implements ChangeTabListener{
 	private final JTextField subjectField;
 	private final JButton sendButton, cancelButton;
 	
+	/**
+	 * Oppretter objektet
+	 */
 	public MailToUserAdmin(){
 		setLayout(new GridLayout(3,1));
 		JPanel panel = new JPanel(new GridBagLayout());
@@ -82,8 +89,15 @@ public class MailToUserAdmin extends JPanel implements ChangeTabListener{
 		subjectField.setText("");
 	}
 	
+	/**
+	 * 
+	 * En lytter til sendknappen i objektet
+	 */
 	private class ButtonListener implements ActionListener{
 
+		/**
+		 * Når aktivert, sender objektet en mail til en aktuell bruker
+		 */
 		public void actionPerformed(ActionEvent arg0) {
 			//send mail til mailklassen
 			if (Mail.sendMail((String) ((Bruker)users.getSelectedItem()).getId(), subjectField.getText(), emailInfo.getText()))
@@ -96,7 +110,9 @@ public class MailToUserAdmin extends JPanel implements ChangeTabListener{
 		}
 	}
 
-	@Override
+	/**
+	 * Ikke i bruk
+	 */
 	public void initPanel() {
 		// TODO Auto-generated method stub
 		

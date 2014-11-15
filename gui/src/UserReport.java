@@ -29,6 +29,10 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 
+/**
+ * 
+ * Rapporten en bruker skal sende inn etter at brukeren har vært på koia.
+ */
 public class UserReport {
 	
 	private JFrame frame;
@@ -42,6 +46,14 @@ public class UserReport {
 	
 	private UserReportListener listener;
 	
+	/**
+	 * Oppretter objektet
+	 * @param dayFrom - dag fra
+	 * @param monthFrom - måned fra
+	 * @param dayTo - dag til
+	 * @param monthTo - måned til
+	 * @param cabin - det aktuelle koieobjektet
+	 */
 	public UserReport(int dayFrom, int monthFrom, int dayTo, int monthTo,  Koie cabin){
 		frame = new JFrame("Rapport");
 		frame.setSize(400, 400);
@@ -103,15 +115,26 @@ public class UserReport {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * 
+	 * @param listener - setter en lytter til rapporten
+	 */
 	public void setListener(UserReportListener listener){
 		this.listener = listener;
 	}
 	
+	/**
+	 * Oppdaterer lista med alt utstyr som er i koia
+	 */
 	private void updateEquipmentInCabin(){
 		List<Item> items = cabin.getInventory().getAllItems();
 		destroyedItems.setInventory(items);
 	}
 	
+	/**
+	 * 
+	 * En klasse som lytter til knappene
+	 */
 	private class ButtonListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent arg0) {

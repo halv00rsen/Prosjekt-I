@@ -13,6 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+/**
+ * 
+ * Et JPanel der admin kan fjerne alle reservasjoner i hele systemet
+ */
 public class RemoveReservationsAdmin extends JPanel implements ReservationRowListener, ChangeTabListener{
 
 	private final JPanel panel;
@@ -20,6 +24,10 @@ public class RemoveReservationsAdmin extends JPanel implements ReservationRowLis
 	private Koie cabin;
 	private final ReservationsListListener deleteListener;
 	
+	/**
+	 * Oppretter objektet
+	 * @param deleteListener - En lytter til panelet
+	 */
 	public RemoveReservationsAdmin(ReservationsListListener deleteListener){
 		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -52,6 +60,9 @@ public class RemoveReservationsAdmin extends JPanel implements ReservationRowLis
 		panel.repaint();
 	}
 
+	/**
+	 * @param reservation - fjerner denne reservasjonen fra panelet.
+	 */
 	public void removeReservation(ReservationRow reservation) {
 		panel.remove(reservation);
 		deleteListener.removeReservation(reservation.getResId());
@@ -59,13 +70,23 @@ public class RemoveReservationsAdmin extends JPanel implements ReservationRowLis
 		panel.repaint();
 	}
 	
+	/**
+	 * 
+	 * En lytter til koiecomboboxen
+	 */
 	private class KoieListener implements ActionListener{
 
+		/**
+		 * En actionEvent som blir kalt når en ny koie er valgt
+		 */
 		public void actionPerformed(ActionEvent arg0) {
 			getAllReservations();
 		}
 	}
 
+	/**
+	 * Henter alle reservasjoner til en aktuell koie
+	 */
 	public void initPanel() {
 		getAllReservations();
 	}
