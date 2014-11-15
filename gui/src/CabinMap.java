@@ -12,13 +12,13 @@ import javax.swing.JPanel;
 
 public class CabinMap extends JPanel{
 	
-	private String picURL = "gui\\pic\\cabinMap.png";
+	private String picURL = "gui\\pic\\";
 //	private String picURL = "C:\\Users\\jorge_000\\prosjekt 1\\Prosjekt-I\\gui\\pic\\cabinMap.png";
 	private BufferedImage map;
 	
-	public CabinMap(){
+	public CabinMap(String picName){
 		try{
-			map = ImageIO.read(new File(picURL));
+			map = ImageIO.read(new File(picURL + picName));
 		}catch (IOException e){
 			e.printStackTrace();
 			map = null;
