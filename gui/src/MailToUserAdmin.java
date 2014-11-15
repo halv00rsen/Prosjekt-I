@@ -68,9 +68,11 @@ public class MailToUserAdmin extends JPanel implements ChangeTabListener{
 	}
 	
 	private List<Bruker> getAllUsers(){
-		List<Bruker> users = new ArrayList<Bruker>();
-		users.add(new Bruker("Jørgen", "1234", false));
-		users.add(new Bruker("Kåre", "123", true));
+		List<Bruker> users = Database.getAllBrukers();
+		for (Bruker user : users){
+			if (user.isAdmin())
+				users.remove(user);
+		}
 		return users;
 	}
 	
