@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+/** Panel der bruker eller admin kan logge seg inn i systemet */
 public class AdminLogin extends JPanel {
 	private JTextField userName;
 	private JPasswordField password;
