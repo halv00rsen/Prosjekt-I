@@ -76,10 +76,12 @@ public class CreateUser extends JPanel{
 	 */
 	private boolean validEmail(){
 		String email = username.getText().toLowerCase().trim();
-//		if (email.indexOf("@") == -1 || email.indexOf(".") == -1){
-//			JOptionPane.showMessageDialog(null, "Feil format pï¿½ email");
-//			return false;
-//		}
+		if (adminCheckBox.isSelected() && email != null)
+			return true;
+		if (email.indexOf("@") == -1 || email.indexOf(".") == -1){
+			JOptionPane.showMessageDialog(null, "Feil format på email");
+			return false;
+		}
 		if (Database.getBruker(email) != null){
 			JOptionPane.showMessageDialog(null, "Brukernavnet er allerede tatt");
 			return false;
