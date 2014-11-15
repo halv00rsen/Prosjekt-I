@@ -21,7 +21,7 @@ public class Mail {
 	 * @param subjectline Emne
 	 * @param messageText Melding
 	 */
-	public static void sendMail(String to, String subjectline, String messageText) {
+	public static boolean sendMail(String to, String subjectline, String messageText) {
 		Properties properties = System.getProperties();
 		properties.setProperty("mail.smtp.host", "smtp.gmail.com");
 		properties.setProperty("mail.smtp.port", "587");
@@ -51,9 +51,10 @@ public class Mail {
 
 	         // Send message
 	         Transport.send(message);
-	         System.out.println("Sent message successfully....");
+	         return true;
 	    }catch (MessagingException mex) {
 	         mex.printStackTrace();
+	         return false;
 	    }
 	}
 	
