@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 public class Pic {
 	private static final String cabinPositions = "gui/pic/cabinPositions.txt";
-	private static final double imageXOffset = 91; // 333-242;
-	private static final double imageYOffset = 5; // 297-292;
+	private static final double imageXOffset = -91; // 242-333;
+	private static final double imageYOffset = -5; // 292-297;
 
 	private static final double guiXScale = 0.74576271186; // 396 / 531;
 	private static final double guiYScale = 0.6894308943; // 424 / 615;
@@ -50,7 +50,7 @@ public class Pic {
 	 * @return
 	 */
 	private static int offsetAndScalePos(Double pos, double offset, double scale) {
-		Double offsetPos = pos - offset;
+		Double offsetPos = pos + offset;
 		Double scaledPos = offsetPos * scale;
 		return scaledPos.intValue();
 	}
