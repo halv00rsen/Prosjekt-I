@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.util.Scanner;
 import java.util.HashMap;
 
+/** Leser koie-posisjoner fra fil og transformerer dem slik at de kan brukes i GUI-et */
 public class Pic {
 	private static final String cabinPositions = "gui/pic/cabinPositions.txt";
 	private static final double imageXOffset = -91; // 242-333;
