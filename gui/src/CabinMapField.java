@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import pic.Pic;
@@ -34,9 +35,12 @@ public class CabinMapField extends JPanel implements ChangeTabListener{
 		cabinInfo.setWrapStyleWord(true);
 		cabinInfo.setLineWrap(true);
 		cabinInfo.setBorder(BorderFactory.createEtchedBorder());
+		JScrollPane pane = new JScrollPane(cabinInfo);
+		pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		add(map1);
 		add(map2);
-		add(cabinInfo);
+		add(pane);
 		
 	}
 
@@ -78,7 +82,7 @@ public class CabinMapField extends JPanel implements ChangeTabListener{
 		}
 
 		public void mouseEntered(MouseEvent arg0) {
-			System.out.println("heisann");
+
 		}
 
 		public void mouseExited(MouseEvent arg0) {
