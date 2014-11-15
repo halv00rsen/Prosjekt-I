@@ -32,7 +32,7 @@ import javax.swing.JComboBox;
 public class UserReport {
 	
 	private JFrame frame;
-	private JTextArea textArea;
+//	private JTextArea textArea;
 	private ButtonListener buttonListener;
 	private final JButton okButton, cancelButton;
 	private DestroyedItems destroyedItems;
@@ -91,13 +91,13 @@ public class UserReport {
 		
 		JLabel lblSkrivAnnenInformasjon = new JLabel("Skriv annen informasjon her:");
 		panel.add(lblSkrivAnnenInformasjon);
-		textArea = new JTextArea(16, 30);
-		textArea.setLineWrap(true);
-		textArea.setWrapStyleWord(true);
-		JScrollPane scrollPane = new JScrollPane(textArea);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		panel.add(scrollPane);
-		tabbedPane.addTab("Annen Info", null, panel, null);
+//		textArea = new JTextArea(16, 30);
+//		textArea.setLineWrap(true);
+//		textArea.setWrapStyleWord(true);
+//		JScrollPane scrollPane = new JScrollPane(textArea);
+//		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//		panel.add(scrollPane);
+//		tabbedPane.addTab("Annen Info", null, panel, null);
 		updateEquipmentInCabin();
 		frame.setLocation(GUI.getXPosition(), GUI.getYPosition());
 		frame.setVisible(true);
@@ -130,7 +130,7 @@ public class UserReport {
 				int number = 0;
 				if (text.length() != 0)
 					number = Integer.parseInt(text);
-				listener.okPressed(textArea.getText(), destroyedItems.getDestroyedElements(), number, lostItems.getLostItems());
+				listener.okPressed("textArea.getText()", destroyedItems.getDestroyedElements(), number, lostItems.getLostItems());
 			}
 			frame.removeAll();
 			frame.setVisible(false);
