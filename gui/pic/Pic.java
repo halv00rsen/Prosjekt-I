@@ -28,10 +28,10 @@ public class Pic {
 				double xPos = Double.parseDouble(fields[1]);
 				double yPos = Double.parseDouble(fields[2]);
 			
-				Double adjustedXPos = offsetAndScalePos(xPos, imageXOffset, guiXScale);
-				Double adjustedYPos = offsetAndScalePos(yPos, imageYOffset, guiYScale);
+				int adjustedXPos = offsetAndScalePos(xPos, imageXOffset, guiXScale);
+				int adjustedYPos = offsetAndScalePos(yPos, imageYOffset, guiYScale);
 	
-				int[] position = {adjustedXPos.intValue(), adjustedYPos.intValue()};
+				int[] position = {adjustedXPos, adjustedYPos};
 				positions.put(koieId, position);
 			}
 			in.close();	
@@ -49,10 +49,9 @@ public class Pic {
 	 * @param scale Skalering
 	 * @return
 	 */
-	private static double offsetAndScalePos(double pos, double offset, double scale) {
-		Double offsetPos = pos + offset;
+	private static int offsetAndScalePos(Double pos, double offset, double scale) {
+		Double offsetPos = pos - offset;
 		Double scaledPos = offsetPos * scale;
-		return scaledPos;
+		return scaledPos.intValue();
 	}
-
 }
