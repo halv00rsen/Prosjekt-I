@@ -13,17 +13,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 public class ValidDates {
 
-	private final Date today, maxDate;
+	private Date today, maxDate;
 	private final JComboBox<Integer> date, numDays;
 	private final JComboBox<Months> month;
 	private final List<ValidDatesListener> listeners;
-	private int cabinId;
 	private final MonthChanged listener;
 	
 	public ValidDates(JComboBox<Integer> day, JComboBox<Months> month, JComboBox<Integer> numDays){
-		Calendar calendar = new Calendar();
-		today = calendar.getTodaysDate();
-		maxDate = calendar.getMaxDate();
+		today = Calendar.getTodaysDate();
+		maxDate = Calendar.getMaxDate();
 		this.date = day;
 		this.month = month;
 		this.numDays = numDays;
@@ -47,7 +45,6 @@ public class ValidDates {
 	}
 	
 	public void setCabin(int cabinId){
-		this.cabinId = cabinId;
 		int[] res = getReservation();
 		callValidDate(res[0], res[1], res[2]);
 	}
@@ -71,6 +68,11 @@ public class ValidDates {
 		res[1] = ((Months) month.getSelectedItem()).getValue();
 		res[2] = (int) numDays.getSelectedItem();
 		return res;
+	}
+	
+	private void checkUpdateDay(){
+		today = Calendar.getTodaysDate();
+		maxDate = Calendar.getMaxDate();
 	}
 	
 	private void updateDays(){
@@ -97,6 +99,7 @@ public class ValidDates {
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == month)
 				updateDays();
+			checkUpdateDay();
 			int[] res = getReservation();
 			callValidDate(res[0], res[1], res[2]);
 		}
