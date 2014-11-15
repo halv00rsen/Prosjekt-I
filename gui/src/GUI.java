@@ -39,7 +39,7 @@ public class GUI implements LoginListener{
 	private AddItemAdmin addItemAdmin;
 	private MailToUserAdmin mailToUser;
 	private CabinMapField mapField;
-	private AdminReport adminReport;
+//	private AdminReport adminReport;
 	
 	public GUI(){
 		frame = new JFrame("NTNUI-Koiene");
@@ -95,8 +95,8 @@ public class GUI implements LoginListener{
 		mailToUser = null;
 		tabbedPane.remove(mapField);
 		mapField = null;
-		tabbedPane.remove(adminReport);
-		adminReport = null;
+//		tabbedPane.remove(adminReport);
+//		adminReport = null;
 	}
 	
 	public static Map<Integer, String> getIdMap(){
@@ -120,8 +120,8 @@ public class GUI implements LoginListener{
 		tabbedPane.addTab("Mail til bruker", null, mailToUser, null);
 		mapField = new CabinMapField();
 		tabbedPane.addTab("Kart", null, mapField, null);
-		adminReport = new AdminReport();
-		tabbedPane.addTab("Rapporter", null, adminReport, null);
+//		adminReport = new AdminReport();
+//		tabbedPane.addTab("Rapporter", null, adminReport, null);
 	}
 
 	public static int getXPosition() {
