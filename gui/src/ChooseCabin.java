@@ -8,6 +8,10 @@ import java.util.Map;
 
 import javax.swing.JComboBox;
 
+/**
+ * 
+ * Henter navnet på alle koiene fra GUI og legger dem i en JComboBox som en annen klasse kan hente og bruke
+ */
 public class ChooseCabin {
 
 	private JComboBox<String> cabins;

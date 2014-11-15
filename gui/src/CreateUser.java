@@ -15,6 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+/**
+ * 
+ * Klassen er en instans av JPanel og gir en bruker/admin mulighet til å lage en ny bruker
+ */
 public class CreateUser extends JPanel{
 	private final JTextField username;
 	private final JPasswordField password, checkPassword, adminCode;
@@ -141,6 +145,10 @@ public class CreateUser extends JPanel{
 		adminCode.setText("");
 	}
 	
+	/**
+	 * 
+	 * Lytter til om man skal lage en adminbruker eller ikke
+	 */
 	private class AdminListener implements ActionListener{
 		
 		private JLabel adminKode;
@@ -149,6 +157,10 @@ public class CreateUser extends JPanel{
 			adminKode = new JLabel("Adminkode: ");
 		}
 		
+		/**
+		 * Når adminCheckBox blir trykket på, blir denne funksjonen kalt.
+		 * Den bestemmer så om det er en admin som skal lage en bruker eller ikke.
+		 */
 		public void actionPerformed(ActionEvent arg0){
 			if (adminCheckBox.isSelected()){
 				c.gridx = 2;
@@ -166,6 +178,10 @@ public class CreateUser extends JPanel{
 		}
 	}
 	
+	/**
+	 * 
+	 * En lytter til knappene på siden.
+	 */
 	private class ButtonListener implements ActionListener{
 		
 		/**

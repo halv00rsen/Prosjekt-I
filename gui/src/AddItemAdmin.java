@@ -27,6 +27,9 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 	private final JTextArea itemInfo;
 	private Koie cabinInUse;
 	
+	/**
+	 * Konstruktøren oppretter objektet
+	 */
 	public AddItemAdmin(){
 		cabins = new ChooseCabin();
 		CabinListener listener = new CabinListener();
@@ -127,8 +130,16 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 		JOptionPane.showMessageDialog(this, "Informasjonen ble lagret.");
 	}
 	
+	/**
+	 * 
+	 * Klassen lytter til alle knappene som blir laget i AddItemAdmin
+	 */
 	private class CabinListener implements ActionListener{
 
+		/**
+		 * En funksjon som bestemmer om noe nytt skal oppdateres i fanen
+		 * @param arg0 en ActionEvent som blir kalt når en av knappene har blitt trykket på
+		 */
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == addItem){
 				Item item = new Item(itemNameInput.getText());
@@ -158,6 +169,9 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 		}
 	}
 
+	/**
+	 * Blir kalt når denne fanen åpnes, gjør da et kall til databasen
+	 */
 	public void initPanel() {
 		updateCabin();
 	}

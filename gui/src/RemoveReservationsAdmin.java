@@ -31,7 +31,7 @@ public class RemoveReservationsAdmin extends JPanel implements ReservationRowLis
 		JScrollPane pane = new JScrollPane(panel);
 		chooseCabin.addActionListener(new KoieListener());
 		panel.setBorder(BorderFactory.createTitledBorder("Reservasjoner"));
-		pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		add(panel2);
 		add(pane);

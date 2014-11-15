@@ -15,12 +15,21 @@ import javax.swing.JTextArea;
 
 import pic.Pic;
 
+/**
+ * 
+ * Er et jpanel og implementerer ChangeTabListener
+ * Lager instanser av kartet og et felt med informasjon om ei koie.
+ * Kan trykke på kartet for å få opp info om koia.
+ */
 public class CabinMapField extends JPanel implements ChangeTabListener{
 	
 	private final CabinMap map1, map2;
 	private final JTextArea cabinInfo;
 	private final HashMap<Integer, int[]> cabinPos;
 	
+	/**
+	 * Oppretter objektet
+	 */
 	public CabinMapField(){
 		map1 = new CabinMap("cabinMap1.png");
 		map2 = new CabinMap("cabinMap2.png");
@@ -44,7 +53,10 @@ public class CabinMapField extends JPanel implements ChangeTabListener{
 		
 	}
 
-	@Override
+	/**
+	 * Gjør ingenting i dette tilfellet, siden det ikke er noen spesielle databasekall som må
+	 * gjøres når man åpner fanen
+	 */
 	public void initPanel() {
 		// TODO Auto-generated method stub
 		
@@ -75,6 +87,10 @@ public class CabinMapField extends JPanel implements ChangeTabListener{
 		return (Math.abs(bx - x) < 12) && (Math.abs(by - y) < 12);
 	}
 	
+	/**
+	 * 
+	 * Lytter til musen om det bli gjort et klikk på kartet
+	 */
 	private class Listener implements MouseListener{
 
 		public void mouseClicked(MouseEvent arg0) {
@@ -89,6 +105,10 @@ public class CabinMapField extends JPanel implements ChangeTabListener{
 			
 		}
 
+		/**
+		 * Henter info om den koia som blir trykt på
+		 * @param arg0 - en MouseEvent som blir kalt når musen blir presset ned
+		 */
 		public void mousePressed(MouseEvent arg0) {
 			int x = arg0.getX();
 			int y = arg0.getY();

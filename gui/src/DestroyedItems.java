@@ -24,6 +24,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 
+/**
+ * 
+ * En instans av JPanel som holder styr på objekter som kan ha blitt ødelagt i ei koie ved besøk.
+ * Brukes av UserReport
+ */
 public class DestroyedItems extends JPanel{
 	
 	  private JList<Item> inventory, brokenInventory;
@@ -31,7 +36,7 @@ public class DestroyedItems extends JPanel{
 	  private SortedListModel inventoryListModel, brokenInventoryListModel;
 
 	  /**
-	   * Oppretter Ã¸delagt utstyr-panelet i rapporten.
+	   * Oppretter ødelagt utstyr-panelet i rapporten.
 	   */
 	  public DestroyedItems() {
 		  setBorder(BorderFactory.createEtchedBorder());
