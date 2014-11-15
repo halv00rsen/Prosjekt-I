@@ -19,6 +19,12 @@ public class Calendar {
 		maxDate = getLastDate(todaysDate, daysInFeature);
 	}
 	
+	/**
+	 * Returnerer en reservasjon
+	 * @param from - dato fra
+	 * @param to - dato til
+	 * @return booking - hvis reservasjonen eksisterer, blir den returnert
+	 */
 	public BookingDate getReservation(Date from, Date to){
 		for (BookingDate booking: datesBooked){
 			if (booking.equals(from, to))
@@ -29,8 +35,8 @@ public class Calendar {
 	
 	
 	/**
-	 * Returnerer nÃ¥vÃ¦rende dato
-	 * @return Date-objekt med nÃ¥vÃ¦rende dato
+	 * Returnerer nåværende dato
+	 * @return Date-objekt med nåværende dato
 	 */
 	public static Date getTodaysDate(){
 		java.util.Calendar c = new GregorianCalendar();
