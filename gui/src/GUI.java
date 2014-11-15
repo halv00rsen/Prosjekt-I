@@ -72,7 +72,6 @@ public class GUI implements LoginListener{
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setVisible(true);
-		
 	}
 
 	public void userHasLoggedIn(String username) {
