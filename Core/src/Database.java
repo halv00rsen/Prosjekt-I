@@ -378,6 +378,10 @@ public class Database {
 		}
 	}
 		
+	/**
+	 * Returnerer alle brukere i databasen som Bruker-objekter
+	 * @return Liste med Bruker-objekter
+	 */
 	public List<Bruker> getAllBrukers() {
 		try {
 			String query = "SELECT person, password_hash, is_admin "
