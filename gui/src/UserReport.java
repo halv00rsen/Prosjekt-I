@@ -36,21 +36,19 @@ public class UserReport {
 	private ButtonListener buttonListener;
 	private final JButton okButton, cancelButton;
 	private DestroyedItems destroyedItems;
-	private final String cabin;
 	private final JTextField numWood;
-	private final int cabinId;
 	private final LostItems lostItems;
+	private final Koie cabin;
 	
 	private UserReportListener listener;
 	
-	public UserReport(String cabin, int dayFrom, int monthFrom, int dayTo, int monthTo, int cabinId){
+	public UserReport(int dayFrom, int monthFrom, int dayTo, int monthTo,  Koie cabin){
 		frame = new JFrame("Rapport");
 		frame.setSize(400, 400);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		buttonListener = new ButtonListener();
 		this.cabin = cabin;
-		this.cabinId = cabinId;
 		JPanel cancelOkButtons = new JPanel();
 		frame.getContentPane().add(cancelOkButtons, BorderLayout.SOUTH);
 		cancelOkButtons.setLayout(new GridLayout(1, 0, 0, 0));
@@ -73,7 +71,7 @@ public class UserReport {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 0;
-		panel_1.add(new JLabel("Rapport for " + cabin + ". "), c);
+		panel_1.add(new JLabel("Rapport for " + cabin.getName() + ". "), c);
 		c.gridx = 0;
 		c.gridy = 1;
 		panel_1.add(new JLabel("Leid fra " + dayFrom + "." + monthFrom + " til " + dayTo + ". " + monthTo));
@@ -110,7 +108,7 @@ public class UserReport {
 	}
 	
 	private void updateEquipmentInCabin(){
-		List<Item> items = Database.getKoie(cabinId).getInventory().getAllItems();
+		List<Item> items = cabin.getInventory().getAllItems();
 		destroyedItems.setInventory(items);
 	}
 	
