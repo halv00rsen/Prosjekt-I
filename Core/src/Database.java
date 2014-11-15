@@ -378,6 +378,28 @@ public class Database {
 		}
 	}
 		
+	public List<Bruker> getAllBrukers() {
+		try {
+			String query = "SELECT person, password_hash, is_admin "
+							 	+ "FROM bruker";
+			ResultSet res = makeQuery(query);
+			
+			List<Bruker> allBrukers = new ArrayList<Bruker>();
+			while (res.next()) {
+				String person = res.getString("person");
+				String passwordHash = res.getString("password_hash");
+				boolean isAdmin = res.getBoolean("is_admin");
+				allBrukers.add(new Bruker(person, passwordHash, isAdmin));
+			}	
+
+			return allBrukers;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	/**
 	 * Legger en ny bruker til databasen
 	 * @param id Bruker-ID
@@ -529,4 +551,5 @@ public class Database {
 		}
 		return vedstatus;
 	}
+
 }
