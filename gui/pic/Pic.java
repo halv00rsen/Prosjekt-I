@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 public class Pic {
 	private static final String cabinPositions = "gui/pic/cabinPositions.txt";
-	private static final double imageXOffset = 91; // 333-242;
-	private static final double imageYOffset = 5; // 297-292;
+	private static final double imageXOffset = -91; // 242-333;
+	private static final double imageYOffset = -5; // 292-297;
 
 	private static final double guiXScale = 0.74576271186; // 396 / 531;
 	private static final double guiYScale = 0.6894308943; // 424 / 615;
@@ -28,10 +28,10 @@ public class Pic {
 				double xPos = Double.parseDouble(fields[1]);
 				double yPos = Double.parseDouble(fields[2]);
 			
-				Double adjustedXPos = offsetAndScalePos(xPos, imageXOffset, guiXScale);
-				Double adjustedYPos = offsetAndScalePos(yPos, imageYOffset, guiYScale);
+				int adjustedXPos = offsetAndScalePos(xPos, imageXOffset, guiXScale);
+				int adjustedYPos = offsetAndScalePos(yPos, imageYOffset, guiYScale);
 	
-				int[] position = {adjustedXPos.intValue(), adjustedYPos.intValue()};
+				int[] position = {adjustedXPos, adjustedYPos};
 				positions.put(koieId, position);
 			}
 			in.close();	
@@ -49,10 +49,9 @@ public class Pic {
 	 * @param scale Skalering
 	 * @return
 	 */
-	private static double offsetAndScalePos(double pos, double offset, double scale) {
+	private static int offsetAndScalePos(Double pos, double offset, double scale) {
 		Double offsetPos = pos + offset;
 		Double scaledPos = offsetPos * scale;
-		return scaledPos;
+		return scaledPos.intValue();
 	}
-
 }
