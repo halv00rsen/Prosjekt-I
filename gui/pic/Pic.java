@@ -25,13 +25,12 @@ public class Pic {
 			while (in.hasNextLine()) {
 				String[] fields = in.nextLine().split(", ");	
 				int koieId = Integer.parseInt(fields[0]);
-				double xPos = Integer.parseInt(fields[1]);
-				double yPos = Integer.parseInt(fields[2]);
+				double xPos = Double.parseDouble(fields[1]);
+				double yPos = Double.parseDouble(fields[2]);
 			
 				Double adjustedXPos = offsetAndScalePos(xPos, imageXOffset, guiXScale);
 				Double adjustedYPos = offsetAndScalePos(yPos, imageYOffset, guiYScale);
 	
-				System.out.println(koieId+", "+adjustedXPos+", "+adjustedYPos);
 				int[] position = {adjustedXPos.intValue(), adjustedYPos.intValue()};
 				positions.put(koieId, position);
 			}
@@ -51,8 +50,8 @@ public class Pic {
 	 * @return
 	 */
 	private static double offsetAndScalePos(double pos, double offset, double scale) {
-		double offsetPos = pos + offset;
-		double scaledPos = offsetPos * scale;
+		Double offsetPos = pos + offset;
+		Double scaledPos = offsetPos * scale;
 		return scaledPos;
 	}
 
