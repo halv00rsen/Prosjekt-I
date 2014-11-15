@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import src.Item.Status;
 
+/** Fane der admin kan legge items til databasen */
 public class AddItemAdmin extends JPanel implements ChangeTabListener{
 	
 	private final ChooseCabin cabins;
@@ -96,6 +97,9 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 		add(resetInfo, c);
 	}
 	
+	/**
+	 * Henter items fra databasen
+	 */
 	private void updateCabin(){
 		cabinInUse = Database.getKoie(cabins.getSelectedItem());
 		allItems.removeAllItems();
@@ -115,6 +119,9 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 		}
 	}
 	
+	/**
+	 * Lagrer items til databasen
+	 */
 	private void sendToDatabase(){
 		Database.toDatabase(cabinInUse);
 		JOptionPane.showMessageDialog(this, "Informasjonen ble lagret.");
