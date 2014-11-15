@@ -297,9 +297,9 @@ public class Database {
 			}
 			
 			//vedmengde
-			ResultSet vedmengde_res = makeQuery("SELECT mengde FROM vedstatus");
+			ResultSet vedmengde_res = makeQuery("SELECT mengde FROM vedstatus WHERE koie_id='"+koie_id+"'");
 			double mengde = 0.0;
-			while (vedmengde_res.next()) {
+			if (vedmengde_res.next()) {
 				mengde = vedmengde_res.getDouble("mengde");
 			}			
 			
