@@ -12,6 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -69,10 +70,10 @@ public class MailToUserAdmin extends JPanel implements ChangeTabListener{
 	
 	private List<Bruker> getAllUsers(){
 		List<Bruker> users = Database.getAllBrukers();
-		for (Bruker user : users){
-			if (user.isAdmin())
-				users.remove(user);
-		}
+//		for (Bruker user : users){
+//			if (user.isAdmin())
+//				users.remove(user);
+//		}
 		return users;
 	}
 	
@@ -85,6 +86,12 @@ public class MailToUserAdmin extends JPanel implements ChangeTabListener{
 
 		public void actionPerformed(ActionEvent arg0) {
 			//send mail til mailklassen
+			if (Mail.sendMail((String) ((Bruker)users.getSelectedItem()).getId(), subjectField.getText(), emailInfo.getText()))
+				JOptionPane.showMessageDialog(null, "Mailen ble sendt");
+			else{
+				JOptionPane.showMessageDialog(null, "Mailen ble ikke sendt");
+				return;
+			}
 			resetFields();
 		}
 	}
