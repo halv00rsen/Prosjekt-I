@@ -183,8 +183,9 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		if (adminLogin){
 			username = reserveForUser.getText();
 			reserveForUser.setText("");
-			if ("".equals(username)){
+			if ("".equals(username) || username.indexOf("@") == -1 || username.indexOf(".") == -1){
 				JOptionPane.showMessageDialog(null, "Ikke et valid brukernavn");
+				return;
 			}
 		}else
 			username = this.username;
