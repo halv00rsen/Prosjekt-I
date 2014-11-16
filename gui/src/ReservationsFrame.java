@@ -24,7 +24,7 @@ import javax.swing.JTextField;
 /**
  * 
  * Et JPanel der man kan reservere ei ny koie.
- * Kan også se informasjon.
+ * Kan ogsï¿½ se informasjon.
  */
 public class ReservationsFrame extends JPanel implements LoginListener, ValidDatesListener, ReservationsListListener, ChangeTabListener{
 	
@@ -164,7 +164,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		info += "\nUtstyr:";
 		for (Item item: cabinChosen.getInventory().getInOrderItems())
 			info += " " + item.getName() + ",";
-		info += "\n\nKoia er reservert på følgende dager:";
+		info += "\n\nKoia er reservert pï¿½ fï¿½lgende dager:";
 		if (cabinChosen.getCalendar().getDatesBooked().size() == 0){
 			info += "\nIngen reservasjoner for denne koia.";
 		}else
@@ -190,7 +190,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		}else
 			username = this.username;
 		if (!isLoggedIn && !adminLogin){
-			JOptionPane.showMessageDialog(null, "Du er ikke logged inn, og kan dermed ikke reservere ei koie."
+			JOptionPane.showMessageDialog(null, "Du er ikke logget inn, og kan dermed ikke reservere ei koie."
 					+ "\nGÃ¥ til innloggingsfanen for Ã¥ logge inn.");
 			return;
 		}
