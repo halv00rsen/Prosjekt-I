@@ -200,7 +200,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 			Date to = Calendar.getLastDate(from, date[2]);
 			cabinChosen.getCalendar().reservePeriod(from, date[2], username, -1, false);
 			Database.toDatabase(cabinChosen);
-			JOptionPane.showMessageDialog(null, "Din reservasjon til " + cabins.getSelectedItem() + " den " + date[0] + "." + date[1] + " i " + 
+			JOptionPane.showMessageDialog(null, "Din reservasjon til " + cabins.getSelectedCabinName() + " den " + date[0] + "." + date[1] + " i " + 
 											date[2] + " dag(er), ble godkjent og lagret.");
 			setCabinInformation();
 			updateField(date[0], date[1], date[2]);
