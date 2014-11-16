@@ -55,14 +55,14 @@ public class ReservationRow extends JPanel{
 		c.gridx = 0;
 		c.gridy = 0;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridwidth = 3;
+		c.gridwidth = 4;
 		add(new JLabel("Koie: " + name + " "), c);
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 1;
 		add(new JLabel("Fra: " + from.day + "." + from.month), c);
 		c.gridx = 1;
-		add(new JLabel("Til: " + to.day + "." + to.month + "  "), c);
+		add(new JLabel(" Til: " + to.day + "." + to.month + "  "), c);
 		c.gridy = 2;
 		c.gridx = 0;
 		if (!isAdmin){
@@ -72,8 +72,10 @@ public class ReservationRow extends JPanel{
 			isReportedString = new JLabel((isReported ? "Ja" : "Nei"));
 			add(isReportedString, c);
 		}else{
+			c.gridwidth = 4;
 			add(new JLabel("Bruker: " + username), c);
 		}
+		c.gridwidth = 1;
 		c.gridy = 1;
 		c.gridx = 3;
 		ButtonListener l = new ButtonListener();
