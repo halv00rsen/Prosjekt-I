@@ -11,18 +11,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * 
  * CabinMap henter kartet fra hardisken, og legger det i en JPanel
  */
 public class CabinMap extends JPanel{
-	
-	private String picURL = "gui\\pic\\";
-//	private String picURL = "C:\\Users\\jorge_000\\prosjekt 1\\Prosjekt-I\\gui\\pic\\cabinMap.png";
+	private String picURL = "gui/pic/";
 	private BufferedImage map;
 	
 	/**
 	 * Oppretter kartet
-	 * @param picName navnet på kartbildet
+	 * @param picName navnet pï¿½ kartbildet
 	 */
 	public CabinMap(String picName){
 		try{
