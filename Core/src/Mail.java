@@ -11,7 +11,6 @@ public class Mail {
 //		Mail.sendMail("it1901gruppe10@gmail.com", "test", "heisann");
 //		Mail.getMail();
 //	}
-	
 	final static String mail = "it1901gruppe10@gmail.com";
 	final static String pass = "prosjekt1"; 
 	
@@ -38,7 +37,7 @@ public class Mail {
 			    	}
 		});
 		
-		try{
+		try {
 	         MimeMessage message = new MimeMessage(session);
 	         message.setFrom(new InternetAddress(mail));
 	         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
@@ -52,7 +51,7 @@ public class Mail {
 	         // Send message
 	         Transport.send(message);
 	         return true;
-	    }catch (MessagingException mex) {
+	    } catch (MessagingException mex) {
 	         mex.printStackTrace();
 	         return false;
 	    }
@@ -65,6 +64,7 @@ public class Mail {
 	public static String getMail() {
 		Properties properties = new Properties();
 		properties.setProperty("mail.store.protocol", "imaps");
+
 		try {
 			Session session = Session.getInstance(properties, null);
 			Store store = session.getStore();
@@ -76,14 +76,10 @@ public class Mail {
 			
 			String content = (String) msg.getContent();
 			return content;
-            
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-		
-		
 	}
 }
-
