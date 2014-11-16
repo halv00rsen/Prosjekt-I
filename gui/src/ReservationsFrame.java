@@ -161,10 +161,12 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		info += "\nTopptur: " + cabinChosen.getTopptur();
 		info += "\nJakt og fiske: " + cabinChosen.getJaktOgFiske();
 		info += "\nSpesialiteter: " + cabinChosen.getSpesialiteter();
-		info += "\nUtstyr:";
-		for (Item item: cabinChosen.getInventory().getInOrderItems())
-			info += " " + item.getName() + ",";
-		info += "\n\nKoia er reservert pï¿½ fï¿½lgende dager:";
+		info += "\nUtstyr: ";
+		List<Item> orderItems = cabinChosen.getInventory().getInOrderItems();
+		for (int a = 0; a < orderItems.size(); a++){
+			info += orderItems.get(a).getName() + (a + 1 == orderItems.size()? "":", ");
+		}
+		info += "\n\nKoia er reservert på følgende dager:";
 		if (cabinChosen.getCalendar().getDatesBooked().size() == 0){
 			info += "\nIngen reservasjoner for denne koia.";
 		}else
