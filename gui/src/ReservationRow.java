@@ -145,7 +145,7 @@ public class ReservationRow extends JPanel{
 		
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == delete){
-				int deleteReservation = JOptionPane.showOptionDialog(null, "Er du sikker pÃ¥ at du vil slette din reservasjon?", "Slett reservasjon", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[] {"Ja", "Nei"}, "Ja");
+				int deleteReservation = JOptionPane.showOptionDialog(null, "Er du sikker på at du vil slette din reservasjon?", "Slett reservasjon", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[] {"Ja", "Nei"}, "Ja");
 				if (deleteReservation == 0){
 					removeThis();
 				}
@@ -175,10 +175,16 @@ public class ReservationRow extends JPanel{
 			for (Item item : brokenInventory){
 				item.setStatus(Status.BROKEN);
 			}
+			for (Item item : lostItems){
+				item.setStatus(Status.LOST_AND_FOUND);
+				cabin.getInventory().addItem(item);
+			}
 			double woodLeft = cabin.getVedmengde() - woodUsed;
 			cabin.setVedmengde(woodLeft);
 			Database.toDatabase(cabin);
 			Database.rapporter(cabin.getId(), username, comment, resId);
+			cabin = null;
+			userReport = null;
 		}
 
 		public void cancelPressed() {
