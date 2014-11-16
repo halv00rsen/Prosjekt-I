@@ -137,8 +137,6 @@ public class Database {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			System.out.println("initialisering vellykket!");
 		}
 	}
 
@@ -217,9 +215,6 @@ public class Database {
 			Connection conn = getConnection();
 			Statement st = conn.createStatement();
 			int res = st.executeUpdate(statement);
-			if (res == 1) {
-				System.out.println("Statement utført.");
-			}
 			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
