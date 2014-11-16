@@ -1,10 +1,14 @@
 package src;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +55,17 @@ public class GUI implements LoginListener{
 		frame = new JFrame("NTNUI-Koiene");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(WIDTH, HEIGHT);
+		
+		BufferedImage icon;
+		try{
+			icon = ImageIO.read(new File("gui/pic/koiene_logo.gif"));
+		}catch (IOException e){
+			e.printStackTrace();
+			icon = null;
+		}
+		if (icon != null){
+			frame.setIconImage(icon);
+		}
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
