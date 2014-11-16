@@ -59,7 +59,7 @@ public class GUI implements LoginListener{
 		tabbedPane.addTab("Innlogging", null, loginPanel, null);
 		
 		reservationList = new ReservationList();
-		tabbedPane.addTab("Reservasjoner", null, reservationList, null);
+//		tabbedPane.addTab("Reservasjoner", null, reservationList, null);
 		loginPanel.addListener(reservationList);
 		
 		allCabins = Database.getIdNameMap();
@@ -87,6 +87,7 @@ public class GUI implements LoginListener{
 	 */
 	public void userHasLoggedIn(String username) {
 		frame.setTitle("NTNUI-Koiene (" + username + ")");
+		tabbedPane.addTab("Reservasjoner", null, reservationList, null);
 	}
 
 	/**
@@ -107,6 +108,7 @@ public class GUI implements LoginListener{
 		mailToUser = null;
 		tabbedPane.remove(mapField);
 		mapField = null;
+		tabbedPane.remove(reservationList);
 //		tabbedPane.remove(adminReport);
 //		adminReport = null;
 	}
