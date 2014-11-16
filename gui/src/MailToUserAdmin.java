@@ -100,6 +100,10 @@ public class MailToUserAdmin extends JPanel implements ChangeTabListener{
 		 */
 		public void actionPerformed(ActionEvent arg0) {
 			//send mail til mailklassen
+			if (arg0.getSource() == cancelButton){
+				resetFields();
+				return;
+			}
 			if (Mail.sendMail((String) ((Bruker)users.getSelectedItem()).getId(), subjectField.getText(), emailInfo.getText()))
 				JOptionPane.showMessageDialog(null, "Mailen ble sendt");
 			else{
