@@ -127,8 +127,8 @@ public class UserReport {
 	 * Oppdaterer lista med alt utstyr som er i koia
 	 */
 	private void updateEquipmentInCabin(){
-		List<Item> items = cabin.getInventory().getAllItems();
-		destroyedItems.setInventory(items);
+		destroyedItems.setInventory(cabin.getInventory().getInOrderItems());
+		destroyedItems.setBrokenInventory(cabin.getInventory().getBrokenItems());
 	}
 	
 	/**
@@ -153,7 +153,7 @@ public class UserReport {
 				int number = 0;
 				if (text.length() != 0)
 					number = Integer.parseInt(text);
-				listener.okPressed("textArea.getText()", destroyedItems.getDestroyedElements(), number, lostItems.getLostItems());
+				listener.okPressed("Ingen kommentar", destroyedItems.getDestroyedElements(), number, lostItems.getLostItems());
 			}
 			frame.removeAll();
 			frame.setVisible(false);
