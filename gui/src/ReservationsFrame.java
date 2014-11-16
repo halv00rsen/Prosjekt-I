@@ -148,6 +148,8 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		reserveForUser.setText("");
 	}
 	
+	
+	
 	private void setCabinInformation(){
 		if (cabinChosen == null)
 			return;
