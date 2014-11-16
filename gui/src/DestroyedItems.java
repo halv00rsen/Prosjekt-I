@@ -79,13 +79,24 @@ public class DestroyedItems extends JPanel{
 		  return items;
 	  }
 	  
+	  
+	  /**
+	   * Setter alt ødelagt utstyr i koia
+	   * @param broken - en liste med alt ødelagt utstyr på koia
+	   */
+	  public void setBrokenInventory(List<Item> broken){
+		  brokenInventoryListModel.clear();
+		  for (Item item: broken)
+			  brokenInventoryListModel.add(item);
+	  }
+	  
 	  /**
 	   * Sletter alt utstyr som ligger i lista
-	   * @param inventory en liste med alt utstyr i koia
+	   * @param inventory en liste med alt utstyr som er i orden i koia
 	   */
 	  public void setInventory(List<Item> inventory){
 		  inventoryListModel.clear();
-		  brokenInventoryListModel.clear();
+//		  brokenInventoryListModel.clear();
 		  for (Item i : inventory)
 			  inventoryListModel.add(i);
 	  }
