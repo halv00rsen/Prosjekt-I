@@ -113,6 +113,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		panel2.setLayout(new GridLayout(1,2));
 		panel2.add(new JLabel("Reserver for : "));
 		panel2.add(reserveForUser);
+		reserveButton.setVisible(false);
 	}
 	
 	/**
@@ -138,6 +139,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 	public void userHasLoggedIn(String username){
 		this.username = username;
 		isLoggedIn = true;
+		reserveButton.setVisible(true);
 	}
 	
 	public void userHasLoggedOut(){
@@ -146,6 +148,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		adminLogin = false;
 		panel.remove(panel2);
 		reserveForUser.setText("");
+		reserveButton.setVisible(false);
 	}
 	
 	
@@ -264,6 +267,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 
 	public void adminHasLoggedIn() {
 		adminLogin = true;
+		reserveButton.setVisible(true);
 	}
 
 	public void removeReservation(int resId) {
