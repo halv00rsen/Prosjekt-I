@@ -80,8 +80,9 @@ public class CreateUser extends JPanel{
 	 */
 	private boolean validEmail(){
 		String email = username.getText().toLowerCase().trim();
-		if (adminCheckBox.isSelected() && email != null && email.length() > 3)
-			return true;
+		if (adminCheckBox.isSelected()){
+			return email != null && email.length() > 3 && email.indexOf("@") == -1;
+		}
 		if (email.indexOf("@") == -1 || email.indexOf(".") == -1){
 			JOptionPane.showMessageDialog(null, "Feil format på email");
 			return false;
