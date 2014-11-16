@@ -64,7 +64,11 @@ public class CabinMapField extends JPanel implements ChangeTabListener{
 	
 	private void setTextToField(int cabinId){
 		Koie cabin = Database.getKoie(cabinId);
-		String info = "Koie: " + cabin.getName() + "\nVedstatus: " + cabin.getVedmengde() + "\n\nReservasjoner: ";
+		String info = "Koie: " + cabin.getName() + "\nVedstatus: " + cabin.getVedmengde();
+		if (cabin.getVedmengde() < WoodStatus.minSacks){
+			info += "\nTrenger snart påfyll.";
+		}
+		info += "\n\nReservasjoner: ";
 		for (BookingDate booking : cabin.getCalendar().getDatesBooked()){
 			info += "\n" + booking.dateFrom + " til " + booking.dateTo;
 		}
