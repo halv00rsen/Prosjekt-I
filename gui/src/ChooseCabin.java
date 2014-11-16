@@ -75,6 +75,14 @@ public class ChooseCabin {
 	
 	/**
 	 * 
+	 * @return cabinName - returnerer navnet til den valgte koia
+	 */
+	public String getSelectedCabinName(){
+		return (String) cabins.getSelectedItem();
+	}
+	
+	/**
+	 * 
 	 * @param l setter en actionlistener til comboboksen
 	 */
 	public void addActionListener(ActionListener l){
