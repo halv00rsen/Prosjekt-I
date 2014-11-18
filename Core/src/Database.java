@@ -68,9 +68,9 @@ public class Database {
 			
 			makeStatement("CREATE TABLE reservasjon"
 						+ "(id int NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-						+ "koie_id SMALLINT NOT NULL, "
-						+ "fromDate VARCHAR(255) NOT NULL, "
+						+ "start_date VARCHAR(255) NOT NULL, "
 						+ "toDate VARCHAR(255) NOT NULL, "
+						+ "koie_id SMALLINT NOT NULL, "
 						+ "bruker_id VARCHAR(255) NOT NULL)");
 			
 			makeStatement("CREATE TABLE rapport"
@@ -161,7 +161,7 @@ public class Database {
 			String bookedFrom = "" + date.dateFrom.year + "-" + date.dateFrom.month + "-" + date.dateFrom.day; 
 			String bookedTo = "" + date.dateTo.year + "-" + date.dateTo.month + "-" + date.dateTo.day;
 			
-			String statement = "INSERT INTO reservasjon (koie_id, fromDate, toDate, bruker_id) "
+			String statement = "INSERT INTO reservasjon (koie_id, start_date, toDate, bruker_id) "
 							 + "VALUES ('"+ koie.getId() + "','" + bookedFrom + "','" + bookedTo + "','" + date.person +"')";
 			makeStatement(statement);
 		}
@@ -310,13 +310,13 @@ public class Database {
 			koie.setVedmengde(mengde);
 			
 			//fyller koieobjektet med reservasjonene:
-			ResultSet reservasjoner = makeQuery("SELECT id, bruker_id, fromDate, toDate "
+			ResultSet reservasjoner = makeQuery("SELECT id, bruker_id, start_date, toDate "
 									+ "FROM reservasjon WHERE koie_id =" + koie_id);
 			Calendar cabinRented = koie.getCalendar();
 			while (reservasjoner.next()) {
 				String person = reservasjoner.getString("bruker_id");
 				int resID = reservasjoner.getInt("id");
-				String fromDate = reservasjoner.getString("fromDate");
+				String fromDate = reservasjoner.getString("start_date");
 				String toDate = reservasjoner.getString("toDate");			
 				String[] fromParts = fromDate.split("-");
 				String[] toParts = toDate.split("-");
@@ -464,10 +464,10 @@ public class Database {
 	public static ArrayList<UserDatesBooked> getReservasjonBruker(String person) {
 		ArrayList<UserDatesBooked> dates = new ArrayList<UserDatesBooked>();
 		try {
-			String query = "SELECT koie_id, fromDate, toDate, id FROM reservasjon WHERE bruker_id =" + "'"+person+"'";
+			String query = "SELECT koie_id, start_date, toDate, id FROM reservasjon WHERE bruker_id =" + "'"+person+"'";
 			ResultSet res = makeQuery(query);
 			while (res.next()) {
-				String fromDate = res.getString("fromDate");
+				String fromDate = res.getString("start_date");
 				String toDate = res.getString("toDate");			
 				String[] fromParts = fromDate.split("-");
 				String[] toParts = toDate.split("-");
