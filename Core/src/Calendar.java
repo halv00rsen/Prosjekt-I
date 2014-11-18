@@ -33,8 +33,8 @@ public class Calendar {
 	}
 	
 	/**
-	 * Returnerer n�v�rende dato
-	 * @return Date-objekt med n�v�rende dato
+	 * Returnerer nåværende dato
+	 * @return Date-objekt med nåværende dato
 	 */
 	public static Date getTodaysDate() {
 		java.util.Calendar c = new GregorianCalendar();
@@ -269,7 +269,7 @@ public class Calendar {
 	
 	/**
 	 * Sjekker om en dato er gyldig
-	 * @param day Dag (ikke 0̈́-indeksert)
+	 * @param day Dag (ikke 0-indeksert)
 	 * @param month Måned (ikke 0-indeksert)
 	 * @return Om dag og måned er en gyldig kombinasjon
 	 */

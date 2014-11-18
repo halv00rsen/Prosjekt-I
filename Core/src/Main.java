@@ -2,7 +2,7 @@ package src;
 
 /** Starter og kjører programmet */
 public class Main {
-	GUI gui;
+	private GUI gui;
 	
 	/**
 	 * Kjører programmet
