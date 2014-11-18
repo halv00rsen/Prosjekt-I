@@ -48,7 +48,7 @@ public class Database {
 						+ "terreng VARCHAR(255), "
 						+ "sykkel VARCHAR(255), " 
 						+ "topptur VARCHAR(255), "
-						+ "jaktOgFiske VARCHAR(255), "
+						+ "jakt_og_fiske VARCHAR(255), "
 						+ "spesialiteter VARCHAR(255))");
 
 			makeStatement("CREATE TABLE bruker"
@@ -74,7 +74,7 @@ public class Database {
 						+ "bruker_id VARCHAR(255) NOT NULL)");
 			
 			makeStatement("CREATE TABLE rapport"
-						+ "(resID int NOT NULL PRIMARY KEY, "
+						+ "(reservasjon_id int NOT NULL PRIMARY KEY, "
 						+ "koie_id SMALLINT NOT NULL, "
 						+ "person VARCHAR(255), "
 						+ "kommentar VARCHAR(255))");
@@ -274,7 +274,7 @@ public class Database {
 			String spesialiteter = "";
 
 			String koie_query = "SELECT name, num_beds, num_seats, year, coordinates, terreng, sykkel, "
-							  + "topptur, jaktOgfiske, spesialiteter "
+							  + "topptur, jakt_og_fiske, spesialiteter "
 			                  +	"FROM koie "
 			                  + "WHERE id =" + koie_id;
 			ResultSet koie_res = makeQuery(koie_query);
@@ -287,7 +287,7 @@ public class Database {
 				terreng = koie_res.getString("terreng");
 				sykkel = koie_res.getString("sykkel");
 				topptur = koie_res.getString("topptur");
-				jaktOgFiske = koie_res.getString("jaktOgFiske");
+				jaktOgFiske = koie_res.getString("jakt_og_fiske");
 				spesialiteter = koie_res.getString("spesialiteter");
 			}
 			
@@ -493,7 +493,7 @@ public class Database {
 	 * @param resID Reservasjons-ID
 	 */
 	public static void rapporter(int koie_id, String person, String kommentar, int resID) {
-		String statement = "INSERT INTO rapport (koie_id, person, kommentar, resID) VALUES ('"
+		String statement = "INSERT INTO rapport (koie_id, person, kommentar, reservasjon_id) VALUES ('"
 						 + koie_id +"', '" + person + "', '" + kommentar + "', '" + resID + "')";
 		makeStatement(statement);
 	}
@@ -526,7 +526,7 @@ public class Database {
 	 */
 	public static boolean isRapportert(int resID) {
 		try {
-			ResultSet res = makeQuery("SELECT * FROM rapport WHERE resID =" + resID);
+			ResultSet res = makeQuery("SELECT * FROM rapport WHERE reservasjon_id =" + resID);
 			return res.next();
 		} catch (Exception e) {
 			e.printStackTrace();
