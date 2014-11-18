@@ -1,28 +1,20 @@
 package src;
 
-import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
 
 /**
  * 
- * Et objekt som h�ndterer alle reservasjonene til en gitt bruker
+ * Et objekt som håndterer alle reservasjonene til en gitt bruker
  */
 public class ReservationList extends JPanel implements LoginListener, ReservationRowListener, ReservationsFrameListener, ChangeTabListener{
 	
@@ -72,14 +64,14 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 	}
 	
 	private void getReservations(){
-		//Skal bruke databasen for å hente alle reservasjoner til brukeren
-//		reservations.add("Koie 1:21.10:29.10:Nei");
-//		reservations.add("Koie 2:10.2:17.2:Ikke relevant");
 		deleteReservations();
-		GregorianCalendar calendar = new GregorianCalendar();
-		Date today = new Date((DEBUG ? 2 :calendar.get(java.util.Calendar.DATE)), (DEBUG ? 1:(calendar.get(java.util.Calendar.MONTH) + 1)));
+		Date today = Calendar.getTodaysDate();
 		List<UserDatesBooked> bookings = Database.getReservasjonBruker(username);
-		HashMap<Integer, String> cabins = Database.getIdNameMap();
+		if (bookings == null){
+			JOptionPane.showMessageDialog(null, "Feil med kommunikasjon med databasen");
+			return;
+		}
+		Map<Integer, String> cabins = GUI.getIdMap();
 		for (UserDatesBooked b: bookings){
 			ReservationRow row = new ReservationRow(cabins.get(b.cabinId), username, b.resID, b.from, b.to, today, Database.isRapportert(b.resID), false, this);
 			reservations.add(row);
@@ -105,16 +97,12 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 	}
 
 	public void userHasLoggedOut() {
-//		c.gridy = 1;
 		username = null;
 		deleteReservations();
 	}
 
-	@Override
 	public void adminHasLoggedIn() {
-		// TODO Auto-generated method stub
 		username = "admin";
-		
 	}
 	
 	private void callListener(int resId){
@@ -131,8 +119,7 @@ public class ReservationList extends JPanel implements LoginListener, Reservatio
 	}
 
 	public void addReservation(String name, Date from, Date to, int resId) {
-		GregorianCalendar calendar = new GregorianCalendar();
-		Date today = new Date((DEBUG ? 2 :calendar.get(java.util.Calendar.DATE)), (DEBUG ? 1:(calendar.get(java.util.Calendar.MONTH) + 1)));
+		Date today = Calendar.getTodaysDate();
 		ReservationRow row = new ReservationRow(name, username,resId, from, to, today, false, false, this);
 		reservations.add(row);
 		if (from.isBefore(today) || from.equals(today)){

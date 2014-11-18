@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 
 /**
  * 
- * Et JPanel som h�ndterer om en bruker vil logge inn
+ * Et JPanel som håndterer om en bruker vil logge inn
  */
 public class LoginPanel extends JPanel implements ChangeTabListener{
 	
@@ -139,6 +139,10 @@ public class LoginPanel extends JPanel implements ChangeTabListener{
 		this.repaint();
 	}
 	
+	/**
+	 * 
+	 * Lytter til logutknappen
+	 */
 	private class Logout implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
@@ -147,6 +151,10 @@ public class LoginPanel extends JPanel implements ChangeTabListener{
 		
 	}
 	
+	/**
+	 * 
+	 * Lytter til databaseknappen
+	 */
 	private class ResetButton implements ActionListener{
 
 		public void actionPerformed(ActionEvent arg0) {
@@ -154,6 +162,10 @@ public class LoginPanel extends JPanel implements ChangeTabListener{
 		}
 	}
 	
+	/**
+	 * 
+	 * Lytter på innloggingsknappen
+	 */
 	private class Login implements AdminLoginListener{
 
 		public void login(String userName, char[] password) {
@@ -175,9 +187,7 @@ public class LoginPanel extends JPanel implements ChangeTabListener{
 		}
 	}
 
-	@Override
 	public void initPanel() {
-		// TODO Auto-generated method stub
-		
+		//Ikke i bruk i denne fanen
 	}
 }

@@ -31,7 +31,7 @@ public class ReservationRow extends JPanel{
 	
 	/**
 	 * Oppretter objektet
-	 * @param name - navnet på koia
+	 * @param name - navnet pÃ¥ koia
 	 * @param username - emailen til brukeren
 	 * @param resId - reservasjonsid i databasen til den aktuelle reservasjon
 	 * @param from - dato fra
@@ -147,14 +147,14 @@ public class ReservationRow extends JPanel{
 		
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == delete){
-				int deleteReservation = JOptionPane.showOptionDialog(null, "Er du sikker på at du vil slette din reservasjon?", "Slett reservasjon", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[] {"Ja", "Nei"}, "Ja");
+				int deleteReservation = JOptionPane.showOptionDialog(null, "Er du sikker pÃ¥ at du vil slette din reservasjon?", "Slett reservasjon", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[] {"Ja", "Nei"}, "Ja");
 				if (deleteReservation == 0){
 					removeThis();
 				}
 				return;
 			}
 			if (!isReported){
-				Map<Integer, String> cabins = Database.getIdNameMap();
+				Map<Integer, String> cabins = GUI.getIdMap();
 				int cabinId = -1;
 				for (Integer i: cabins.keySet()){
 					if (cabins.get(i).equals(name)){
@@ -165,6 +165,10 @@ public class ReservationRow extends JPanel{
 				if (cabinId == -1)
 					return;
 				cabin = Database.getKoie(cabinId);
+				if (cabin == null){
+					JOptionPane.showMessageDialog(null, "Feil med kommunikasjon med databasen");
+					return;
+				}
 				userReport = new UserReport(from.day, from.month, to.day, to.month, cabin);
 				userReport.setListener(this);
 			}
@@ -172,8 +176,6 @@ public class ReservationRow extends JPanel{
 
 		public void okPressed(String comment, List<Item> brokenInventory, int woodUsed, List<Item> lostItems) {
 			removeButton();
-			isReported = true;
-			isReportedString.setText("Ja");
 			for (Item item : brokenInventory){
 				item.setStatus(Status.BROKEN);
 			}
@@ -183,8 +185,13 @@ public class ReservationRow extends JPanel{
 			}
 			double woodLeft = cabin.getVedmengde() - woodUsed;
 			cabin.setVedmengde(woodLeft);
-			Database.toDatabase(cabin);
-			Database.rapporter(cabin.getId(), username, comment, resId);
+			boolean woodsave = Database.toDatabase(cabin);
+			boolean reportsave = Database.rapporter(cabin.getId(), username, comment, resId);
+			JOptionPane.showMessageDialog(null, woodsave && reportsave ? "Infoen ble lagret": "En liten feil med databasen");
+			if (reportsave){
+				isReported = true;
+				isReportedString.setText("Ja");
+			}
 			cabin = null;
 			userReport = null;
 		}

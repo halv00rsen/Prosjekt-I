@@ -2,7 +2,7 @@ package src;
 
 /**
  * 
- * Et enum med alle instanser til en måned, navn og hvilket nummer i rekken måneden er
+ * Et enum med alle instanser til en mÃ¥ned, navn og hvilket nummer i rekken mÃ¥neden er
  */
 public enum Months {
 	Januar(1), Februar(2), Mars(3), April(4), Mai(5), Juni(6), July(7), August(8),
@@ -11,8 +11,8 @@ public enum Months {
 	private int value;
 
 	/**
-	 * Oppretter måneden
-	 * @param value - hvilken måned i verdi det er
+	 * Oppretter mÃ¥neden
+	 * @param value - hvilken mÃ¥ned i verdi det er
 	 */
 	Months(int value){
 		this.value = value;
@@ -20,7 +20,7 @@ public enum Months {
 	
 	/**
 	 * 
-	 * @param month - en måned
+	 * @param month - en mÃ¥ned
 	 * @return hvilken verdi month har
 	 */
 	public static int getValue(Months month){
@@ -29,7 +29,7 @@ public enum Months {
 	
 	/**
 	 * 
-	 * @return value - hvilken verdi en måned har
+	 * @return value - hvilken verdi en mÃ¥ned har
 	 */
 	public int getValue(){
 		return value;
@@ -37,8 +37,8 @@ public enum Months {
 	
 	/**
 	 * 
-	 * @param value - en månedsverdi
-	 * @return month - returnerer måneden med verdi "value"
+	 * @param value - en mÃ¥nedsverdi
+	 * @return month - returnerer mÃ¥neden med verdi "value"
 	 */
 	public static Months getMonth(int value){
 		for (Months month: Months.values()){

@@ -1,17 +1,15 @@
 package src;
 
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * CabinMap henter kartet fra hardisken, og legger det i en JPanel
+ * CabinMap henter kartet fra hardisken, og legger det i et JPanel
  */
 public class CabinMap extends JPanel{
 	private String picURL = "gui/pic/";
@@ -19,7 +17,7 @@ public class CabinMap extends JPanel{
 	
 	/**
 	 * Oppretter kartet
-	 * @param picName navnet p� kartbildet
+	 * @param picName navnet på kartbildet
 	 */
 	public CabinMap(String picName){
 		try{
@@ -31,9 +29,6 @@ public class CabinMap extends JPanel{
 		repaint();
 	}
 	
-	/**
-	 * @param g tegner kartet i JPanelet
-	 */
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.drawImage(map, 0, 0, getWidth(), getHeight(), null);

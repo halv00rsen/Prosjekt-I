@@ -1,32 +1,22 @@
 package src;
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
-import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListModel;
 
 /**
  * 
- * En instans av JPanel som holder styr på objekter som kan ha blitt ødelagt i ei koie ved besøk.
+ * En instans av JPanel som holder styr pÃ¥ objekter som kan ha blitt Ã¸delagt i ei koie ved besÃ¸k.
  * Brukes av UserReport
  */
 public class DestroyedItems extends JPanel{
@@ -36,7 +26,7 @@ public class DestroyedItems extends JPanel{
 	  private SortedListModel inventoryListModel, brokenInventoryListModel;
 
 	  /**
-	   * Oppretter ødelagt utstyr-panelet i rapporten.
+	   * Oppretter Ã¸delagt utstyr-panelet i rapporten.
 	   */
 	  public DestroyedItems() {
 		  setBorder(BorderFactory.createEtchedBorder());
@@ -65,7 +55,7 @@ public class DestroyedItems extends JPanel{
 		  brokenInventoryListModel = new SortedListModel();
 		  brokenInventory = new JList<Item>(brokenInventoryListModel);
 		  JScrollPane pane2 = new JScrollPane(brokenInventory);
-		  pane2.setBorder(BorderFactory.createTitledBorder("Ødelagt utstyr"));
+		  pane2.setBorder(BorderFactory.createTitledBorder("Ã˜delagt utstyr"));
 		  add(pane2);
 	  }
 	  
@@ -81,8 +71,8 @@ public class DestroyedItems extends JPanel{
 	  
 	  
 	  /**
-	   * Setter alt ødelagt utstyr i koia
-	   * @param broken - en liste med alt ødelagt utstyr på koia
+	   * Setter alt Ã¸delagt utstyr i koia
+	   * @param broken - en liste med alt Ã¸delagt utstyr pÃ¥ koia
 	   */
 	  public void setBrokenInventory(List<Item> broken){
 		  brokenInventoryListModel.clear();
@@ -96,7 +86,6 @@ public class DestroyedItems extends JPanel{
 	   */
 	  public void setInventory(List<Item> inventory){
 		  inventoryListModel.clear();
-//		  brokenInventoryListModel.clear();
 		  for (Item i : inventory)
 			  inventoryListModel.add(i);
 	  }

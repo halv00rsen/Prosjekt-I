@@ -1,13 +1,8 @@
 package src;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
 
 public class GetMail{
 	public final boolean DEBUG = false;
@@ -45,14 +40,14 @@ public class GetMail{
 							System.out.println("Lagret i databasen");
 							
 					}catch (Exception e){
-						e.printStackTrace();
-						if (DEBUG)
+						if (DEBUG){
+							e.printStackTrace();
 							System.out.println("En error med mailen");
+						}
 						return;
 					}
 				}
-				System.out.println("heisann");
 			}
-		}, 1*60*1000, 1*60*1000);
+		}, 5*60*1000, 5*60*1000);
 	}
 }

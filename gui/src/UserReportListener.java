@@ -10,7 +10,7 @@ public interface UserReportListener {
 	/**
 	 * Sier i fra om rapporten ble skrevet.
 	 * @param comment - kommentar
-	 * @param brokenInventory - en liste med ødelagt utstyr
+	 * @param brokenInventory - en liste med Ã¸delagt utstyr
 	 * @param usedWood - antall vedsekker brukt
 	 * @param lostItems - utstyr som er mistet
 	 */

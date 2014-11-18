@@ -2,30 +2,21 @@ package src;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
-import javax.swing.JComboBox;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
  * 
- * Hovedklassen til GUIet. Lager en instans av alt som har med gui, inneholder også selve JFramen.
+ * Hovedklassen til GUIet. Lager en instans av alt som har med gui, inneholder ogsÃ¥ selve JFramen.
  */
 public class GUI implements LoginListener{
 
@@ -39,7 +30,6 @@ public class GUI implements LoginListener{
 	private final ReservationsFrame reservationFrame;
 	private final ReservationList reservationList;
 	private final JTabbedPane tabbedPane;
-	private final GetMail getMail;
 	
 	private ItemStatus itemStatus;
 	private WoodStatus woodStatus;
@@ -47,7 +37,6 @@ public class GUI implements LoginListener{
 	private AddItemAdmin addItemAdmin;
 	private MailToUserAdmin mailToUser;
 	private CabinMapField mapField;
-//	private AdminReport adminReport;
 	
 	/**
 	 * Oppretter JFrame og legger til alle fanene i programmet
@@ -75,7 +64,6 @@ public class GUI implements LoginListener{
 		tabbedPane.addTab("Innlogging", null, loginPanel, null);
 		
 		reservationList = new ReservationList();
-//		tabbedPane.addTab("Reservasjoner", null, reservationList, null);
 		loginPanel.addListener(reservationList);
 		
 		allCabins = Database.getIdNameMap();
@@ -90,9 +78,7 @@ public class GUI implements LoginListener{
 				((ChangeTabListener) tabbedPane.getSelectedComponent()).initPanel();
 			}
 		});
-		
-//		frame.pack();
-		getMail = new GetMail();
+		new GetMail();
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setVisible(true);
@@ -126,8 +112,6 @@ public class GUI implements LoginListener{
 		tabbedPane.remove(mapField);
 		mapField = null;
 		tabbedPane.remove(reservationList);
-//		tabbedPane.remove(adminReport);
-//		adminReport = null;
 	}
 	
 	/**
@@ -135,8 +119,11 @@ public class GUI implements LoginListener{
 	 * @return HashMap - returnerer id og navn til alle koiene i koienettverket
 	 */
 	public static Map<Integer, String> getIdMap(){
-		if (allCabins == null)
-			return null;
+		if (allCabins == null){
+			allCabins = Database.getIdNameMap();
+			if (allCabins == null)
+				return new HashMap<Integer, String>();
+		}
 		return new HashMap<Integer, String>(allCabins);
 	}
 
@@ -144,7 +131,6 @@ public class GUI implements LoginListener{
 	 * Oppretter alle instanser admin skal ha tilgang til
 	 */
 	public void adminHasLoggedIn() {
-//		Utstyrstatus, legg inn nytt utstyr, sjekk vedstatus, veddugnad, 
 		frame.setTitle("NTNUI-Koiene (admin)");
 		itemStatus = new ItemStatus();
 		tabbedPane.addTab("Utstyrstatus", null, itemStatus, null);
@@ -158,8 +144,6 @@ public class GUI implements LoginListener{
 		tabbedPane.addTab("Mail til bruker", null, mailToUser, null);
 		mapField = new CabinMapField();
 		tabbedPane.addTab("Kart", null, mapField, null);
-//		adminReport = new AdminReport();
-//		tabbedPane.addTab("Rapporter", null, adminReport, null);
 	}
 
 	/**

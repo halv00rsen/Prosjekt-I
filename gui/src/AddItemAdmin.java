@@ -28,7 +28,7 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 	private Koie cabinInUse;
 	
 	/**
-	 * Konstruktøren oppretter objektet
+	 * KonstruktÃ¸ren oppretter objektet
 	 */
 	public AddItemAdmin(){
 		cabins = new ChooseCabin();
@@ -105,6 +105,10 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 	 */
 	private void updateCabin(){
 		cabinInUse = Database.getKoie(cabins.getSelectedItem());
+		if (cabinInUse == null){
+			itemInfo.setText("Feil med kommunikasjon med databasen");
+			return;
+		}
 		allItems.removeAllItems();
 		for (Item item: cabinInUse.getInventory().getAllItems()){
 			allItems.addItem(item);
@@ -126,8 +130,7 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 	 * Lagrer items til databasen
 	 */
 	private void sendToDatabase(){
-		Database.toDatabase(cabinInUse);
-		JOptionPane.showMessageDialog(this, "Informasjonen ble lagret.");
+		JOptionPane.showMessageDialog(this, Database.toDatabase(cabinInUse) ? "Informasjonen ble lagret.": "Informasjonen ble ikke lagret");
 	}
 	
 	/**
@@ -136,10 +139,6 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 	 */
 	private class CabinListener implements ActionListener{
 
-		/**
-		 * En funksjon som bestemmer om noe nytt skal oppdateres i fanen
-		 * @param arg0 en ActionEvent som blir kalt når en av knappene har blitt trykket på
-		 */
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == addItem){
 				Item item = new Item(itemNameInput.getText());
@@ -170,9 +169,6 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 		}
 	}
 
-	/**
-	 * Blir kalt når denne fanen åpnes, gjør da et kall til databasen
-	 */
 	public void initPanel() {
 		updateCabin();
 	}

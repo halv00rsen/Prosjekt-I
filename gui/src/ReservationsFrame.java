@@ -6,9 +6,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -24,13 +21,12 @@ import javax.swing.JTextField;
 /**
  * 
  * Et JPanel der man kan reservere ei ny koie.
- * Kan ogsï¿½ se informasjon.
+ * Kan ogsÃ¥ se informasjon.
  */
 public class ReservationsFrame extends JPanel implements LoginListener, ValidDatesListener, ReservationsListListener, ChangeTabListener{
 	
 	private ValidDates validDates;
 	private JButton reserveButton;
-//	private JComboBox<String> cabins;
 	private ChooseCabin cabins;
 	private JComboBox<Integer> day, numDays;
 	private JComboBox<Months> month;
@@ -171,7 +167,7 @@ public class ReservationsFrame extends JPanel implements LoginListener, ValidDat
 		for (int a = 0; a < orderItems.size(); a++){
 			info += orderItems.get(a).getName() + (a + 1 == orderItems.size()? "":", ");
 		}
-		info += "\n\nKoia er reservert på følgende dager:";
+		info += "\n\nKoia er reservert pï¿½ fï¿½lgende dager:";
 		if (cabinChosen.getCalendar().getDatesBooked().size() == 0){
 			info += "\nIngen reservasjoner for denne koia.";
 		}else

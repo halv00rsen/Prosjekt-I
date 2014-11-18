@@ -5,7 +5,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -41,9 +40,11 @@ public class MailToUserAdmin extends JPanel implements ChangeTabListener{
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(new JLabel("Velg bruker: "), c);
 		users = new JComboBox<Bruker>();
-		for (Bruker user: getAllUsers()){
-			users.addItem(user);
-		}
+		List<Bruker> allUsers = getAllUsers();
+		if (allUsers != null)
+			for (Bruker user: getAllUsers()){
+				users.addItem(user);
+			}
 		c.gridx = 1;
 		panel.add(users, c);
 		c.gridx = 0;
@@ -76,12 +77,7 @@ public class MailToUserAdmin extends JPanel implements ChangeTabListener{
 	}
 	
 	private List<Bruker> getAllUsers(){
-		List<Bruker> users = Database.getAllBrukers();
-//		for (Bruker user : users){
-//			if (user.isAdmin())
-//				users.remove(user);
-//		}
-		return users;
+		return Database.getAllBrukers();
 	}
 	
 	private void resetFields(){
@@ -95,11 +91,7 @@ public class MailToUserAdmin extends JPanel implements ChangeTabListener{
 	 */
 	private class ButtonListener implements ActionListener{
 
-		/**
-		 * Når aktivert, sender objektet en mail til en aktuell bruker
-		 */
 		public void actionPerformed(ActionEvent arg0) {
-			//send mail til mailklassen
 			if (arg0.getSource() == cancelButton){
 				resetFields();
 				return;
@@ -114,11 +106,7 @@ public class MailToUserAdmin extends JPanel implements ChangeTabListener{
 		}
 	}
 
-	/**
-	 * Ikke i bruk
-	 */
 	public void initPanel() {
-		// TODO Auto-generated method stub
-		
+		//Ikke i bruk
 	}
 }

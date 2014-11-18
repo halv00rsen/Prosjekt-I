@@ -2,7 +2,6 @@ package src;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +9,7 @@ import javax.swing.JComboBox;
 
 /**
  * 
- * Henter navnet på alle koiene fra GUI og legger dem i en JComboBox som en annen klasse kan hente og bruke
+ * Henter navnet pÃ¥ alle koiene fra GUI og legger dem i en JComboBox som en annen klasse kan hente og bruke
  */
 public class ChooseCabin {
 
@@ -41,6 +40,8 @@ public class ChooseCabin {
 	 * @return cabinNames en liste med alle navnene til koiene
 	 */
 	private List<String> getNameCabins(){
+		if (cabinsIdName == null)
+			return null;
 		List<String> cabinNames = new ArrayList<String>();
 		for (Integer id : cabinsIdName.keySet()){
 			cabinNames.add(cabinsIdName.get(id));

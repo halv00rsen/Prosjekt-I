@@ -2,7 +2,6 @@ package src;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,7 +16,7 @@ import javax.swing.JTextField;
 
 /**
  * 
- * Klassen er en instans av JPanel og gir en bruker/admin mulighet til Â lage en ny bruker
+ * Klassen er en instans av JPanel og gir en bruker/admin mulighet til √• lage en ny bruker
  */
 public class CreateUser extends JPanel{
 	private final JTextField username;
@@ -84,7 +83,7 @@ public class CreateUser extends JPanel{
 			return email != null && email.length() > 3 && email.indexOf("@") == -1;
 		}
 		if (email.indexOf("@") == -1 || email.indexOf(".") == -1){
-			JOptionPane.showMessageDialog(null, "Feil format pÂ email");
+			JOptionPane.showMessageDialog(null, "Feil format p√• email");
 			return false;
 		}
 		if (Database.getBruker(email) != null){
@@ -132,8 +131,7 @@ public class CreateUser extends JPanel{
 			pass += c;
 		}
 		String username = this.username.getText().trim().toLowerCase();
-		Database.addBruker(username, pass, adminCheckBox.isSelected());
-		JOptionPane.showMessageDialog(null, "Du har n√• opprettet en bruker!");
+		JOptionPane.showMessageDialog(null, Database.addBruker(username, pass, adminCheckBox.isSelected()) ? "Du har n√• opprettet en bruker!": "Brukeren ble ikke opprettet");
 	}
 	
 	/**
@@ -159,8 +157,8 @@ public class CreateUser extends JPanel{
 		}
 		
 		/**
-		 * NÂr adminCheckBox blir trykket pÂ, blir denne funksjonen kalt.
-		 * Den bestemmer sÂ om det er en admin som skal lage en bruker eller ikke.
+		 * N√•r adminCheckBox blir trykket p√•, blir denne funksjonen kalt.
+		 * Den bestemmer s√• om det er en admin som skal lage en bruker eller ikke.
 		 */
 		public void actionPerformed(ActionEvent arg0){
 			if (adminCheckBox.isSelected()){
@@ -181,7 +179,7 @@ public class CreateUser extends JPanel{
 	
 	/**
 	 * 
-	 * En lytter til knappene pÂ siden.
+	 * En lytter til knappene p√• siden.
 	 */
 	private class ButtonListener implements ActionListener{
 		

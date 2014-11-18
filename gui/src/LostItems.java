@@ -82,7 +82,7 @@ public class LostItems extends JPanel{
 	private class LostItemButtonListener implements ActionListener{
 		
 		/**
-		 * @param arg0 - En ActionEvent som blir kalt når en av knappene blir trykket på
+		 * @param arg0 - En ActionEvent som blir kalt nÃ¥r en av knappene blir trykket pÃ¥
 		 */
 		public void actionPerformed(ActionEvent arg0){
 			if (arg0.getSource() == addButton){

@@ -1,8 +1,5 @@
 package src;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -19,7 +16,7 @@ import pic.Pic;
  * 
  * Er et jpanel og implementerer ChangeTabListener
  * Lager instanser av kartet og et felt med informasjon om ei koie.
- * Kan trykke på kartet for å få opp info om koia.
+ * Kan trykke pÃ¥ kartet for Ã¥ fÃ¥ opp info om koia.
  */
 public class CabinMapField extends JPanel implements ChangeTabListener{
 	
@@ -53,20 +50,19 @@ public class CabinMapField extends JPanel implements ChangeTabListener{
 		
 	}
 
-	/**
-	 * Gjør ingenting i dette tilfellet, siden det ikke er noen spesielle databasekall som må
-	 * gjøres når man åpner fanen
-	 */
 	public void initPanel() {
-		// TODO Auto-generated method stub
-		
+		//Ikke i bruk i denne fanen
 	}
 	
 	private void setTextToField(int cabinId){
 		Koie cabin = Database.getKoie(cabinId);
+		if (cabin == null){
+			cabinInfo.setText("Feil i kommunikasjonen med databasen");
+			return;
+		}
 		String info = "Koie: " + cabin.getName() + "\nVedstatus: " + cabin.getVedmengde();
 		if (cabin.getVedmengde() < WoodStatus.minSacks){
-			info += "\nTrenger snart påfyll.";
+			info += "\nTrenger snart pÃ¥fyll.";
 		}
 		info += "\n\nReservasjoner: ";
 		for (BookingDate booking : cabin.getCalendar().getDatesBooked()){
@@ -75,12 +71,12 @@ public class CabinMapField extends JPanel implements ChangeTabListener{
 		if (cabin.getCalendar().getDatesBooked().size() == 0){
 			info += "\nIngen reservasjoner";
 		}
-		info += "\n\nØdelagte ting:";
+		info += "\n\nÃ˜delagte ting:";
 		for (Item item : cabin.getInventory().getBrokenItems()){
 			info += "\n" + item.getName();
 		}
 		if (cabin.getInventory().getBrokenItems().size() == 0){
-			info += "\nIngen ødelagte ting";
+			info += "\nIngen Ã¸delagte ting";
 		}
 		cabinInfo.setText(info);
 	}
@@ -93,7 +89,7 @@ public class CabinMapField extends JPanel implements ChangeTabListener{
 	
 	/**
 	 * 
-	 * Lytter til musen om det bli gjort et klikk på kartet
+	 * Lytter til musen om det bli gjort et klikk pÃ¥ kartet
 	 */
 	private class Listener implements MouseListener{
 
@@ -110,8 +106,8 @@ public class CabinMapField extends JPanel implements ChangeTabListener{
 		}
 
 		/**
-		 * Henter info om den koia som blir trykt på
-		 * @param arg0 - en MouseEvent som blir kalt når musen blir presset ned
+		 * Henter info om den koia som blir trykt pÃ¥
+		 * @param arg0 - en MouseEvent som blir kalt nÃ¥r musen blir presset ned
 		 */
 		public void mousePressed(MouseEvent arg0) {
 			int x = arg0.getX();

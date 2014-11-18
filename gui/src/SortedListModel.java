@@ -7,7 +7,7 @@ import javax.swing.AbstractListModel;
 
 /**
  * 
- * En listemodell som håndterer items
+ * En listemodell som hÃ¥ndterer items
  */
 public class SortedListModel extends AbstractListModel<Item> {
 	

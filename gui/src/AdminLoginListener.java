@@ -1,5 +1,8 @@
 package src;
-
+/**
+ * 
+ * Et interface som lytter til adminloginpanelet
+ */
 public interface AdminLoginListener {
 	/**
 	 * Noen har logget inn

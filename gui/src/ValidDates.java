@@ -1,20 +1,15 @@
 package src;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  * 
- * Et objekt som håndterer riktig format på dato.
+ * Et objekt som hÃ¥ndterer riktig format pï¿½ dato.
  */
 public class ValidDates {
 
@@ -26,8 +21,8 @@ public class ValidDates {
 	
 	/**
 	 * Oppretter objektet
-	 * @param day - en JComboBox som alle dager i en måned skal settes til.
-	 * @param month - en JComboBox som alle lovlige måneder kan reserveres i.
+	 * @param day - en JComboBox som alle dager i en mÃ¥ned skal settes til.
+	 * @param month - en JComboBox som alle lovlige mÃ¥neder kan reserveres i.
 	 * @param numDays - en JComboBox som viser antall dager man leier for
 	 */
 	public ValidDates(JComboBox<Integer> day, JComboBox<Months> month, JComboBox<Integer> numDays){
@@ -42,9 +37,9 @@ public class ValidDates {
 		}
 		date.addItem(0);//Must be here, else nullpointerexception
 		listener = new MonthChanged();
-		month.addActionListener(listener);
+		this.month.addActionListener(listener);
 		date.addActionListener(listener);
-		numDays.addActionListener(listener);
+		this.numDays.addActionListener(listener);
 		int monthToDay = today.month;
 		for (int a = monthToDay; a <= monthToDay + 6; a++){
 			if (a % 12 == 0)
@@ -122,7 +117,7 @@ public class ValidDates {
 	
 	/**
 	 * 
-	 * Lytter til månedboksen, siden antall dager varierer fra måned til måned
+	 * Lytter til mÃ¥nedboksen, siden antall dager varierer fra mÃ¥ned til mÃ¥ned
 	 */
 	private class MonthChanged implements ActionListener{
 

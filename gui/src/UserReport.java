@@ -1,12 +1,9 @@
 package src;
 
 import javax.swing.JFrame;
-import javax.swing.JToolBar;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
-
-import javax.swing.JTextArea;
 
 import java.awt.GridBagLayout;
 
@@ -15,28 +12,20 @@ import javax.swing.JPanel;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.EventListener;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.JComboBox;
 
 /**
  * 
- * Rapporten en bruker skal sende inn etter at brukeren har vært på koia.
+ * Rapporten en bruker skal sende inn etter at brukeren har vÃ¦rt pÃ¥ koia.
  */
 public class UserReport {
 	
 	private JFrame frame;
-//	private JTextArea textArea;
 	private ButtonListener buttonListener;
 	private final JButton okButton, cancelButton;
 	private DestroyedItems destroyedItems;
@@ -49,9 +38,9 @@ public class UserReport {
 	/**
 	 * Oppretter objektet
 	 * @param dayFrom - dag fra
-	 * @param monthFrom - måned fra
+	 * @param monthFrom - mÃ¥ned fra
 	 * @param dayTo - dag til
-	 * @param monthTo - måned til
+	 * @param monthTo - mÃ¥ned til
 	 * @param cabin - det aktuelle koieobjektet
 	 */
 	public UserReport(int dayFrom, int monthFrom, int dayTo, int monthTo,  Koie cabin){
@@ -94,22 +83,11 @@ public class UserReport {
 		panel_1.add(numWood, c);
 		
 		destroyedItems = new DestroyedItems();
-		tabbedPane.addTab("Ødelagt utsyr", null, destroyedItems, null);
+		tabbedPane.addTab("Ã˜delagt utsyr", null, destroyedItems, null);
 		
 		lostItems = new LostItems();
 		tabbedPane.addTab("Gjenglemt utstyr", null, lostItems, null);
 		
-		JPanel panel = new JPanel();
-		
-		JLabel lblSkrivAnnenInformasjon = new JLabel("Skriv annen informasjon her:");
-		panel.add(lblSkrivAnnenInformasjon);
-//		textArea = new JTextArea(16, 30);
-//		textArea.setLineWrap(true);
-//		textArea.setWrapStyleWord(true);
-//		JScrollPane scrollPane = new JScrollPane(textArea);
-//		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-//		panel.add(scrollPane);
-//		tabbedPane.addTab("Annen Info", null, panel, null);
 		updateEquipmentInCabin();
 		frame.setLocation(GUI.getXPosition(), GUI.getYPosition());
 		frame.setVisible(true);

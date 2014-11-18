@@ -2,14 +2,11 @@ package src;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -20,7 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 /**
  * 
@@ -89,7 +85,7 @@ public class WoodStatus extends JPanel implements ChangeTabListener{
 	private void setWoodInfo(){
 		String info = "";
 		for (Integer id : woodStatus.keySet()){
-			info += cabinNames.get(id) + ": " + woodStatus.get(id) + " vedsekker." + (woodStatus.get(id) < 5? "Trenger påfyll": "") + "\n";
+			info += cabinNames.get(id) + ": " + woodStatus.get(id) + " vedsekker." + (woodStatus.get(id) < 5? "Trenger pÃ¥fyll": "") + "\n";
 		}
 		woodInformation.setText(info);
 	}
@@ -103,6 +99,8 @@ public class WoodStatus extends JPanel implements ChangeTabListener{
 		public void actionPerformed(ActionEvent arg0) {
 			String woods = numWood.getText();
 			String numbs = "0123456789-";
+			if (cabinInUse == null)
+				return;
 			if (woods.length() == 0){
 				JOptionPane.showMessageDialog(null, "Feil vedinput.");
 				return;
@@ -119,7 +117,10 @@ public class WoodStatus extends JPanel implements ChangeTabListener{
 				return;
 			}
 			cabinInUse.setVedmengde(cabinInUse.getVedmengde() + numSacks);
-			Database.toDatabase(cabinInUse);
+			if (!Database.toDatabase(cabinInUse)){
+				JOptionPane.showMessageDialog(null, "Feil med kommunikasjonen med databasen");
+				return;
+			}
 			JOptionPane.showMessageDialog(null, cabinInUse.getName() + " fikk lagt til " + numSacks + " sekker.");
 			numWood.setText("");
 			woodStatus.put(cabinInUse.getId(), cabinInUse.getVedmengde());
@@ -129,7 +130,7 @@ public class WoodStatus extends JPanel implements ChangeTabListener{
 	
 	/**
 	 * 
-	 * En lytter som blir kalt når ei ny koie blir valgt
+	 * En lytter som blir kalt nÃ¥r ei ny koie blir valgt
 	 */
 	private class UpdateListener implements ActionListener{
 
@@ -140,8 +141,10 @@ public class WoodStatus extends JPanel implements ChangeTabListener{
 
 	public void initPanel() {
 		cabinNames.clear();
-		cabinNames.putAll(Database.getIdNameMap());
+		cabinNames.putAll(GUI.getIdMap());
 		Map<Integer, Double> woodAmount = Database.getVedstatusForAlleKoier();
+		if (woodAmount == null)
+			return;
 		woodStatus.clear();
 		for (Integer cabinId : cabinNames.keySet()){
 			woodStatus.put(cabinId, woodAmount.get(cabinId));

@@ -1,13 +1,10 @@
 package src;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -27,19 +24,15 @@ public class ItemStatus extends JPanel implements ChangeTabListener{
 	public ItemStatus(){
 		cabins = new ChooseCabin();
 		cabins.addActionListener(new CabinListener());
-//		panel.add(cabins.getComboBox(), c);
 		setLayout(new GridLayout(2,1));
 		add(cabins.getComboBox());
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1,3));
 		inOrder = createTextArea("Utstyr", panel);
-		broken = createTextArea("Ødelagt", panel);
+		broken = createTextArea("Ã˜delagt", panel);
 		lostAndFound = createTextArea("Mistet utstyr", panel);
 		add(panel);
-		
-//		setKoieInformation(cabins.getSelectedItem());
-		
 	}
 	
 	private JTextArea createTextArea(String header, JPanel panel){
@@ -54,7 +47,14 @@ public class ItemStatus extends JPanel implements ChangeTabListener{
 	}
 	
 	private void setKoieInformation(int cabinId){
-		Inventory cabin = Database.getKoie(cabinId).getInventory();
+		Koie actualcabin = Database.getKoie(cabinId);
+		if (actualcabin == null){
+			inOrder.setText("Mistet kontakten med databasen");
+			broken.setText("");
+			lostAndFound.setText("");
+			return;
+		}
+		Inventory cabin = actualcabin.getInventory();
 		String inOrder = "";
 		for (Item item : cabin.getInOrderItems())
 			inOrder += item.getName() + "\n";
@@ -76,16 +76,13 @@ public class ItemStatus extends JPanel implements ChangeTabListener{
 	 */
 	private class CabinListener implements ActionListener{
 
-		/**
-		 * Oppdaterer koieinformasjonen når det har byttet koie.
-		 */
 		public void actionPerformed(ActionEvent e) {
 			setKoieInformation(cabins.getSelectedItem());
 		}
 	}
 
 	/**
-	 * Når panelet blir åpnet, så henter den info fra databasen til valgt koie
+	 * Nï¿½r panelet blir Ã¥pnet, sÃ¥ henter den info fra databasen til valgt koie
 	 */
 	public void initPanel() {
 		setKoieInformation(cabins.getSelectedItem());

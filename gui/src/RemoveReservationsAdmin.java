@@ -6,10 +6,10 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -49,11 +49,15 @@ public class RemoveReservationsAdmin extends JPanel implements ReservationRowLis
 	private void getAllReservations(){
 		panel.removeAll();
 		cabin = Database.getKoie(chooseCabin.getSelectedItem());
+		if (cabin == null){
+			JOptionPane.showMessageDialog(null, "Fant ikke koia, eller ingen kommunikasjon med databasen");
+			return;
+		}
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
 		for (BookingDate booking: cabin.getCalendar().getDatesBooked()){
-			panel.add(new ReservationRow(cabin.getName(),booking.person, booking.getID(), booking.dateFrom, booking.dateTo, cabin.getCalendar().getTodaysDate(), true, true, this), c);
+			panel.add(new ReservationRow(cabin.getName(),booking.person, booking.getID(), booking.dateFrom, booking.dateTo, Calendar.getTodaysDate(), true, true, this), c);
 			c.gridy++;
 		}
 		panel.revalidate();
@@ -77,7 +81,7 @@ public class RemoveReservationsAdmin extends JPanel implements ReservationRowLis
 	private class KoieListener implements ActionListener{
 
 		/**
-		 * En actionEvent som blir kalt når en ny koie er valgt
+		 * En actionEvent som blir kalt nÃ¥r en ny koie er valgt
 		 */
 		public void actionPerformed(ActionEvent arg0) {
 			getAllReservations();

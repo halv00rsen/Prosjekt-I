@@ -21,7 +21,7 @@ public class AdminLogin extends JPanel {
 	
 	/**
 	 * Oppretter et loginfelt for bruker.
-	 * @param listener En AdminLoginListener som lytter til om noen har logget inn
+	 * @param listener - En AdminLoginListener som lytter til om noen har logget inn
 	 */
 	public AdminLogin(AdminLoginListener listener) {
 		setLayout(new GridLayout(3, 2, 0, 0));
@@ -35,7 +35,6 @@ public class AdminLogin extends JPanel {
 		userName = new JTextField(20);
 		userName.addKeyListener(boardListener);
 		add(userName);
-//		userName.setColumns(10);
 		
 		add(new JLabel("Passord: "));
 		
