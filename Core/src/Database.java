@@ -26,6 +26,7 @@ public class Database {
 
 	/**
 	 *  Metode som initialiserer/resetter databasen med informasjon fra initialiseringsfiler
+	 *  
 	 */
 	public static void initializeDatabase() {
 		try {
