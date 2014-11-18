@@ -3,10 +3,16 @@ package src;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
+/**
+ * 
+ * Klassen sjekker om det har kommet noen nye reservasjoner via mail
+ */
 public class GetMail{
 	public final boolean DEBUG = false;
 	
+	/**
+	 * Oppretter objektet og timeren som sjekker serveren etter ny mail.
+	 */
 	public GetMail(){
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTask(){
@@ -48,6 +54,6 @@ public class GetMail{
 					}
 				}
 			}
-		}, 5*60*1000, 5*60*1000);
+		}, 1*60*1000, 1*60*1000);
 	}
 }

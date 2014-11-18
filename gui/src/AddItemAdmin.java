@@ -4,6 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -139,6 +141,11 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 	 */
 	private class CabinListener implements ActionListener{
 
+		private final List<Item> removedItems;
+		
+		public CabinListener(){
+			removedItems = new ArrayList<Item>();
+		}
 		public void actionPerformed(ActionEvent arg0) {
 			if (arg0.getSource() == addItem){
 				Item item = new Item(itemNameInput.getText());
@@ -151,20 +158,28 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 				Item item = (Item) allItems.getSelectedItem();
 				cabinInUse.getInventory().removeItem(item);
 				allItems.removeItem(item);
+				removedItems.add(item);
 				updateInformation();
 			}
 			else if (arg0.getSource() == allItems || arg0.getSource() == statusBox){
 				if (arg0.getSource() == statusBox){
 					((Item) allItems.getSelectedItem()).setStatus((Status) statusBox.getSelectedItem());
-				}else
-					statusBox.setSelectedItem(((Item) allItems.getSelectedItem()).getStatus());
+				}else{
+					Item item = (Item) allItems.getSelectedItem();
+					if (item == null)
+						return;
+					statusBox.setSelectedItem(item.getStatus());
+				}
 				updateInformation();
 			}
 			else if (arg0.getSource() == saveInfo){
 				sendToDatabase();
+				for (Item item : removedItems)
+					Database.removeItem(item);
 			}
 			else{
 				updateCabin();
+				removedItems.clear();
 			}
 		}
 	}

@@ -26,6 +26,7 @@ public class GUI implements LoginListener{
 	
 	private static JFrame frame;
 	
+	private final GetMail getMail;
 	private final LoginPanel loginPanel;
 	private final ReservationsFrame reservationFrame;
 	private final ReservationList reservationList;
@@ -78,7 +79,7 @@ public class GUI implements LoginListener{
 				((ChangeTabListener) tabbedPane.getSelectedComponent()).initPanel();
 			}
 		});
-		new GetMail();
+		getMail = new GetMail();
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setVisible(true);
