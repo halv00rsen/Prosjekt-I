@@ -1,11 +1,10 @@
 package src;
 
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -83,7 +82,7 @@ public class Database {
 			
 			
 			// Fyller koie-tabellen med data fra fil
-			Scanner in = new Scanner(new FileReader(initKoie));
+			Scanner in = new Scanner(new FileInputStream(initKoie), "UTF-8");
 			in.nextLine(); // Hopper over første linje som beskriver data
 			// Lager en INSERT-statement from hver linje i initialiseringsfila
 			while (in.hasNextLine()) {
@@ -98,7 +97,7 @@ public class Database {
 			in.close();
 			
 			// Fyller item-tabellen med data fra fil
-			in = new Scanner(new FileReader(initItem));
+			in = new Scanner(new FileInputStream(initItem), "UTF-8");
 			in.nextLine();
 			while (in.hasNextLine()) {
 				String[] fields = in.nextLine().split(", ");	
@@ -113,7 +112,7 @@ public class Database {
 			in.close();
 			
 			//Fyller vedstatus-tabellen med data fra fil
-			in = new Scanner(new FileReader(initVed));
+			in = new Scanner(new FileInputStream(initVed), "UTF-8");
 			in.nextLine();
 			while (in.hasNextLine()) {
 				String[] felt = in.nextLine().split(" ");
@@ -122,7 +121,7 @@ public class Database {
 			in.close();
 			
 			// Fyller bruker-tabellen med data fra fil
-			in = new Scanner(new FileReader(initBruker));
+			in = new Scanner(new FileInputStream(initBruker), "UTF-8");
 			in.nextLine();
 			while (in.hasNextLine()) {
 				String[] fields = in.nextLine().split(", ");	
