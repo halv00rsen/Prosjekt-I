@@ -57,8 +57,8 @@ public class Database {
 						+ "is_admin BOOL NOT NULL)");
 
 			makeStatement("CREATE TABLE item"
-						+ "(ID SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-						+ "item VARCHAR(255) NOT NULL, "
+						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "name VARCHAR(255) NOT NULL, "
 						+ "status VARCHAR(255) NOT NULL, "
 						+ "koie_id SMALLINT NOT NULL)");
 			
@@ -103,7 +103,7 @@ public class Database {
 				String koieId = fields[0];
 				String itemNavn = fields[1];
 
-				String statement = "INSERT INTO item (item, status, koie_id) " 
+				String statement = "INSERT INTO item (name, status, koie_id) " 
 								 + "VALUES ('"+itemNavn+"', 'IN_ORDER', '"+koieId+"')";
 
 				makeStatement(statement);
@@ -327,14 +327,14 @@ public class Database {
 				cabinRented.reservePeriod(from, to, person, resID, true);
 			}
 
-			String item_query = "SELECT ID, item, status "
+			String item_query = "SELECT id, name, status "
 							  + "FROM item "
 							  + "WHERE koie_id =" + String.valueOf(koie_id);
 			ResultSet item_res = makeQuery(item_query);
 			Inventory inventory = koie.getInventory();
 			while (item_res.next()) {
-				int itemId = item_res.getInt("ID");
-				String itemName = item_res.getString("item");
+				int itemId = item_res.getInt("id");
+				String itemName = item_res.getString("name");
 				String itemStatusString = item_res.getString("status");
 				Item.Status itemStatus = Item.getItemStatus(itemStatusString);
 				Item item = new Item(itemId, itemName, itemStatus);
@@ -422,7 +422,7 @@ public class Database {
 	 */
 	public static void addItem(Item item, int koie_id) {
 		try {
-			String statement = "INSERT INTO item (item, status, koie_id) "
+			String statement = "INSERT INTO item (name, status, koie_id) "
 							 + "VALUES('"+item.getName()+"', '"+item.getStatus()+"', '"+koie_id+"')";
 			makeStatement(statement);
 		} catch (Exception e) {
@@ -436,7 +436,7 @@ public class Database {
 	 */
 	public static void updateItem(Item item) {
 		try {
-			String statement = "UPDATE item SET status = '"+item.getStatus()+"' WHERE ID = "+item.getId();
+			String statement = "UPDATE item SET status = '"+item.getStatus()+"' WHERE id = "+item.getId();
 			makeStatement(statement);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -449,7 +449,7 @@ public class Database {
 	 */
 	public static void removeItem(Item item) {
 		try {
-			String statement = "DELETE FROM item WHERE ID = "+item.getId();
+			String statement = "DELETE FROM item WHERE id = "+item.getId();
 			makeStatement(statement);
 		} catch (Exception e) {
 			e.printStackTrace();
