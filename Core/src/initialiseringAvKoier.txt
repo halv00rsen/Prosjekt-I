@@ -1,24 +1,24 @@
-id#navn#sengeplasser#bordplasser#år#koordinat#terreng#sykkel#topptur#jakt/fiske#spesialiteter
-1#Flåkoia#11#14#1968#32V,0568785,7003816#S#x#-#-/x#badstue, båt, isbor
+id#navn#sengeplasser#bordplasser#Ã¥r#koordinat#terreng#sykkel#topptur#jakt/fiske#spesialiteter
+1#FlÃ¥koia#11#14#1968#32V,0568785,7003816#S#x#-#-/x#badstue, bÃ¥t, isbor
 2#Fosenkoia#10#12#1957#32V,0564334,7049543#S/T#-#(x)#-#ingen
 3#Heinfjordstua#25#25#1966#32V,0587781,7021877#S#x#-#-/x#badstue, stekeoven
 4#Hognabu#6#6#1966#32V,0627876,7000229#T#-#x#-#nasjonalpark
-5#Holmsåkoia#20#25#1974#32V,0633739,6997975#S#x#x#-#badstue, piano
-6#Holvassgamma#8#16#1978#32V,0567484,7078511#S#-#(x)#x/x#båt
+5#HolmsÃ¥koia#20#25#1974#32V,0633739,6997975#S#x#x#-#badstue, piano
+6#Holvassgamma#8#16#1978#32V,0567484,7078511#S#-#(x)#x/x#bÃ¥t
 7#Iglbu#8#14#1964#32V,0555297,6981734#T#(x)#x#x/x#ingen
-8#Kamtjønnkoia#6#10#1993#32V,0514879,6957008#H#-#x#x/x#isbor
-9#Kråklikåten#4#6#1963#32V,0580277,7000271#S#(x)#x#-#ingen
+8#KamtjÃ¸nnkoia#6#10#1993#32V,0514879,6957008#H#-#x#x/x#isbor
+9#KrÃ¥klikÃ¥ten#4#6#1963#32V,0580277,7000271#S#(x)#x#-#ingen
 10#Kvernmovollen#8#14#1975#32V,0600470,6979147#T#-#x#x/-#2-seters do
-11#Kåsen#8#12#2011#32V,0522363,6999454#S#(x)#-#x/x#ingen
-12#Lynhøgen#4#8#1973#32V,0585922,7010162#S/T#(x)#x#-#ingen
-13#Mortenskåten#2#4#1961#32V,0599158,6988938#T#(x)#x#-#ølbua, hengekøye
+11#KÃ¥sen#8#12#2011#32V,0522363,6999454#S#(x)#-#x/x#ingen
+12#LynhÃ¸gen#4#8#1973#32V,0585922,7010162#S/T#(x)#x#-#ingen
+13#MortenskÃ¥ten#2#4#1961#32V,0599158,6988938#T#(x)#x#-#Ã¸lbua, hengekÃ¸ye
 14#Nicokoia#8#12#1947#32V,0576877,7004719#S/T#-#(x)#-#historisk
-15#Rindalsløa#4#6#1978#32V,0510015,6987831#S#(x)#x#x/-#ingen
-16#Selbukåten#2#4#1959#32V,0601534,7023798#S#(x)#(x)#-#skiløype
+15#RindalslÃ¸a#4#6#1978#32V,0510015,6987831#S#(x)#x#x/-#ingen
+16#SelbukÃ¥ten#2#4#1959#32V,0601534,7023798#S#(x)#(x)#-#skilÃ¸ype
 17#Sonvasskoia#8#12#1951#32V,0620844,7031357#S#x#x#x/x#kano, isbor
 18#Stabburet#2#4#1995#32V,0637194,7004319#T#(x)#x#x/x#ingen
 19#Stakkslettbua#11#15#2013#32V,0505834,7001988#T#(x)#x#x/x#4-etasjers soverom
 20#Telin#9#12#1991#32V,0533672,6971964#T#x#x#x/-#lenestol
 21#Taagaabu#6#9#1970#32V,0581974,6966772#T#(x)#x#x/-#ingen
-22#Vekvessætra#20#24#2011#32V,0540969,6953366#T#x#x#x/x#3-seters sagkrakk
-23#Øvensenget#8#14#1992#32V,0612960,6922011#S/T#x#x#-#badstue, Bråkåten
+22#VekvessÃ¦tra#20#24#2011#32V,0540969,6953366#T#x#x#x/x#3-seters sagkrakk
+23#Ã˜vensenget#8#14#1992#32V,0612960,6922011#S/T#x#x#-#badstue, BrÃ¥kÃ¥ten
