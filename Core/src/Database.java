@@ -32,12 +32,12 @@ public class Database {
 			// Sletter alle tidligere tabeller
 			makeStatement("DROP TABLE koie");
 			makeStatement("DROP TABLE bruker");
-			makeStatement("DROP TABLE inventory");
+			makeStatement("DROP TABLE item");
 			makeStatement("DROP TABLE vedstatus");
 			makeStatement("DROP TABLE reservasjon");
 			makeStatement("DROP TABLE rapport");
 			
-			// Oppretter tabellene koie, bruker, inventory, vedstatus, reservasjon og rapport
+			// Oppretter tabellene koie, bruker, item, vedstatus, reservasjon og rapport
 			makeStatement("CREATE TABLE koie"
 						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "name VARCHAR(255) NOT NULL, "
@@ -56,9 +56,9 @@ public class Database {
 						+ "password_hash VARCHAR(255) NOT NULL, "
 						+ "is_admin BOOL NOT NULL)");
 
-			makeStatement("CREATE TABLE inventory"
-						+ "(ID SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
-						+ "item VARCHAR(255) NOT NULL, "
+			makeStatement("CREATE TABLE item"
+						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "name VARCHAR(255) NOT NULL, "
 						+ "status VARCHAR(255) NOT NULL, "
 						+ "koie_id SMALLINT NOT NULL)");
 			
@@ -67,10 +67,10 @@ public class Database {
 						+ "mengde DOUBLE NOT NULL)");
 			
 			makeStatement("CREATE TABLE reservasjon"
-						+ "(ID int NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "(id int NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "start_date VARCHAR(255) NOT NULL, "
+						+ "end_date VARCHAR(255) NOT NULL, "
 						+ "koie_id SMALLINT NOT NULL, "
-						+ "fromDate VARCHAR(255) NOT NULL, "
-						+ "toDate VARCHAR(255) NOT NULL, "
 						+ "bruker_id VARCHAR(255) NOT NULL)");
 			
 			makeStatement("CREATE TABLE rapport"
@@ -103,7 +103,7 @@ public class Database {
 				String koieId = fields[0];
 				String itemNavn = fields[1];
 
-				String statement = "INSERT INTO inventory (item, status, koie_id) " 
+				String statement = "INSERT INTO item (name, status, koie_id) " 
 								 + "VALUES ('"+itemNavn+"', 'IN_ORDER', '"+koieId+"')";
 
 				makeStatement(statement);
@@ -161,7 +161,7 @@ public class Database {
 			String bookedFrom = "" + date.dateFrom.year + "-" + date.dateFrom.month + "-" + date.dateFrom.day; 
 			String bookedTo = "" + date.dateTo.year + "-" + date.dateTo.month + "-" + date.dateTo.day;
 			
-			String statement = "INSERT INTO reservasjon (koie_id, fromDate, toDate, bruker_id) "
+			String statement = "INSERT INTO reservasjon (koie_id, start_date, end_date, bruker_id) "
 							 + "VALUES ('"+ koie.getId() + "','" + bookedFrom + "','" + bookedTo + "','" + date.person +"')";
 			makeStatement(statement);
 		}
@@ -185,7 +185,7 @@ public class Database {
 	 * @param resID Reservasjons-ID
 	 */
 	public static void slettReservasjon(int resID) {
-		makeStatement("DELETE FROM reservasjon WHERE ID =" + resID);
+		makeStatement("DELETE FROM reservasjon WHERE id =" + resID);
 	}
 
 	/**
@@ -310,14 +310,14 @@ public class Database {
 			koie.setVedmengde(mengde);
 			
 			//fyller koieobjektet med reservasjonene:
-			ResultSet reservasjoner = makeQuery("SELECT ID, bruker_id, fromDate, toDate "
+			ResultSet reservasjoner = makeQuery("SELECT id, bruker_id, start_date, end_date "
 									+ "FROM reservasjon WHERE koie_id =" + koie_id);
 			Calendar cabinRented = koie.getCalendar();
 			while (reservasjoner.next()) {
 				String person = reservasjoner.getString("bruker_id");
-				int resID = reservasjoner.getInt("ID");
-				String fromDate = reservasjoner.getString("fromDate");
-				String toDate = reservasjoner.getString("toDate");			
+				int resID = reservasjoner.getInt("id");
+				String fromDate = reservasjoner.getString("start_date");
+				String toDate = reservasjoner.getString("end_date");			
 				String[] fromParts = fromDate.split("-");
 				String[] toParts = toDate.split("-");
 				
@@ -327,14 +327,14 @@ public class Database {
 				cabinRented.reservePeriod(from, to, person, resID, true);
 			}
 
-			String item_query = "SELECT ID, item, status "
-							  + "FROM inventory "
+			String item_query = "SELECT id, name, status "
+							  + "FROM item "
 							  + "WHERE koie_id =" + String.valueOf(koie_id);
 			ResultSet item_res = makeQuery(item_query);
 			Inventory inventory = koie.getInventory();
 			while (item_res.next()) {
-				int itemId = item_res.getInt("ID");
-				String itemName = item_res.getString("item");
+				int itemId = item_res.getInt("id");
+				String itemName = item_res.getString("name");
 				String itemStatusString = item_res.getString("status");
 				Item.Status itemStatus = Item.getItemStatus(itemStatusString);
 				Item item = new Item(itemId, itemName, itemStatus);
@@ -422,7 +422,7 @@ public class Database {
 	 */
 	public static void addItem(Item item, int koie_id) {
 		try {
-			String statement = "INSERT INTO inventory (item, status, koie_id) "
+			String statement = "INSERT INTO item (name, status, koie_id) "
 							 + "VALUES('"+item.getName()+"', '"+item.getStatus()+"', '"+koie_id+"')";
 			makeStatement(statement);
 		} catch (Exception e) {
@@ -436,7 +436,7 @@ public class Database {
 	 */
 	public static void updateItem(Item item) {
 		try {
-			String statement = "UPDATE inventory SET status = '"+item.getStatus()+"' WHERE ID = "+item.getId();
+			String statement = "UPDATE item SET status = '"+item.getStatus()+"' WHERE id = "+item.getId();
 			makeStatement(statement);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -449,7 +449,7 @@ public class Database {
 	 */
 	public static void removeItem(Item item) {
 		try {
-			String statement = "DELETE FROM inventory WHERE ID = "+item.getId();
+			String statement = "DELETE FROM item WHERE id = "+item.getId();
 			makeStatement(statement);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -464,17 +464,17 @@ public class Database {
 	public static ArrayList<UserDatesBooked> getReservasjonBruker(String person) {
 		ArrayList<UserDatesBooked> dates = new ArrayList<UserDatesBooked>();
 		try {
-			String query = "SELECT koie_id, fromDate, toDate, ID FROM reservasjon WHERE bruker_id =" + "'"+person+"'";
+			String query = "SELECT koie_id, start_date, end_date, id FROM reservasjon WHERE bruker_id =" + "'"+person+"'";
 			ResultSet res = makeQuery(query);
 			while (res.next()) {
-				String fromDate = res.getString("fromDate");
-				String toDate = res.getString("toDate");			
+				String fromDate = res.getString("start_date");
+				String toDate = res.getString("end_date");			
 				String[] fromParts = fromDate.split("-");
 				String[] toParts = toDate.split("-");
 				Date from = new Date(Integer.valueOf(fromParts[2]), Integer.valueOf(fromParts[1]));
 				Date to = new Date(Integer.valueOf(toParts[2]), Integer.valueOf(toParts[1]));
 				int koie_id = res.getInt("koie_id");
-				int ID = res.getInt("ID");
+				int ID = res.getInt("id");
 				
 				dates.add(new UserDatesBooked(koie_id, from, to, ID));
 			}
