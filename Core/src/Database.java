@@ -32,12 +32,12 @@ public class Database {
 			// Sletter alle tidligere tabeller
 			makeStatement("DROP TABLE koie");
 			makeStatement("DROP TABLE bruker");
-			makeStatement("DROP TABLE item");
+			makeStatement("DROP TABLE inventory");
 			makeStatement("DROP TABLE vedstatus");
 			makeStatement("DROP TABLE reservasjon");
 			makeStatement("DROP TABLE rapport");
 			
-			// Oppretter tabellene koie, bruker, item, vedstatus, reservasjon og rapport
+			// Oppretter tabellene koie, bruker, inventory, vedstatus, reservasjon og rapport
 			makeStatement("CREATE TABLE koie"
 						+ "(id SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "name VARCHAR(255) NOT NULL, "
@@ -56,7 +56,7 @@ public class Database {
 						+ "password_hash VARCHAR(255) NOT NULL, "
 						+ "is_admin BOOL NOT NULL)");
 
-			makeStatement("CREATE TABLE item"
+			makeStatement("CREATE TABLE inventory"
 						+ "(ID SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "item VARCHAR(255) NOT NULL, "
 						+ "status VARCHAR(255) NOT NULL, "
@@ -103,7 +103,7 @@ public class Database {
 				String koieId = fields[0];
 				String itemNavn = fields[1];
 
-				String statement = "INSERT INTO item (item, status, koie_id) " 
+				String statement = "INSERT INTO inventory (item, status, koie_id) " 
 								 + "VALUES ('"+itemNavn+"', 'IN_ORDER', '"+koieId+"')";
 
 				makeStatement(statement);
@@ -328,7 +328,7 @@ public class Database {
 			}
 
 			String item_query = "SELECT ID, item, status "
-							  + "FROM item "
+							  + "FROM inventory "
 							  + "WHERE koie_id =" + String.valueOf(koie_id);
 			ResultSet item_res = makeQuery(item_query);
 			Inventory inventory = koie.getInventory();
@@ -422,7 +422,7 @@ public class Database {
 	 */
 	public static void addItem(Item item, int koie_id) {
 		try {
-			String statement = "INSERT INTO item (item, status, koie_id) "
+			String statement = "INSERT INTO inventory (item, status, koie_id) "
 							 + "VALUES('"+item.getName()+"', '"+item.getStatus()+"', '"+koie_id+"')";
 			makeStatement(statement);
 		} catch (Exception e) {
@@ -436,7 +436,7 @@ public class Database {
 	 */
 	public static void updateItem(Item item) {
 		try {
-			String statement = "UPDATE item SET status = '"+item.getStatus()+"' WHERE ID = "+item.getId();
+			String statement = "UPDATE inventory SET status = '"+item.getStatus()+"' WHERE ID = "+item.getId();
 			makeStatement(statement);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -449,7 +449,7 @@ public class Database {
 	 */
 	public static void removeItem(Item item) {
 		try {
-			String statement = "DELETE FROM item WHERE ID = "+item.getId();
+			String statement = "DELETE FROM inventory WHERE ID = "+item.getId();
 			makeStatement(statement);
 		} catch (Exception e) {
 			e.printStackTrace();
