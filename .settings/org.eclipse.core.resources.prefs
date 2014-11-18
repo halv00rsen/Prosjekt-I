@@ -1,5 +1,16 @@
 eclipse.preferences.version=1
+encoding//Core/src/BookingDate.java=UTF-8
+encoding//Core/src/Bruker.java=UTF-8
+encoding//Core/src/Calendar.java=UTF-8
 encoding//Core/src/Database.java=UTF-8
+encoding//Core/src/Date.java=UTF-8
+encoding//Core/src/Inventory.java=UTF-8
+encoding//Core/src/Item.java=UTF-8
+encoding//Core/src/Koie.java=UTF-8
+encoding//Core/src/Mail.java=UTF-8
+encoding//Core/src/Main.java=UTF-8
+encoding//Core/src/UserDatesBooked.java=UTF-8
+encoding//gui/pic/Pic.java=UTF-8
 encoding//gui/src/AddItemAdmin.java=UTF-8
 encoding//gui/src/AdminLogin.java=UTF-8
 encoding//gui/src/AdminLoginListener.java=UTF-8

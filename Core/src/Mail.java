@@ -16,7 +16,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-/** Inneholder metoder for å sende epost til brukere om at nytt utstyr må fraktes til en koie */
+/** Inneholder metoder for Ã¥ sende epost til brukere om at nytt utstyr mÃ¥ fraktes til en koie */
 public class Mail {
 	final static String mail = "it1901gruppe10@gmail.com";
 	final static String pass = "prosjekt1"; 
