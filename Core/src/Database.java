@@ -76,7 +76,7 @@ public class Database {
 			makeStatement("CREATE TABLE rapport"
 						+ "(reservasjon_id int NOT NULL PRIMARY KEY, "
 						+ "koie_id SMALLINT NOT NULL, "
-						+ "person VARCHAR(255), "
+						+ "bruker_id VARCHAR(255), "
 						+ "kommentar VARCHAR(255))");
 			
 			
@@ -493,7 +493,7 @@ public class Database {
 	 * @param resID Reservasjons-ID
 	 */
 	public static void rapporter(int koie_id, String person, String kommentar, int resID) {
-		String statement = "INSERT INTO rapport (koie_id, person, kommentar, reservasjon_id) VALUES ('"
+		String statement = "INSERT INTO rapport (koie_id, bruker_id, kommentar, reservasjon_id) VALUES ('"
 						 + koie_id +"', '" + person + "', '" + kommentar + "', '" + resID + "')";
 		makeStatement(statement);
 	}
@@ -506,10 +506,10 @@ public class Database {
 	public static ArrayList<String> getRapport(int koie_id) {
 		ArrayList<String> rapport = new ArrayList<String>();
 		try {
-			String query = "SELECT kommentar, person FROM rapport WHERE koie_id =" + koie_id;
+			String query = "SELECT kommentar, bruker_id FROM rapport WHERE koie_id =" + koie_id;
 			ResultSet res = makeQuery(query);
 			while (res.next()) {
-				String kommentar = res.getString("person") + ": ";
+				String kommentar = res.getString("bruker_id") + ": ";
 				kommentar += res.getString("kommentar");
 				rapport.add(kommentar);
 			}
