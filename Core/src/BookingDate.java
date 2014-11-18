@@ -36,6 +36,10 @@ public class BookingDate {
 		return resID;
 	}
 	
+	/**
+	 * Setter om reservasjonen er fra databasen
+	 * @param isFrom Om reservasjonen er fra databasen
+	 */
 	public void setIsFromDatabase(boolean isFrom){
 		isFromDatabase = isFrom;
 	}
@@ -58,7 +62,6 @@ public class BookingDate {
 		return !(dateFrom.isAfter(this.dateTo) || dateTo.isBefore(this.dateFrom));
 	}
 	
-	//samme som over
 	/**
 	 * Sjekker om en reservasjon kolliderer med denne reservasjonen
 	 * @param booking Reservasjon som BookingDate-objekt
@@ -91,7 +94,6 @@ public class BookingDate {
 		return dateFrom.equals(booking.dateFrom) && dateTo.equals(booking.dateTo);
 	}
 	
-	//samme som over
 	/**
 	 * Sjekker om en reservasjon er lik denne
 	 * @param dateFrom Start-dato
