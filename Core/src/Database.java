@@ -67,7 +67,7 @@ public class Database {
 						+ "mengde DOUBLE NOT NULL)");
 			
 			makeStatement("CREATE TABLE reservasjon"
-						+ "(ID int NOT NULL AUTO_INCREMENT PRIMARY KEY, "
+						+ "(id int NOT NULL AUTO_INCREMENT PRIMARY KEY, "
 						+ "koie_id SMALLINT NOT NULL, "
 						+ "fromDate VARCHAR(255) NOT NULL, "
 						+ "toDate VARCHAR(255) NOT NULL, "
@@ -185,7 +185,7 @@ public class Database {
 	 * @param resID Reservasjons-ID
 	 */
 	public static void slettReservasjon(int resID) {
-		makeStatement("DELETE FROM reservasjon WHERE ID =" + resID);
+		makeStatement("DELETE FROM reservasjon WHERE id =" + resID);
 	}
 
 	/**
@@ -310,12 +310,12 @@ public class Database {
 			koie.setVedmengde(mengde);
 			
 			//fyller koieobjektet med reservasjonene:
-			ResultSet reservasjoner = makeQuery("SELECT ID, bruker_id, fromDate, toDate "
+			ResultSet reservasjoner = makeQuery("SELECT id, bruker_id, fromDate, toDate "
 									+ "FROM reservasjon WHERE koie_id =" + koie_id);
 			Calendar cabinRented = koie.getCalendar();
 			while (reservasjoner.next()) {
 				String person = reservasjoner.getString("bruker_id");
-				int resID = reservasjoner.getInt("ID");
+				int resID = reservasjoner.getInt("id");
 				String fromDate = reservasjoner.getString("fromDate");
 				String toDate = reservasjoner.getString("toDate");			
 				String[] fromParts = fromDate.split("-");
@@ -464,7 +464,7 @@ public class Database {
 	public static ArrayList<UserDatesBooked> getReservasjonBruker(String person) {
 		ArrayList<UserDatesBooked> dates = new ArrayList<UserDatesBooked>();
 		try {
-			String query = "SELECT koie_id, fromDate, toDate, ID FROM reservasjon WHERE bruker_id =" + "'"+person+"'";
+			String query = "SELECT koie_id, fromDate, toDate, id FROM reservasjon WHERE bruker_id =" + "'"+person+"'";
 			ResultSet res = makeQuery(query);
 			while (res.next()) {
 				String fromDate = res.getString("fromDate");
@@ -474,7 +474,7 @@ public class Database {
 				Date from = new Date(Integer.valueOf(fromParts[2]), Integer.valueOf(fromParts[1]));
 				Date to = new Date(Integer.valueOf(toParts[2]), Integer.valueOf(toParts[1]));
 				int koie_id = res.getInt("koie_id");
-				int ID = res.getInt("ID");
+				int ID = res.getInt("id");
 				
 				dates.add(new UserDatesBooked(koie_id, from, to, ID));
 			}
