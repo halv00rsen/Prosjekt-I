@@ -52,7 +52,7 @@ public class Mail {
 	         Transport.send(message);
 	         return true;
 	    } catch (MessagingException mex) {
-	         mex.printStackTrace();
+//	         mex.printStackTrace();
 	         return false;
 	    }
 	}
@@ -61,7 +61,7 @@ public class Mail {
 	 * Metode som leser siste mail fra "it1901gruppe10@gmail.com"
 	 * @return string med innhold fra mail
 	 */
-	public static String getMail() {
+	public static String[] getMail() {
 		Properties properties = new Properties();
 		properties.setProperty("mail.store.protocol", "imaps");
 
@@ -71,14 +71,16 @@ public class Mail {
 			store.connect("imap.gmail.com", mail, pass);
 			Folder inbox = store.getFolder("reservasjon");
 			
-			inbox.open(Folder.READ_ONLY);
+			inbox.open(Folder.READ_WRITE);
 			Message msg = inbox.getMessage(inbox.getMessageCount());
-			
-			String content = (String) msg.getContent();
-			return content;
+			Multipart mp = (Multipart) msg.getContent();
+			String[] res = ((String) mp.getBodyPart(0).getContent()).split(",");
+//			msg.setFlag(Flags.Flag.DELETED, true);
+			inbox.close(true);
+			return res;
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
