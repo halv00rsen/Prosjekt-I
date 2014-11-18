@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class GetMail{
-	public final boolean DEBUG = true;
+	public final boolean DEBUG = false;
 	
 	public GetMail(){
 		Timer timer = new Timer();
@@ -23,9 +23,9 @@ public class GetMail{
 				for (String res: reservation){
 					try{
 						String[] oneRes = res.split(":");
-						String koie = oneRes[0];
-						String username = oneRes[1];
-						String[] date = oneRes[2].split(".");
+						String koie = oneRes[0].trim();
+						String username = oneRes[1].trim();
+						String[] date = oneRes[2].split("\\.");
 						Map<Integer, String> cabins;
 						if (DEBUG)
 							cabins = Database.getIdNameMap();
@@ -33,19 +33,19 @@ public class GetMail{
 							cabins = GUI.getIdMap();
 						int koieID = -1;
 						for (Integer id : cabins.keySet()){
-							System.out.println(cabins.get(id) + "   " + koie);
 							if (cabins.get(id).equals(koie)){
 								koieID = id;
 								break;
 							}
 						}
-						System.out.println(koieID);
 						Koie cabin = Database.getKoie(koieID);
-						cabin.getCalendar().reservePeriod(new Date(Integer.parseInt(date[0]), Integer.parseInt(date[1])), 0, username, -1, false);
+						cabin.getCalendar().reservePeriod(new Date(Integer.parseInt(date[0].trim()), Integer.parseInt(date[1].trim())), 0, username, -1, false);
 						Database.toDatabase(cabin);
-						System.out.println("Lagret i databasen");
+						if (DEBUG)
+							System.out.println("Lagret i databasen");
 							
 					}catch (Exception e){
+						e.printStackTrace();
 						if (DEBUG)
 							System.out.println("En error med mailen");
 						return;
@@ -53,6 +53,6 @@ public class GetMail{
 				}
 				System.out.println("heisann");
 			}
-		}, 1*1000, 1*1000);
+		}, 1*60*1000, 1*60*1000);
 	}
 }

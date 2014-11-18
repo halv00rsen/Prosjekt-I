@@ -39,6 +39,7 @@ public class GUI implements LoginListener{
 	private final ReservationsFrame reservationFrame;
 	private final ReservationList reservationList;
 	private final JTabbedPane tabbedPane;
+	private final GetMail getMail;
 	
 	private ItemStatus itemStatus;
 	private WoodStatus woodStatus;
@@ -91,6 +92,7 @@ public class GUI implements LoginListener{
 		});
 		
 //		frame.pack();
+		getMail = new GetMail();
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setVisible(true);
