@@ -39,7 +39,7 @@ public class LoginPanel extends JPanel implements ChangeTabListener{
 		this.setLayout(new GridLayout(2, 1));
 		loginUser = new AdminLogin(new Login());
 		listeners = new ArrayList<LoginListener>();
-		logoutButton = new JButton("Log ut");
+		logoutButton = new JButton("Logg ut");
 		logoutButton.addActionListener(new Logout());
 		panel.add(loginUser);
 		adminCheckBox = new JCheckBox();
@@ -119,7 +119,7 @@ public class LoginPanel extends JPanel implements ChangeTabListener{
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		loginUser.resetFields();
-		add(new JLabel("Logget in som admin.  "), c);
+		add(new JLabel("Logget inn som admin.  "), c);
 		c.gridx = 1;
 		add(logoutButton,c);
 		c.gridy = 1;
