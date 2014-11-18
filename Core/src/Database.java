@@ -52,7 +52,7 @@ public class Database {
 						+ "spesialiteter VARCHAR(255))");
 
 			makeStatement("CREATE TABLE bruker"
-						+ "(person VARCHAR(255) NOT NULL PRIMARY KEY, "
+						+ "(id VARCHAR(255) NOT NULL PRIMARY KEY, "
 						+ "password_hash VARCHAR(255) NOT NULL, "
 						+ "is_admin BOOL NOT NULL)");
 
@@ -128,7 +128,7 @@ public class Database {
 				String password = fields[1];
 				String isAdmin = fields[2];
 
-				String statement = "INSERT INTO bruker (person, password_hash, is_admin) "
+				String statement = "INSERT INTO bruker (id, password_hash, is_admin) "
 								 + "VALUES('"+person+"', '"+Bruker.hashPassword(password)+"', '"+isAdmin+"');";
  
 				makeStatement(statement);
@@ -358,7 +358,7 @@ public class Database {
 		try {
 			String bruker_query = "SELECT password_hash, is_admin "
 							 	+ "FROM bruker "
-							 	+ "WHERE person = '" + person +"'";
+							 	+ "WHERE id = '" + person +"'";
 			ResultSet bruker_res = makeQuery(bruker_query);
 			if (bruker_res.next()) {
 				String passwordHash = bruker_res.getString("password_hash");
@@ -379,13 +379,13 @@ public class Database {
 	 */
 	public static List<Bruker> getAllBrukers() {
 		try {
-			String query = "SELECT person, password_hash, is_admin "
+			String query = "SELECT id, password_hash, is_admin "
 							 	+ "FROM bruker";
 			ResultSet res = makeQuery(query);
 			
 			List<Bruker> allBrukers = new ArrayList<Bruker>();
 			while (res.next()) {
-				String person = res.getString("person");
+				String person = res.getString("id");
 				String passwordHash = res.getString("password_hash");
 				boolean isAdmin = res.getBoolean("is_admin");
 				allBrukers.add(new Bruker(person, passwordHash, isAdmin));
@@ -407,7 +407,7 @@ public class Database {
 	 */
 	public static void addBruker(String id, String password, boolean isAdmin) {
 		try {
-			String statement = "INSERT INTO bruker (person, password_hash, is_admin) "
+			String statement = "INSERT INTO bruker (id, password_hash, is_admin) "
 							 + "VALUES('"+id+"', '"+Bruker.hashPassword(password)+"', '"+(isAdmin?1:0)+"')";
 			makeStatement(statement);
 		} catch (Exception e) {
