@@ -246,7 +246,6 @@ public class Database {
 			return conn;
 			
 		} catch (Exception e) {
-//			e.printStackTrace();
 			return null;
 		}
 	}
@@ -306,14 +305,14 @@ public class Database {
 				spesialiteter = koie_res.getString("spesialiteter");
 			}
 			
-			//vedmengde
+			// Vedmengde
 			ResultSet vedmengde_res = makeQuery("SELECT mengde FROM vedstatus WHERE koie_id='"+koie_id+"'");
 			double mengde = 0.0;
 			if (vedmengde_res.next()) {
 				mengde = vedmengde_res.getDouble("mengde");
 			}			
 			
-			//lager koie objekt:
+			// Lager Koie-objekt
 			Koie koie = new Koie(koie_id, name, coordinate, year);
 			koie.setNumBeds(numBeds);
 			koie.setNumSeats(numSeats);
@@ -324,7 +323,7 @@ public class Database {
 			koie.setSpesialiteter(spesialiteter);
 			koie.setVedmengde(mengde);
 			
-			//fyller koieobjektet med reservasjonene:
+			// Fyller Koie-objektet med reservasjonene
 			ResultSet reservasjoner = makeQuery("SELECT id, bruker_id, start_date, end_date "
 									+ "FROM reservasjon WHERE koie_id =" + koie_id);
 			Calendar cabinRented = koie.getCalendar();
@@ -585,5 +584,4 @@ public class Database {
 		}
 		return vedstatus;
 	}
-
 }
