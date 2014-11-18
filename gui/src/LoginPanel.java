@@ -150,8 +150,7 @@ public class LoginPanel extends JPanel implements ChangeTabListener{
 	private class ResetButton implements ActionListener{
 
 		public void actionPerformed(ActionEvent arg0) {
-			Database.initializeDatabase();
-			JOptionPane.showMessageDialog(null, "Databasen er tilbakestilt");
+			JOptionPane.showMessageDialog(null, Database.initializeDatabase() ? "Databasen er tilbakestilt": "Databasen ble ikke tilbakestilt");
 		}
 	}
 	
