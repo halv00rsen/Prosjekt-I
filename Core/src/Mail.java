@@ -75,7 +75,7 @@ public class Mail {
 			Message msg = inbox.getMessage(inbox.getMessageCount());
 			Multipart mp = (Multipart) msg.getContent();
 			String[] res = ((String) mp.getBodyPart(0).getContent()).split(",");
-//			msg.setFlag(Flags.Flag.DELETED, true);
+			msg.setFlag(Flags.Flag.DELETED, true);
 			inbox.close(true);
 			return res;
 			
