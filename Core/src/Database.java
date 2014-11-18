@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 
 /** Håndterer kommunikasjon mellom programmet og MySQL-databasen */
 public class Database {
+	public static boolean DEBUG = false;
 	private static String url = "jdbc:mysql://mysql.stud.ntnu.no/";
 	private static String dbName = "alekh_prosjekt1";
 	private static String driver = "com.mysql.jdbc.Driver";
@@ -26,9 +27,9 @@ public class Database {
 
 	/**
 	 *  Metode som initialiserer/resetter databasen med informasjon fra initialiseringsfiler
-	 *  
+	 *  @return boolean - returnerer om databasen ble tilbakestilt
 	 */
-	public static void initializeDatabase() {
+	public static boolean initializeDatabase() {
 		try {
 			// Sletter alle tidligere tabeller
 			makeStatement("DROP TABLE koie");
@@ -135,17 +136,21 @@ public class Database {
 				makeStatement(statement);
 			}
 			in.close();
+			return true;
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
+			return false;
 		}
 	}
 
 	/**
 	 * Oppdaterer databasen med info fra et Koie-objekt
 	 * @param koie Et Koie-objekt
+	 * @return boolean - om koia ble lagret i databasen
 	 */
-	public static void toDatabase(Koie koie) {
+	public static boolean toDatabase(Koie koie) {
 		// Legger til vedmengden fra koia til databasen
 		double vedmengde = koie.getVedmengde();		
 		makeStatement("UPDATE vedstatus SET mengde = '" + vedmengde +"' WHERE koie_id=" + koie.getId());
@@ -179,14 +184,16 @@ public class Database {
 		for (Item item : oldItems) {
 			updateItem(item);
 		}
+		return true;
 	}
 	
 	/**
 	 * Sletter en reservasjon med gitt ID
 	 * @param resID Reservasjons-ID
+	 * @return returnerer om reservasjonen ble slettet
 	 */
-	public static void slettReservasjon(int resID) {
-		makeStatement("DELETE FROM reservasjon WHERE id =" + resID);
+	public static boolean slettReservasjon(int resID) {
+		return makeStatement("DELETE FROM reservasjon WHERE id =" + resID);
 	}
 
 	/**
@@ -202,7 +209,9 @@ public class Database {
 			res = st.executeQuery(query);
 			//conn.close(); // Må kommenteres ut for at getIdNameMap skal fungere...
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
+			return null;
 		}
 		return res;
 	}
@@ -210,15 +219,19 @@ public class Database {
 	/**
 	 * Utfører statements mot databasen
 	 * @param statement Statement som skal utføres
+	 * @return returnerer om statementen ble fullført
 	 */
-	private static void makeStatement(String statement) {
+	private static boolean makeStatement(String statement) {
 		try {
 			Connection conn = getConnection();
 			Statement st = conn.createStatement();
 			int res = st.executeUpdate(statement);
 			conn.close();
+			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
+			return false;
 		}
 	}
 	
@@ -233,7 +246,7 @@ public class Database {
 			return conn;
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			return null;
 		}
 	}
@@ -251,7 +264,8 @@ public class Database {
 			}
 			return idNameMap;
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
 			return null;
 		}
 	}
@@ -345,7 +359,8 @@ public class Database {
 			return koie;
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
 			return null;
 		}
 	}
@@ -369,7 +384,8 @@ public class Database {
 				return null;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
 			return null;
 		}
 	}
@@ -395,7 +411,8 @@ public class Database {
 			return allBrukers;
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
 			return null;
 		}
 	}
@@ -405,14 +422,17 @@ public class Database {
 	 * @param id Bruker-ID
 	 * @param password Passord som blir hashet 
 	 * @param isAdmin Om brukeren skal være admninistrator eller ikke
+	 * @return returnerer om en bruker ble lagt til i databasen
 	 */
-	public static void addBruker(String id, String password, boolean isAdmin) {
+	public static boolean addBruker(String id, String password, boolean isAdmin) {
 		try {
 			String statement = "INSERT INTO bruker (id, password_hash, is_admin) "
 							 + "VALUES('"+id+"', '"+Bruker.hashPassword(password)+"', '"+(isAdmin?1:0)+"')";
-			makeStatement(statement);
+			return makeStatement(statement);
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
+			return false;
 		}
 	}
 
@@ -420,40 +440,49 @@ public class Database {
 	 * Legger et Item-objekt inn i databasen
 	 * @param item Et Item-objekt
 	 * @param koie_id ID-en til koia som Item-objektet hører til
+	 * @return returnerer om utstyret ble lagt til i databasen
 	 */
-	public static void addItem(Item item, int koie_id) {
+	public static boolean addItem(Item item, int koie_id) {
 		try {
 			String statement = "INSERT INTO item (name, status, koie_id) "
 							 + "VALUES('"+item.getName()+"', '"+item.getStatus()+"', '"+koie_id+"')";
-			makeStatement(statement);
+			return makeStatement(statement);
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
+			return false;
 		}
 	}
 
 	/**
 	 * Oppdaterer statusen til et Item i databasen
 	 * @param item Et Item-objekt
+	 * @return returnerer om utstyret ble oppdatert
 	 */
-	public static void updateItem(Item item) {
+	public static boolean updateItem(Item item) {
 		try {
 			String statement = "UPDATE item SET status = '"+item.getStatus()+"' WHERE id = "+item.getId();
-			makeStatement(statement);
+			return makeStatement(statement);
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
+			return false;
 		}
 	}
 	
 	/**
 	 * Fjernet et Item fra databasen
 	 * @param item Et Item-objekt som skal fjernes
+	 * @return returnerer om utstyret ble slettet fra databasen
 	 */
-	public static void removeItem(Item item) {
+	public static boolean removeItem(Item item) {
 		try {
 			String statement = "DELETE FROM item WHERE id = "+item.getId();
-			makeStatement(statement);
+			return makeStatement(statement);
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
+			return true;
 		}
 	}
 
@@ -480,7 +509,8 @@ public class Database {
 				dates.add(new UserDatesBooked(koie_id, from, to, ID));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
 		}
 		
 		return dates;
@@ -492,11 +522,12 @@ public class Database {
 	 * @param person Unik bruker-ID
 	 * @param kommentar Kommentar til rapporten
 	 * @param resID Reservasjons-ID
+	 * @return returnerer om rapporten ble lagret
 	 */
-	public static void rapporter(int koie_id, String person, String kommentar, int resID) {
+	public static boolean rapporter(int koie_id, String person, String kommentar, int resID) {
 		String statement = "INSERT INTO rapport (koie_id, bruker_id, kommentar, reservasjon_id) VALUES ('"
 						 + koie_id +"', '" + person + "', '" + kommentar + "', '" + resID + "')";
-		makeStatement(statement);
+		return makeStatement(statement);
 	}
 	
 	/**
@@ -515,7 +546,8 @@ public class Database {
 				rapport.add(kommentar);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
 		}
 		return rapport;
 	}
@@ -530,7 +562,8 @@ public class Database {
 			ResultSet res = makeQuery("SELECT * FROM rapport WHERE reservasjon_id =" + resID);
 			return res.next();
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
 			return false;
 		}
 	}
@@ -547,7 +580,8 @@ public class Database {
 				vedstatus.put(res.getInt("koie_id"), res.getDouble("mengde"));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (DEBUG)
+				e.printStackTrace();
 		}
 		return vedstatus;
 	}
