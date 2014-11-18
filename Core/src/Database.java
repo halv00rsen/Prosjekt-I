@@ -52,7 +52,7 @@ public class Database {
 						+ "spesialiteter VARCHAR(255))");
 
 			makeStatement("CREATE TABLE bruker"
-						+ "(person VARCHAR(255) NOT NULL PRIMARY KEY, "
+						+ "(id VARCHAR(255) NOT NULL PRIMARY KEY, "
 						+ "password_hash VARCHAR(255) NOT NULL, "
 						+ "is_admin BOOL NOT NULL)");
 
@@ -76,7 +76,7 @@ public class Database {
 			makeStatement("CREATE TABLE rapport"
 						+ "(resID int NOT NULL PRIMARY KEY, "
 						+ "koie_id SMALLINT NOT NULL, "
-						+ "person VARCHAR(255), "
+						+ "bruker_id VARCHAR(255), "
 						+ "kommentar VARCHAR(255))");
 			
 			
@@ -124,12 +124,12 @@ public class Database {
 			in.nextLine();
 			while (in.hasNextLine()) {
 				String[] fields = in.nextLine().split(", ");	
-				String person = fields[0];
+				String brukerId = fields[0];
 				String password = fields[1];
 				String isAdmin = fields[2];
 
-				String statement = "INSERT INTO bruker (person, password_hash, is_admin) "
-								 + "VALUES('"+person+"', '"+Bruker.hashPassword(password)+"', '"+isAdmin+"');";
+				String statement = "INSERT INTO bruker (id, password_hash, is_admin) "
+								 + "VALUES('"+brukerId+"', '"+Bruker.hashPassword(password)+"', '"+isAdmin+"');";
  
 				makeStatement(statement);
 			}
@@ -314,7 +314,7 @@ public class Database {
 									+ "FROM reservasjon WHERE koie_id =" + koie_id);
 			Calendar cabinRented = koie.getCalendar();
 			while (reservasjoner.next()) {
-				String person = reservasjoner.getString("bruker_id");
+				String brukerId = reservasjoner.getString("bruker_id");
 				int resID = reservasjoner.getInt("ID");
 				String fromDate = reservasjoner.getString("fromDate");
 				String toDate = reservasjoner.getString("toDate");			
@@ -324,7 +324,7 @@ public class Database {
 				Date from = new Date(Integer.valueOf(fromParts[2]), Integer.valueOf(fromParts[1]));
 				Date to = new Date(Integer.valueOf(toParts[2]), Integer.valueOf(toParts[1]));
 				
-				cabinRented.reservePeriod(from, to, person, resID, true);
+				cabinRented.reservePeriod(from, to, brukerId, resID, true);
 			}
 
 			String item_query = "SELECT ID, item, status "
@@ -351,19 +351,19 @@ public class Database {
 		
 	/**
 	 * Henter et Bruker-objekt fra databasen
-	 * @param person Bruker-ID
+	 * @param brukerId Bruker-ID
 	 * @return Et Bruker-objekt
 	 */
-	public static Bruker getBruker(String person) {
+	public static Bruker getBruker(String brukerId) {
 		try {
 			String bruker_query = "SELECT password_hash, is_admin "
 							 	+ "FROM bruker "
-							 	+ "WHERE person = '" + person +"'";
+							 	+ "WHERE id = '" + brukerId +"'";
 			ResultSet bruker_res = makeQuery(bruker_query);
 			if (bruker_res.next()) {
 				String passwordHash = bruker_res.getString("password_hash");
 				boolean isAdmin = bruker_res.getBoolean("is_admin");
-				return new Bruker(person, passwordHash, isAdmin);
+				return new Bruker(brukerId, passwordHash, isAdmin);
 			} else {
 				return null;
 			}
@@ -379,16 +379,16 @@ public class Database {
 	 */
 	public static List<Bruker> getAllBrukers() {
 		try {
-			String query = "SELECT person, password_hash, is_admin "
+			String query = "SELECT id, password_hash, is_admin "
 							 	+ "FROM bruker";
 			ResultSet res = makeQuery(query);
 			
 			List<Bruker> allBrukers = new ArrayList<Bruker>();
 			while (res.next()) {
-				String person = res.getString("person");
+				String brukerId = res.getString("id");
 				String passwordHash = res.getString("password_hash");
 				boolean isAdmin = res.getBoolean("is_admin");
-				allBrukers.add(new Bruker(person, passwordHash, isAdmin));
+				allBrukers.add(new Bruker(brukerId, passwordHash, isAdmin));
 			}	
 
 			return allBrukers;
@@ -407,7 +407,7 @@ public class Database {
 	 */
 	public static void addBruker(String id, String password, boolean isAdmin) {
 		try {
-			String statement = "INSERT INTO bruker (person, password_hash, is_admin) "
+			String statement = "INSERT INTO bruker (id, password_hash, is_admin) "
 							 + "VALUES('"+id+"', '"+Bruker.hashPassword(password)+"', '"+(isAdmin?1:0)+"')";
 			makeStatement(statement);
 		} catch (Exception e) {
@@ -458,13 +458,13 @@ public class Database {
 
 	/**
 	 * Returnerer alle reservasjonene til en bruker
-	 * @param person Bruker-ID-en
+	 * @param brukerId Bruker-ID-en
 	 * @return Liste med UserDatesBooked objekter hvor reservasjonene samnt reservasjons id ligger
 	 */
-	public static ArrayList<UserDatesBooked> getReservasjonBruker(String person) {
+	public static ArrayList<UserDatesBooked> getReservasjonBruker(String brukerId) {
 		ArrayList<UserDatesBooked> dates = new ArrayList<UserDatesBooked>();
 		try {
-			String query = "SELECT koie_id, fromDate, toDate, ID FROM reservasjon WHERE bruker_id =" + "'"+person+"'";
+			String query = "SELECT koie_id, fromDate, toDate, ID FROM reservasjon WHERE bruker_id =" + "'"+brukerId+"'";
 			ResultSet res = makeQuery(query);
 			while (res.next()) {
 				String fromDate = res.getString("fromDate");
@@ -488,13 +488,13 @@ public class Database {
 	/**
 	 * Sender rapporten/kommentaren til databasen
 	 * @param koie_id Unik koie-ID
-	 * @param person Unik bruker-ID
+	 * @param brukerId Unik bruker-ID
 	 * @param kommentar Kommentar til rapporten
 	 * @param resID Reservasjons-ID
 	 */
-	public static void rapporter(int koie_id, String person, String kommentar, int resID) {
-		String statement = "INSERT INTO rapport (koie_id, person, kommentar, resID) VALUES ('"
-						 + koie_id +"', '" + person + "', '" + kommentar + "', '" + resID + "')";
+	public static void rapporter(int koie_id, String brukerId, String kommentar, int resID) {
+		String statement = "INSERT INTO rapport (koie_id, bruker_id, kommentar, resID) VALUES ('"
+						 + koie_id +"', '" + brukerId + "', '" + kommentar + "', '" + resID + "')";
 		makeStatement(statement);
 	}
 	
@@ -506,10 +506,10 @@ public class Database {
 	public static ArrayList<String> getRapport(int koie_id) {
 		ArrayList<String> rapport = new ArrayList<String>();
 		try {
-			String query = "SELECT kommentar, person FROM rapport WHERE koie_id =" + koie_id;
+			String query = "SELECT kommentar, bruker_id FROM rapport WHERE koie_id =" + koie_id;
 			ResultSet res = makeQuery(query);
 			while (res.next()) {
-				String kommentar = res.getString("person") + ": ";
+				String kommentar = res.getString("bruker_id") + ": ";
 				kommentar += res.getString("kommentar");
 				rapport.add(kommentar);
 			}
