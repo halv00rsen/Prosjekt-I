@@ -26,6 +26,7 @@ public class Mail {
 	 * @param to Epost-adresse til mottaker
 	 * @param subjectline Emne
 	 * @param messageText Melding
+	 * @return boolean avhengig av om mail er sendt eller ei.
 	 */
 	public static boolean sendMail(String to, String subjectline, String messageText) {
 		Properties properties = System.getProperties();
