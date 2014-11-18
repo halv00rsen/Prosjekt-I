@@ -157,7 +157,8 @@ public class AddItemAdmin extends JPanel implements ChangeTabListener{
 			else if (arg0.getSource() == allItems || arg0.getSource() == statusBox){
 				if (arg0.getSource() == statusBox){
 					((Item) allItems.getSelectedItem()).setStatus((Status) statusBox.getSelectedItem());
-				}
+				}else
+					statusBox.setSelectedItem(((Item) allItems.getSelectedItem()).getStatus());
 				updateInformation();
 			}
 			else if (arg0.getSource() == saveInfo){

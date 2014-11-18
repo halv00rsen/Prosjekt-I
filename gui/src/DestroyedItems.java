@@ -44,7 +44,7 @@ public class DestroyedItems extends JPanel{
 		  inventoryListModel = new SortedListModel();
 		  inventory = new JList<Item>(inventoryListModel);
 		  JScrollPane pane1 = new JScrollPane(inventory);
-		  pane1.setBorder(BorderFactory.createTitledBorder("Utstyr"));
+		  pane1.setBorder(BorderFactory.createTitledBorder("Utstyr i orden"));
 		  add(pane1);
 		  JPanel panel = new JPanel();
 		  GridBagConstraints c = new GridBagConstraints();
@@ -65,7 +65,7 @@ public class DestroyedItems extends JPanel{
 		  brokenInventoryListModel = new SortedListModel();
 		  brokenInventory = new JList<Item>(brokenInventoryListModel);
 		  JScrollPane pane2 = new JScrollPane(brokenInventory);
-		  pane2.setBorder(BorderFactory.createTitledBorder("Ødelagt/forsvunnet utstyr"));
+		  pane2.setBorder(BorderFactory.createTitledBorder("Ødelagt utstyr"));
 		  add(pane2);
 	  }
 	  

@@ -65,7 +65,7 @@ public class UserReport {
 		frame.getContentPane().add(cancelOkButtons, BorderLayout.SOUTH);
 		cancelOkButtons.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		okButton = new JButton("Ok");
+		okButton = new JButton("Send inn");
 		cancelOkButtons.add(okButton);
 		okButton.addActionListener(buttonListener);
 		
@@ -94,7 +94,7 @@ public class UserReport {
 		panel_1.add(numWood, c);
 		
 		destroyedItems = new DestroyedItems();
-		tabbedPane.addTab("Ã˜delagt utsyr", null, destroyedItems, null);
+		tabbedPane.addTab("Ødelagt utsyr", null, destroyedItems, null);
 		
 		lostItems = new LostItems();
 		tabbedPane.addTab("Gjenglemt utstyr", null, lostItems, null);
