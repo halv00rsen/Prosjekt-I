@@ -1,16 +1,23 @@
 package src;
 
-import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.activation.*;
+import java.util.Properties;
 
-/** Inneholder metoder for Ã¥ sende epost til brukere om at nytt utstyr mÃ¥ fraktes til en koie */
+import javax.mail.Authenticator;
+import javax.mail.Flags;
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Store;
+import javax.mail.Transport;
+
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+/** Inneholder metoder for å sende epost til brukere om at nytt utstyr må fraktes til en koie */
 public class Mail {
-//	public static void main(String[] args) {
-//		Mail.sendMail("it1901gruppe10@gmail.com", "test", "heisann");
-//		Mail.getMail();
-//	}
 	final static String mail = "it1901gruppe10@gmail.com";
 	final static String pass = "prosjekt1"; 
 	
@@ -19,6 +26,7 @@ public class Mail {
 	 * @param to Epost-adresse til mottaker
 	 * @param subjectline Emne
 	 * @param messageText Melding
+	 * @return boolean avhengig av om mail er sendt eller ei.
 	 */
 	public static boolean sendMail(String to, String subjectline, String messageText) {
 		Properties properties = System.getProperties();
@@ -29,7 +37,6 @@ public class Mail {
 		properties.setProperty("mail.smtp.auth", "true");
 		properties.setProperty("mail.smtp.starttls.enable", "true");
 		
-		//Session session = Session.getDefaultInstance(properties);
 		Session session = Session.getDefaultInstance(properties,
 				new Authenticator() {
 			    	protected PasswordAuthentication  getPasswordAuthentication() {
@@ -42,17 +49,12 @@ public class Mail {
 	         message.setFrom(new InternetAddress(mail));
 	         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
-	         // Set Subject: header field
 	         message.setSubject(subjectline);
-
-	         // Now set the actual message
 	         message.setText(messageText);
 
-	         // Send message
 	         Transport.send(message);
 	         return true;
 	    } catch (MessagingException mex) {
-//	         mex.printStackTrace();
 	         return false;
 	    }
 	}
@@ -80,7 +82,6 @@ public class Mail {
 			return res;
 			
 		} catch (Exception e) {
-//			e.printStackTrace();
 			return null;
 		}
 	}
