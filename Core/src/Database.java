@@ -155,9 +155,6 @@ public class Database {
 		double vedmengde = koie.getVedmengde();		
 		makeStatement("UPDATE vedstatus SET mengde = '" + vedmengde +"' WHERE koie_id=" + koie.getId());
 		
-		// Sletter alle tidligere reservasjoner
-		//makeStatement("DELETE FROM reservasjon WHERE koie_id =" + koie.getId());
-		
 		// Oppdaterer reservasjoner
 		Calendar calendar = koie.getCalendar();
 		List<BookingDate> datesBooked = calendar.getDatesBooked();
